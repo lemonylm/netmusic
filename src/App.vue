@@ -2,7 +2,7 @@
   <div id="app">
     <router-view />
     <audio src=""></audio>
-    玩儿erer
+    玩儿ererer
   </div>
 </template>
 
