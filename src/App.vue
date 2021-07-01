@@ -2,7 +2,7 @@
   <div id="app">
     <router-view />
     <audio src=""></audio>
-    test1 
+    test2 
   </div>
 </template>
 
