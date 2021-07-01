@@ -2,8 +2,8 @@
 const Discover = () => import("pages/Discover");
 const MyMusic = () => import("pages/MyMusic");
 // 二级路由
-const Recommend = () => import("pages/Recommend");
-const Rank = () => import("pages/Rank");
+const Recommend = () => import("pages/Discover/Recommend");
+const Rank = () => import("pages/Discover/Rank");
 // 404
 const NotFound = () => import("pages/404/404");
 
@@ -40,10 +40,10 @@ export default [
   },
   {
     path: "/",
-    redircet: "/discover",
+    redirect: "/discover/recommend",
   },
   {
     path: "/*",
-    redircet: "/notfound",
+    redirect: "/notfound",
   },
 ];

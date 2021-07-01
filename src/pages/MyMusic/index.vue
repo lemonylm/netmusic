@@ -1,6 +1,7 @@
 <template>
     <div>
-mymusic页
+        <Header></Header>
+        mymusic页
     </div>
 </template>
 
