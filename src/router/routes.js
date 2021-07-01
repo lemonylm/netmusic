@@ -40,10 +40,10 @@ export default [
   },
   {
     path: "/",
-    redircet: "/discover",
+    redirect: "/discover/recommend",
   },
   {
     path: "/*",
-    redircet: "/notfound",
+    redirect: "/notfound",
   },
 ];
