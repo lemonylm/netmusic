@@ -6,18 +6,23 @@
         <ul class="nav_list">
           <li class="nav_item" :class="{active: path === 'discover'}">
             <router-link :to="{ path: '/discover' }">发现音乐</router-link>
+            <div class="delta" :style="{display: path === 'discover' ? 'block' : 'none'}"></div>
           </li>
           <li class="nav_item" :class="{active: path === 'mymusic'}">
             <router-link :to="{ path: '/mymusic' }">我的音乐</router-link>
+            <div class="delta" :style="{display: path === 'mymusic' ? 'block' : 'none'}"></div>
           </li>
           <li class="nav_item" style="width: 66px" :class="{active: path === 'friends'}">
             <router-link :to="{ path: '/friends' }">朋友</router-link>
+            <div class="delta" :style="{display: path === 'friends' ? 'block' : 'none'}"></div>
           </li>
           <li class="nav_item" style="width: 66px" :class="{active: path === 'store'}">
             <router-link :to="{ path: '/store' }">商城</router-link>
+            <div class="delta" :style="{display: path === 'store' ? 'block' : 'none'}"></div>
           </li>
           <li class="nav_item" style="width: 80px" :class="{active: path === 'musician'}">
             <router-link :to="{ path: '/musician' }">音乐人</router-link>
+            <div class="delta" :style="{display: path === 'musician' ? 'block' : 'none'}"></div>
           </li>
           <li class="nav_item" style="width: 108px" :class="{active: path === 'download'}">
             <router-link :to="{ path: '/download' }">下载客户端</router-link>
@@ -39,6 +44,7 @@
           </div>
         </div>
       </div>
+      <div class="line"></div>
     </div>
   </div>
 </template>
@@ -53,14 +59,14 @@ export default {
 <style lang="less" scoped>
 #nav {
   .nav_header {
-    height: 70px;
+    height: 75px;
     border-bottom: 1px solid #000;
     box-sizing: border-box;
     background: #242424;
     .nav_header_main {
       position: relative;
       width: 1100px;
-      height: 100%;
+      height: 70px;
       margin: 0 auto;
       .logo_wrap {
         float: left;
@@ -76,6 +82,7 @@ export default {
         float: left;
         .nav_item {
           float: left;
+          position: relative;
           width: 94px;
           height: 100%;
           box-sizing: border-box;
@@ -87,6 +94,18 @@ export default {
             a {
               color: #fff !important;
             }
+          }
+          .delta {
+            position: absolute;
+            left: 50%;
+            bottom: -1px;
+            transform: translateX(-6px);
+            width: 0;
+            height: 0;
+            border: 6px solid #C20C0C;
+            border-top-color: transparent;
+            border-left-color: transparent;
+            border-right-color: transparent;
           }
           a {
             display: block;
@@ -171,6 +190,10 @@ export default {
           }
         }
       }
+    }
+    .line {
+      height: 5px;
+      background-color: #C20C0C;
     }
   }
 }
