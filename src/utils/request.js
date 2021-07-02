@@ -1,7 +1,7 @@
 import axios from "axios";
 import nprogress from "nprogress";
 const instance = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "/api",
   timeout: 10000,
 });
 instance.interceptors.request.use((config) => {
@@ -9,9 +9,9 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 instance.interceptors.response.use(
-  (config) => {
+  (response) => {
     nprogress.done();
-    return config;
+    return response.data;
   },
   (err) => {
     nprogress.done();
