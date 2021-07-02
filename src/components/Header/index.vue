@@ -135,6 +135,7 @@ export default {
         height: 100%;
         display: flex;
         align-items: center;
+        padding-right: 22px;
         img {
           width: 30px;
           height: 30px;
