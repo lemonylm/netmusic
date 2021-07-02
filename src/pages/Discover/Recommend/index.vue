@@ -52,6 +52,10 @@
                             </div>
                             <Card :cardInfo="item" v-for="item in recommendList" :key="item.id"></Card>
                         </div>
+                        <Title title="新碟上架"></Title>
+                        <div class="content">
+                            <Card :cardInfo="item" v-for="item in newAlbum" :key="item.id"></Card>
+                        </div>
                     </div>
                 </div>
                 <div class="right_wrap"></div>
@@ -72,7 +76,8 @@ export default {
             isDownload: false,
             pageInfo: [],
             hotRecommendList: [],
-            recommendList: []
+            recommendList: [],
+            newAlbum: []
         }
     },
     computed: {
@@ -98,12 +103,19 @@ export default {
             if(result.code === 200) {
                 this.recommendList = result.recommend.slice(0,3)
             }
+        },
+        async getNewAlbum() {
+            const result = await this.$API.recommend.getNewAlbum();
+            if(result.code === 200) {
+                this.newAlbum = result.albums
+            }
         }
     },
     created() {
         this.getHomepage()
         this.getHotRecommend()
         this.getRecommend()
+        this.getNewAlbum()
     }
 };
 </script>
