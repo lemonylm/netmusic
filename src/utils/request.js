@@ -6,16 +6,13 @@ const instance = axios.create({
 });
 instance.interceptors.request.use((config) => {
   nprogress.start();
-  return config.data;
+  return config;
 });
 instance.interceptors.response.use(
   (response) => {
     nprogress.done();
-<<<<<<< HEAD
     return config.data;
-=======
     return response.data;
->>>>>>> 952a7d586ed96c618dcbcb51a9aebea0b55d9041
   },
   (err) => {
     nprogress.done();

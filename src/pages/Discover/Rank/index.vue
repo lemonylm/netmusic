@@ -5,17 +5,17 @@
         <p class="kind-title">云音乐特色榜</p>
         <el-radio 
          class="radio-list"
-         v-for="item in artistToplist"
+         v-for="item in toplist"
          :key="item.id"
          :label="item.id"
         >
           <div class="radio-details">
             <div class="img">
-              <img src="" alt="" />
+              <img :src="item.coverImgUrl" alt="" />
             </div>
             <div class="details">
-              <p class="title"></p>
-              <p class="info"></p>
+              <p class="title">{{item.name}}</p>
+              <p class="info">{{item.updateFrequency}}</p>
             </div>
           </div>
         </el-radio>
@@ -163,30 +163,41 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+
 export default {
   name: "rank",
   data() {
     return {
-      artistToplist: []
-    }
-  },
-  beforeRouteUpdata(to,from,next){
-    next(),
-    this.getplaylistDetail()
-  },
-  created() {
-    this.init();
-  },
-  methods: {
-    getToplist(){
-      this.$store.dispatch("getToplist")
-    },
-    getplaylistDetail(){
-      this.$store.dispatch("getplaylistDetail",id)
-    }
-  }
+      artistToplist: [],
+      toplist:[]
 
+    }
+  },
+  computed:{},
+  methods: {
+
+    async getToplist(){
+      console.log(this.$API.rank)
+      const result = await this.$API.rank.getToplist()
+      if(result.code === 200){
+        this.toplist = result.data
+      }
+    
+    },
+    
+
+    // async getplaylistDetail(id){
+    //   const result = await this.$API.rank.getplaylistDetail()
+    //   if(result.code === 200){
+    //     this.getplaylistDetail = result.data.id
+    //   }
+    // },
+    
+  },
+ created() {
+       this.getToplist()
+     },
+ 
 };
 </script>
 

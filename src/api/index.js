@@ -1,4 +1,7 @@
 import recommend from "./discover/recommend";
-export {
-  recommend
+import rank from './discover/rank';
+
+export  {
+  recommend,
+  rank
 }
