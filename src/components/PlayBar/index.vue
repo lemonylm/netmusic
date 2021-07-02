@@ -22,9 +22,29 @@
           <a class="songName" href="javascript:;">呼吸决定</a>
           <a class="band" href="javascript:;">Fine乐团</a>
           <a class="src" href="javascript:;"></a>
-          <span></span>
         </div>
-        <Progress />
+        <Progress
+          :percent="percentMusic"
+          :percent-progress="currentProgress"
+          @percentChange="progressMusic"
+          @percentChangeEnd="progressMusicEnd"
+        />
+      </div>
+      <!-- 时间进度 -->
+      <div class="time">
+        <em class="cur">{{ curTime }}</em> / {{ totalTime }}
+      </div>
+      <!-- 分享等选项 -->
+      <div class="oper">
+        <a class="icn" href="javascript:;" title="画中画歌词"></a>
+        <a class="like" href="javascript:;" title="收藏"></a>
+        <a class="share" href="javascript:;" title="分享"></a>
+      </div>
+      <!-- 控制条 -->
+      <div class="controller">
+        <a class="volume" href="javascript:;" title="音量"></a>
+        <a class="mode" href="javascript:;" :title="mode"></a>
+        <a class="list" href="javascript:;" title="播放列表"></a>
       </div>
     </div>
     <div class="lock-bg">
@@ -48,12 +68,32 @@ export default {
     return {
       isLock: true,
       isPlay: false,
+      currentProgress: 0, // 当前缓冲进度
+      curTime: "00:00",
+      totalTime: "04:00",
+      mode: ['播放',"随机","循环"]
     };
   },
+  computed: {
+    //   计算进度条的进度
+    percentMusic() {
+      //   const duration = this.currentMusic.duration;
+      //   return this.currentTime && duration ? this.currentTime / duration : 0;
+    },
+  },
   methods: {
+    //   修改锁定状态
     changeStatus() {
       let { isLock } = this;
       this.isLock = !isLock;
+    },
+    // 修改音乐显示时长
+    progressMusic(percent) {
+      //   this.currentTime = this.currentMusic.duration * percent;
+    },
+    // 修改音乐进度
+    progressMusicEnd(percent) {
+      //   this.audioEle.currentTime = this.currentMusic.duration * percent;
     },
   },
 };
@@ -67,7 +107,7 @@ export default {
   background-image: url("./imgs/playbar.png");
   background-repeat: repeat-x;
   background-position: 0 10px;
-  transition: all 0.8s linear 0.5s;
+  transition: all 0.5s linear 0.5s;
   .wrap {
     width: 980px;
     height: 42px;
@@ -92,9 +132,15 @@ export default {
       }
       .prv {
         background-position: 0 -130px;
+        &:hover {
+          background-position: -30px -130px;
+        }
       }
       .nxt {
         background-position: -80px -130px;
+        &:hover {
+          background-position: -110px -130px;
+        }
       }
       .ply {
         background-image: url("./imgs/playbar.png");
@@ -102,6 +148,9 @@ export default {
         height: 36px;
         background-position: 0 -204px;
         margin: 2px 8px;
+        &:hover {
+          background-position: -40px -204px;
+        }
       }
     }
     .album {
@@ -139,6 +188,88 @@ export default {
           display: inline-block;
           background-image: url("./imgs/playbar.png");
           background-position: -110px -103px;
+          width: 14px;
+          height: 15px;
+          position: relative;
+          left: 10px;
+          top: 4px;
+          &:hover {
+            background-position: -130px -103px;
+          }
+        }
+      }
+    }
+    .time {
+      float: left;
+      color: #797979;
+      font-size: 14px;
+      position: relative;
+      top: 20px;
+      left: 10px;
+      .cur {
+        color: #a1a1a1;
+      }
+    }
+    .oper {
+      float: left;
+      margin: 7px 0 0 28px;
+      a {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        margin-left: 2px;
+      }
+      .like {
+        background-position: -88px -163px;
+        background-image: url("./imgs/playbar.png");
+        &:hover {
+          background-position: -88px -189px;
+        }
+      }
+      .icn {
+        background-position: -88px -163px;
+        background: url("./imgs/icn.png") no-repeat 0 0;
+        &:hover {
+          background-position: 0px -25px;
+        }
+      }
+      .share {
+        background-position: -114px -163px;
+        background-image: url("./imgs/playbar.png");
+        &:hover {
+          background-position: -114px -189px;
+        }
+      }
+    }
+    .controller {
+      position: relative;
+      left: 20px;
+      top: 7px;
+      a {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        margin-right: 2px;
+      }
+      .volume {
+        background-image: url("./imgs/playbar.png");
+        background-position: -2px -248px;
+        &:hover {
+          background-position: -31px -248px;
+        }
+      }
+      .mode {
+        background-image: url("./imgs/playbar.png");
+        background-position: -3px -344px;
+        &:hover {
+          background-position: -33px -344px;
+        }
+      }
+      .list {
+        background-image: url("./imgs/playbar.png");
+        background-position: -42px -68px;
+        &:hover {
+          background-position: -42px -98px;
         }
       }
     }

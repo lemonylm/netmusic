@@ -110,8 +110,6 @@ export default {
         this.$refs.mmProgress.clientWidth - dotWidth,
         Math.max(0, this.move.left + dist)
       );
-      console.log(this.move.left);
-      console.log(dist);
       this.moveSilde(offsetWidth);
       this.commitPercent();
     },
@@ -132,6 +130,7 @@ export default {
       const { mmProgress, mmProgressInner } = this.$refs;
       const lineWidth = mmProgress.clientWidth - dotWidth;
       const percent = mmProgressInner.clientWidth / lineWidth;
+      console.log(percent);
       this.$emit(isEnd ? "percentChangeEnd" : "percentChange", percent);
     },
   },
@@ -144,8 +143,8 @@ export default {
   height: 30px;
   .mmProgress-dot {
     position: absolute;
-    top: 11px;
-    left: 0;
+    top: 3px;
+    left: -4px;
     width: 15px;
     height: 15px;
     border-radius: 50%;
@@ -158,7 +157,7 @@ export default {
 }
 .mmProgress {
   height: 9px;
-  top: 14px;
+  top: 6px;
   width: 466px;
   position: relative;
   user-select: none;
@@ -172,6 +171,7 @@ export default {
     position: absolute;
     background-image: url("../imgs/statbar.png");
     background-position: right 0;
+    z-index: 101;
   }
   .mmProgress-bar {
     border-radius: 6px;
@@ -180,6 +180,7 @@ export default {
     background: skyblue;
     background-position: right -30px;
     background-image: url("../imgs/statbar.png");
+    z-index: 100;
   }
   .mmProgress-outer {
     position: absolute;
@@ -195,14 +196,13 @@ export default {
     border-radius: 5px;
     top: 2px;
     position: absolute;
-    left: 5px;
     display: inline-block;
     width: 0;
     height: 9px;
     margin-top: -2px;
     background-image: url("../imgs/statbar.png");
     background-position: right -66px;
-    z-index: 990;
+    z-index: 999;
   }
 }
 </style>
