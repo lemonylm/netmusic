@@ -71,7 +71,7 @@ export default {
       currentProgress: 0, // 当前缓冲进度
       curTime: "00:00",
       totalTime: "04:00",
-      mode: ['播放',"随机","循环"]
+      mode: ["播放", "随机", "循环"],
     };
   },
   computed: {
@@ -170,6 +170,10 @@ export default {
       height: 40px;
       float: left;
       .words {
+        float: left;
+        a {
+          display: block;
+        }
         .songName {
           color: #e8e8e8;
           &:hover {
@@ -283,7 +287,7 @@ export default {
     width: 70px;
     background-position: 0 -383px;
     .lock {
-      user-select: none;
+      //   user-select: none;
       position: absolute;
       left: 16px;
       top: 2px;
