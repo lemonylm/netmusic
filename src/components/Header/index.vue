@@ -2,9 +2,27 @@
   <div id="nav">
     <div class="nav_header">
       <div class="nav_header_main">
-        <img class="logo" src="@/" alt="">
-        <router-link :class="{active: path === 'discover'}" :to="{ path: '/discover' }">Discover</router-link> |
-        <router-link :class="{active: path === 'mymusic'}" :to="{ path: '/mymusic' }">MyMusic</router-link>
+        <a class="logo_wrap" href="javascript:;"></a>
+        <ul class="nav_list">
+          <li class="nav_item" :class="{active: path === 'discover'}">
+            <router-link :to="{ path: '/discover' }">发现音乐</router-link>
+          </li>
+          <li class="nav_item" :class="{active: path === 'mymusic'}">
+            <router-link :to="{ path: '/mymusic' }">我的音乐</router-link>
+          </li>
+          <li class="nav_item" style="width: 66px" :class="{active: path === 'friends'}">
+            <router-link :to="{ path: '/friends' }">朋友</router-link>
+          </li>
+          <li class="nav_item" style="width: 66px" :class="{active: path === 'store'}">
+            <router-link :to="{ path: '/store' }">商城</router-link>
+          </li>
+          <li class="nav_item" style="width: 80px" :class="{active: path === 'musician'}">
+            <router-link :to="{ path: '/musician' }">音乐人</router-link>
+          </li>
+          <li class="nav_item" style="width: 108px" :class="{active: path === 'download'}">
+            <router-link :to="{ path: '/download' }">下载客户端</router-link>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -19,7 +37,7 @@ export default {
 
 <style lang="less" scoped>
 .active {
-  color: red;
+  background: #000;
 }
 #nav {
   .nav_header {
@@ -29,9 +47,35 @@ export default {
       width: 1100px;
       height: 100%;
       margin: 0 auto;
-      .logo {
+      .logo_wrap {
+        float: left;
         width: 177px;
-        height: 59px;
+        height: 70px;
+        box-sizing: border-box;
+        padding-right: 20px;
+        background: url(/image/sprite/topbar.png);
+      }
+      .nav_list {
+        width: 508px;
+        height: 70px;
+        float: left;
+        .nav_item {
+          float: left;
+          width: 94px;
+          height: 70px;
+          box-sizing: border-box;
+          &:hover {
+            background: #000;
+          }
+          a {
+            display: block;
+            height: 100%;
+            padding: 0 19px;
+            font-size: 14px;
+            line-height: 70px;
+            color: #fff !important;
+          }
+        }
       }
     }
   }
