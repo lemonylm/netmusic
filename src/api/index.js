@@ -1,3 +1,6 @@
-export {default as aaa} from './discover/aaa.js'
-export {default as bbb} from './mymusic/bbb.js'
-export {default as reqSinger} from './singer/singer'
+import recommend from "./discover/recommend";
+import singer from './discover/singer'
+export {
+  recommend,
+  singer
+}

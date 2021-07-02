@@ -247,22 +247,30 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
 export default {
   name: "Singer",
   data() {
       return {
           type:-1,
-          area:-1
+          area:-1,
+          singerList:{}
       }
   },
   mounted() {
       
   },
   methods: {
-      
-      
+       async getSingerList() {
+            const result = await this.$API.recommend.getSingerList()
+            console.log(result)
+            if(result.code === 200) {
+                this.singerList = result
+            }
+        }   
   },
+   created() {
+        this.getSingerList()
+    },
   computed:{
       
   }
