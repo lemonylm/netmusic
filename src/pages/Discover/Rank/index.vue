@@ -3,7 +3,12 @@
     <div id="one-box">
       <div class="kind-box">
         <p class="kind-title">云音乐特色榜</p>
-        <el-radio class="radio-list">
+        <el-radio 
+         class="radio-list"
+         v-for="item in artistToplist"
+         :key="item.id"
+         :label="item.id"
+        >
           <div class="radio-details">
             <div class="img">
               <img src="" alt="" />
@@ -158,8 +163,30 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
-  name: "",
+  name: "rank",
+  data() {
+    return {
+      artistToplist: []
+    }
+  },
+  beforeRouteUpdata(to,from,next){
+    next(),
+    this.getplaylistDetail()
+  },
+  created() {
+    this.init();
+  },
+  methods: {
+    getToplist(){
+      this.$store.dispatch("getToplist")
+    },
+    getplaylistDetail(){
+      this.$store.dispatch("getplaylistDetail",id)
+    }
+  }
+
 };
 </script>
 
