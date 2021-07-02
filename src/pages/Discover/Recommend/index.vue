@@ -8,11 +8,8 @@
                 <div class="swiper_wrap">
                     <div class="block">
                         <el-carousel autoplay trigger="click">
-                            <el-carousel-item>
-                                <img src="/image/萌萌哒.jpg" alt="">
-                            </el-carousel-item>
-                            <el-carousel-item>
-                                <img src="/image/萌萌哒.jpg" alt="">
+                            <el-carousel-item v-for="banner of bannerList" :key="banner.bannerId">
+                                <img :src="banner.pic" alt="">
                             </el-carousel-item>
                         </el-carousel>
                     </div>
@@ -34,13 +31,21 @@ export default {
     name:"Recommend",
     data() {
         return {
-            isDownload: false
+            isDownload: false,
+            pageInfo: []
+        }
+    },
+    computed: {
+        bannerList() {
+            return (( this.pageInfo[0] || {} ).extInfo || {}).banners
         }
     },
     methods: {
         async getHomepage() {
             const result = await this.$API.recommend.getHomePage()
-            console.log(result)
+            if(result.code === 200) {
+                this.pageInfo = result.data.blocks
+            }
         } 
     },
     created() {
