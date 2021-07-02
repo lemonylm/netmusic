@@ -29,7 +29,11 @@
           </li>
         </ul>
         <sup class="hot"></sup>
-        <div class="login_wrap">
+        <!-- 判断用户是否登录， 若登录则显示头像， 否则显示登录 -->
+        <div v-if="true" class="avatar">
+          <img src="/image/萌萌哒.jpg" alt="">
+        </div>
+        <div v-else class="login_wrap">
           <a class="login" href="javascript:;">登录</a>
         </div>
         <div class="creater_center_wrap">
@@ -98,7 +102,7 @@ export default {
           .delta {
             position: absolute;
             left: 50%;
-            bottom: -1px;
+            bottom: 0;
             transform: translateX(-6px);
             width: 0;
             height: 0;
@@ -124,6 +128,19 @@ export default {
         width: 28px;
         height: 19px;
         background: url(/image/sprite/topbar.png) no-repeat -190px 0;
+      }
+      .avatar {
+        float: right;
+        width: 30px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          cursor: pointer;
+        }
       }
       .login_wrap {
         float: right;
