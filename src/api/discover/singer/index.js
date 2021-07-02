@@ -1,12 +1,17 @@
-import request from '@/utils/request'
+import request from '@/utils/request.js'
 
-console.log(
-    "###"
-)
-export const reqSinger = () => {
-    return request({
-        url:`/artist/list`,
-        method:'get'
-    })
+export default {
+   async getSingerList(){
+        return request.get('/artist/list')
+    }
 }
-reqSinger()
+// console.log(
+//     "###"
+// )
+// export const reqSinger = () => {
+//     return request({
+//         url:`/artist/list`,
+//         method:'get'
+//     })
+// }
+// reqSinger()
