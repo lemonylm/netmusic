@@ -7,7 +7,6 @@ const Rank = () => import("pages/Discover/Rank");
 const PlayList = () => import("pages/Discover/PlayList");
 const NewDiscShelves = () => import("pages/Discover/NewDiscShelves");
 const Radio = () => import("pages/Discover/Radio");
-const Rank = () => import("../pages/Discover/Rank");
 const Singer = () => import("../pages/Discover/Singer");
 // 404
 const NotFound = () => import("../pages/404/404");
