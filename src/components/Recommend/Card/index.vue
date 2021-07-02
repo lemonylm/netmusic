@@ -33,6 +33,7 @@ export default {
 
 <style lang="less" scoped>
 .container {
+  cursor: pointer;
   width: 25%;
   padding-bottom: 40px;
   display: flex;
@@ -76,7 +77,6 @@ export default {
       background:  url(/image/sprite/iconall.png) no-repeat 0 0;
     }
     }
-    
   }
 }
 </style>
