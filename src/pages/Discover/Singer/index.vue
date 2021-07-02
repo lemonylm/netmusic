@@ -257,17 +257,14 @@ export default {
       }
   },
   mounted() {
-      this.getSingerList()
+      
   },
   methods: {
-      getSingerList(){
-          this.$store.dispatch('getSingerList',{type:this.type,area:this.area})
-      }
+      
+      
   },
   computed:{
-      ...mapState({
-          singerList:state => state.singer.singerList || []
-      })
+      
   }
 };
 </script>

@@ -1,18 +1,18 @@
-import request from '@/utils/request'
+import {reqSinger} from '@/api'
 const state={
-    singerList:[]
+  singerList:[]   
 }
 const mutations={
-    RECEIVE_SINGERLIST(state,singerList){
-        state.singerList = singerList
+    SET_SINGERLIST(state,singerList){
+      state.singerList = singerList
     }
 }
 const actions={
-    async getSingerList({commit},{type,area}){
-        const result = await request('/artist/list',{type,area})
-        if(result.code === 200){
-            commit('RECEIVE_SINGERLIST',result)
-        }
+   getSingerList({commit}){
+      const result = await reqSinger()
+      if(result.code === 200){
+        commit('SET_SINGERLIST',result.artists)
+      }
    }
 }
 const getters={

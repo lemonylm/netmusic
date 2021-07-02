@@ -1,6 +1,5 @@
 module.exports = {
   lintOnSave: false,
-  configureWebpack: {
     devServer: {
       port: 8080,
       open: true,
@@ -11,12 +10,11 @@ module.exports = {
         },
       },
     },
-    resolve: {
-      alias: {
-        components: "@/components",
-        pages: "@/pages",
-        store: "@/store",
-      },
-    },
-  },
+    // resolve: {
+    //   alias: {
+    //     components: "@/components",
+    //     pages: "@/pages",
+    //     store: "@/store",
+    //   },
+    // },
 };
