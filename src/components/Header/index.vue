@@ -2,7 +2,7 @@
   <div id="nav">
     <div class="nav_header">
       <div class="nav_header_main">
-        <img class="logo" src="" alt="">
+        <img class="logo" src="@/" alt="">
         <router-link :class="{active: path === 'discover'}" :to="{ path: '/discover' }">Discover</router-link> |
         <router-link :class="{active: path === 'mymusic'}" :to="{ path: '/mymusic' }">MyMusic</router-link>
       </div>
