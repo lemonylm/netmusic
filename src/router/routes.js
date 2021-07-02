@@ -4,6 +4,7 @@ const MyMusic = () => import("pages/MyMusic");
 // 二级路由
 const Recommend = () => import("pages/Discover/Recommend");
 const Rank = () => import("pages/Discover/Rank");
+const Singer = () => import("pages/Discover/Singer")
 // 404
 const NotFound = () => import("pages/404/404");
 
@@ -25,6 +26,11 @@ export default [
       {
         path: "",
         redirect: "recommend",
+      },
+      {
+        path:"singer",
+        name:"Singer",
+        component:Singer
       },
     ],
   },
