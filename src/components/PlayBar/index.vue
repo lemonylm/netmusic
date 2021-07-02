@@ -23,7 +23,7 @@
       </div>
       <!-- 专辑图片 -->
       <div class="album">
-        <img src="./imgs/404_cloud.png" />
+        <img src="./imgs/avatar.gif" />
       </div>
       <!-- 播放条 -->
       <div class="play">
@@ -53,14 +53,14 @@
       <div class="controller">
         <div class="volumeBar">
           <a
-            @click="showVolume()"
+            @click="isShowVolume = !isShowVolume"
             class="volume"
             v-show="volume !== 0"
             href="javascript:;"
             title="音量"
           ></a>
           <a
-            @click="showVolume()"
+            @click="isShowVolume = !isShowVolume"
             class="volume mute"
             v-show="volume === 0"
             href="javascript:;"
@@ -179,13 +179,6 @@ export default {
     next() {},
     // 上一首
     prev() {},
-    // 显示bar
-    showVolume() {
-      //   let { isMute } = this;
-      //   this.isMute = !isMute;
-      //   this.$refs.audio.volume = this.isMute ? 0 : 1;
-      this.isShowVolume = !this.isShowVolume;
-    },
     // 调整音量
     changeVolume(e) {
       let { isDown } = this;
@@ -309,9 +302,8 @@ export default {
       margin: 3px 15px 0 0;
       width: 34px;
       height: 34px;
-      border-radius: 3px;
-      background-color: red;
       img {
+        border-radius: 3px;
         width: 34px;
         height: 34px;
       }
@@ -414,7 +406,7 @@ export default {
           top: -124px;
           left: -4px;
           width: 32px;
-          height: 113px;
+          height: 115px;
           background-position: 0 -503px;
           background-image: url("./imgs/playbar.png");
           display: none;

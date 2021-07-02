@@ -37,20 +37,18 @@ export default [
         component: NewDiscShelves,
       },
       {
-        path: "",
-        redirect: "recommend",
         path: "radio",
         name: "Radio",
         component: Radio,
       },
       {
-        path: "",
-        redirect: "recommend",
-      },
-      {
         path: "singer",
         name: "Singer",
         component: Singer,
+      },
+      {
+        path: "",
+        redirect: "recommend",
       },
     ],
   },

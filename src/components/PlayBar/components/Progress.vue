@@ -130,7 +130,6 @@ export default {
       const { mmProgress, mmProgressInner } = this.$refs;
       const lineWidth = mmProgress.clientWidth - dotWidth;
       const percent = mmProgressInner.clientWidth / lineWidth;
-      console.log(percent);
       this.$emit(isEnd ? "percentChangeEnd" : "percentChange", percent);
     },
   },

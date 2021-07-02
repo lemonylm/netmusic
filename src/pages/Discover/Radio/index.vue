@@ -188,7 +188,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less"  scoped>
 .container {
   // height: 2222px;
   background-color: #f5f5f5;
