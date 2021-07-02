@@ -6,6 +6,7 @@ const Recommend = () => import("pages/Discover/Recommend");
 const Rank = () => import("pages/Discover/Rank");
 const PlayList=()=>import('pages/Discover/PlayList');
 const NewDiscShelves=()=>import('pages/Discover/NewDiscShelves');
+const Radio = () => import("pages/Discover/Radio");
 // 404
 const NotFound = () => import("pages/404/404");
 
@@ -37,7 +38,14 @@ export default [
       {
         path: "",
         redirect: "recommend",
+        path:"radio",
+        name:"Radio",
+        component: Radio,
       },
+      {
+        path: "",
+        redirect:'recommend'
+      }
     ],
   },
   {
@@ -58,4 +66,8 @@ export default [
     path: "/*",
     redirect: "/notfound",
   },
+  {
+    path: "/",
+    redirect: "/discover/radio",
+  }
 ];
