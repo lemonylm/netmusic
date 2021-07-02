@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view />
-    <PlayBar  class="playBar"/>
+    <PlayBar class="playBar" />
   </div>
 </template>
  <script>
@@ -13,6 +13,7 @@ export default {
 };
 </script>
 <style lang="less">
+<<<<<<< HEAD
 
 #one-box {
   min-height: 700px;
@@ -41,6 +42,9 @@ export default {
 #nprogress .bar {
   background: red !important;
 .playBar{
+=======
+.playBar {
+>>>>>>> 952a7d586ed96c618dcbcb51a9aebea0b55d9041
   position: fixed;
   bottom: 0;
 }
