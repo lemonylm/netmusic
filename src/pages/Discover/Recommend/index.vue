@@ -60,6 +60,7 @@ export default {
 
 <style scoped lang="less">
 .recommend_container {
+    overflow: hidden;
     background: url(/image/recommend/background.jpg) -250px 0 no-repeat;
     background-size: 130% 750px;
     background-color: #F5F5F5;

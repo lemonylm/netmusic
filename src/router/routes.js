@@ -28,6 +28,10 @@ export default [
         name:"Radio",
         component: Radio,
       },
+      {
+        path: "",
+        redirect:'recommend'
+      }
     ],
   },
   {
