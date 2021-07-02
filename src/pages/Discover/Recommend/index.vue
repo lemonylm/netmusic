@@ -1,12 +1,12 @@
 <template>
-    <div>
-recommend页
+    <div class="recommend_container">
+        
     </div>
 </template>
 
 <script>
 export default {
-    name:"",
+    name:"Recommend",
 };
 </script>
 
