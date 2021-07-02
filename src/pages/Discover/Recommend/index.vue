@@ -22,6 +22,10 @@
                     <p class="tip">PC 安卓 iPhone WP iPad Mac 六大客户端</p>
                 </div>
             </div>
+            <div class="under_content_wrap">
+                <div class="left_wrap"></div>
+                <div class="right_wrap"></div>
+            </div>
         </div>
     </div>
 </template>
@@ -56,7 +60,6 @@ export default {
 
 <style scoped lang="less">
 .recommend_container {
-    height: 1000px;
     background: url(/image/recommend/background.jpg) -250px 0 no-repeat;
     background-size: 130% 750px;
     background-color: #F5F5F5;
@@ -96,6 +99,11 @@ export default {
                             width: 100%;
                             height: 100% !important;
                         }
+                        & /deep/ .el-carousel__indicators {
+                            width: 50%;
+                            display: flex;
+                            justify-content: space-around;
+                        }
                         .el-carousel__item {
                             height: 100%;
                             width: 100%;
@@ -128,8 +136,24 @@ export default {
                 .tip {
                     color: #aaa;
                     text-align: center;
-                    margin: 10px 0;
+                    margin: 14px 0;
                 }
+            }
+        }
+        .under_content_wrap {
+            width: 982px;
+            box-sizing: border-box;
+            display: flex;
+            .left_wrap {
+                width: 730px;
+                height: 1000px;
+                background: #baf;
+                box-sizing: border-box;
+            }
+            .right_wrap {
+                width: 252px;
+                box-sizing: border-box;
+                background: #bfa;
             }
         }
     }

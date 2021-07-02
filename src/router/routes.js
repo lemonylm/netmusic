@@ -27,7 +27,7 @@ export default [
         path:"radio",
         name:"Radio",
         component: Radio,
-      }
+      },
     ],
   },
   {
