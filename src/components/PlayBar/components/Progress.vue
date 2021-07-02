@@ -142,6 +142,7 @@ export default {
   position: relative;
   height: 30px;
   .mmProgress-dot {
+    cursor: pointer;
     position: absolute;
     top: 3px;
     left: -4px;
