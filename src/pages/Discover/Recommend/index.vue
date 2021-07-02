@@ -24,7 +24,26 @@
             </div>
             <div class="under_content_wrap">
                 <div class="left_wrap">
-                    <Title></Title>
+                    <div class="one">
+                        <Title title="热门推荐">
+                            <template>
+                                <ul class="type_list">
+                                    <li><a href="javascript:;">华语</a></li>
+                                    <li><a href="javascript:;">流行</a></li>
+                                    <li><a href="javascript:;">摇滚</a></li>
+                                    <li><a href="javascript:;">民谣</a></li>
+                                    <li><a href="javascript:;">电子</a></li>
+                                </ul>
+                            </template>
+                        </Title>
+                        <div class="content">
+                            <Card :cardInfo="item" v-for="item in hotRecommendList" :key="item.id"></Card>
+                        </div>
+                        <Title v-if="recommendList.length" title="个性化推荐"></Title>
+                        <div v-if="recommendList.length" class="content">
+                            <Card :cardInfo="item" v-for="item in recommendList" :key="item.id"></Card>
+                        </div>
+                    </div>
                 </div>
                 <div class="right_wrap"></div>
             </div>
@@ -36,12 +55,15 @@
 export default {
     name:"Recommend",
     components: {
-        Title: () => import('@/components/Recommend/Title')
+        Title: () => import('@/components/Recommend/Title'),
+        Card: () => import('@/components/Recommend/Card'),
     },
     data() {
         return {
             isDownload: false,
-            pageInfo: []
+            pageInfo: [],
+            hotRecommendList: [],
+            recommendList: []
         }
     },
     computed: {
@@ -55,10 +77,24 @@ export default {
             if(result.code === 200) {
                 this.pageInfo = result.data.blocks
             }
-        } 
+        },
+        async getHotRecommend() {
+            const result = await this.$API.recommend.getHotRecommend()
+            if(result.code === 200) {
+                this.hotRecommendList = result.result
+            }
+        },
+        async getRecommend() {
+            const result = await this.$API.recommend.getRecommend();
+            if(result.code === 200) {
+                this.recommendList = result.recommend.slice(0,3)
+            }
+        }
     },
     created() {
         this.getHomepage()
+        this.getHotRecommend()
+        this.getRecommend()
     }
 };
 </script>
@@ -154,9 +190,15 @@ export default {
             .left_wrap {
                 width: 730px;
                 height: 1000px;
-                background: #baf;
+                background: #fff;
                 box-sizing: border-box;
                 padding: 20px 20px 40px;
+                .content {
+                    padding: 20px 0 0;
+                    display: flex;
+                    flex-wrap: wrap;
+                    
+                }
             }
             .right_wrap {
                 width: 252px;
