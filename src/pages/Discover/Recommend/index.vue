@@ -23,7 +23,9 @@
                 </div>
             </div>
             <div class="under_content_wrap">
-                <div class="left_wrap"></div>
+                <div class="left_wrap">
+                    <Title></Title>
+                </div>
                 <div class="right_wrap"></div>
             </div>
         </div>
@@ -33,6 +35,9 @@
 <script>
 export default {
     name:"Recommend",
+    components: {
+        Title: () => import('@/components/Recommend/Title')
+    },
     data() {
         return {
             isDownload: false,
@@ -151,6 +156,7 @@ export default {
                 height: 1000px;
                 background: #baf;
                 box-sizing: border-box;
+                padding: 20px 20px 40px;
             }
             .right_wrap {
                 width: 252px;
