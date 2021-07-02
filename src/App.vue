@@ -41,8 +41,7 @@ export default {
 #nprogress .bar {
   background: red !important;
 }
-.playBar{
-}
+
 .playBar {
   position: fixed;
   bottom: 0;
