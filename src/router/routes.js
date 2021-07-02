@@ -4,6 +4,7 @@ const MyMusic = () => import("pages/MyMusic");
 // 二级路由
 const Recommend = () => import("pages/Discover/Recommend");
 const Rank = () => import("pages/Discover/Rank");
+const Radio = () => import("pages/Discover/Radio");
 // 404
 const NotFound = () => import("pages/404/404");
 
@@ -23,9 +24,10 @@ export default [
         component: Rank,
       },
       {
-        path: "",
-        redirect: "recommend",
-      },
+        path:"radio",
+        name:"Radio",
+        component: Radio,
+      }
     ],
   },
   {
@@ -46,4 +48,8 @@ export default [
     path: "/*",
     redirect: "/notfound",
   },
+  {
+    path: "/",
+    redirect: "/discover/radio",
+  }
 ];

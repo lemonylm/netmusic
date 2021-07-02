@@ -1,10 +1,17 @@
 <template>
   <div id="app">
     <router-view />
-    <audio src=""></audio>
+    <PlayBar  class="playBar"/>
   </div>
 </template>
-
+ <script>
+import PlayBar from "components/PlayBar";
+export default {
+  components: {
+    PlayBar,
+  },
+};
+</script>
 <style lang="less">
 
 #one-box {
@@ -33,5 +40,9 @@
 }
 #nprogress .bar {
   background: red !important;
+.playBar{
+  position: fixed;
+  bottom: 0;
+}
 }
 </style>

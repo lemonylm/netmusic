@@ -439,8 +439,7 @@ export default {
               }
             }
           }
-          .right {
-          }
+          
         }
         .details {
           margin-top: 10px;

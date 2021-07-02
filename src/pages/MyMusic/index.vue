@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header></Header>
+        <Header path='mymusic'></Header>
         mymusic页
     </div>
 </template>

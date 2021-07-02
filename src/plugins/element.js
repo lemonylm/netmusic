@@ -10,6 +10,7 @@ import {
   MenuItem,
   Col,
   Row,
+  Carousel
 } from "element-ui";
 // Vue.use(Menu);
 // Vue.use(Submenu);
@@ -18,6 +19,8 @@ import {
 // Vue.use(Row);
 Vue.use(Button);
 Vue.use(Radio);
+Vue.use(Carousel);
+
 
 Vue.prototype.$message = Message;
 Vue.prototype.$msgbox = MessageBox;
