@@ -6,7 +6,7 @@ const instance = axios.create({
 });
 instance.interceptors.request.use((config) => {
   nprogress.start();
-  return config.data;
+  return config;
 });
 instance.interceptors.response.use(
   (response) => {
