@@ -40,72 +40,9 @@
             <!--图片展示-->
         <div class="singerList">
             <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
+                <img class="image" src="" alt="">
                 <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-            <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-            <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-            <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-             <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-             <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-             <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-            <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-            <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-            <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
+                    <p class="name">hhh</p>
                     <a href="##" class="icon el-icon-user-solid"></a>
                 </div>
             </div>
@@ -118,73 +55,10 @@
         </div>
             <!--图片展示-->
         <div class="singerList">
-            <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
+            <div class="singerItem" v-for="(host,index) in hostSinger" :key="host.id">
+                <img class="image" :src="host.picUrl" alt="">
                 <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-            <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-            <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-            <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-             <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-             <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-             <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-            <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-            <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-            <div class="singerItem">
-                <img class="image" src="./image/1.png" alt="">
-                <div class="text">
-                    <p class="name">张惠妹</p>
+                    <p class="name">{{host.name}}</p>
                     <a href="##" class="icon el-icon-user-solid"></a>
                 </div>
             </div>
@@ -253,7 +127,8 @@ export default {
       return {
           type:-1,
           area:-1,
-          singerList:{}
+          singerList:[],
+          hostSinger:[]
       }
   },
   mounted() {
@@ -261,15 +136,34 @@ export default {
   },
   methods: {
        async getSingerList() {
-            const result = await this.$API.recommend.getSingerList()
-            console.log(result)
+            const result = await this.$API.singer.getSingerList()
+            // console.log(result)
             if(result.code === 200) {
-                this.singerList = result
+                this.singerList = result.data.artists
             }
-        }   
+            // console.log(result.data.artists)
+        },
+        async hostSingerList(){
+            const result = await this.$API.singer.hostSingerList()
+            // console.log(result)
+            if(result.code === 200){
+                this.hostSinger = result.data.artists
+            }
+        },
+        async CollectionSinger(){
+            const result = await this.$API.singer.CollectionSinger()
+            // console.log(result)
+        },
+        async singerSheet(){
+            const result = await this.$API.singer.singerSheet()
+            // console.log(result)
+        }
   },
    created() {
         this.getSingerList()
+        this.hostSingerList()
+        this.CollectionSinger()
+        this.singerSheet()
     },
   computed:{
       
