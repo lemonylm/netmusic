@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view />
-    <PlayBar  class="playBar"/>
+    <PlayBar class="playBar" />
   </div>
 </template>
  <script>
@@ -13,7 +13,7 @@ export default {
 };
 </script>
 <style lang="less">
-.playBar{
+.playBar {
   position: fixed;
   bottom: 0;
 }
