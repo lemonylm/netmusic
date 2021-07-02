@@ -1,5 +1,6 @@
 <template>
   <div>
+<<<<<<< HEAD
     <Header path="discover"></Header>
     <div class="discover_nav_container">
       <div class="discover_nav_content">
@@ -16,6 +17,13 @@
         </ul>
       </div>
     </div>
+=======
+    <Header></Header>
+    discover页
+    <router-link :to="{ path: '/discover/recommend' }">推荐</router-link>
+    <router-link :to="{ path: '/discover/rank' }">排行</router-link>
+    <router-link :to="{ path: '/discover/singer' }">歌手</router-link>
+>>>>>>> yunlixing
     <router-view></router-view>
   </div>
 </template>
