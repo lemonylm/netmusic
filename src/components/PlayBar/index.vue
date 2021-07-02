@@ -1,6 +1,8 @@
 <template>
   <div class="playBar" :class="{ hide: !isLock }">
+    <!-- 版心 -->
     <div class="wrap">
+      <!-- 按钮 -->
       <div class="btns">
         <a href="javascript:;" title="上一首" class="prv"></a>
         <a
@@ -9,6 +11,20 @@
           class="ply"
         ></a>
         <a href="javascript:;" title="上一首" class="nxt"></a>
+      </div>
+      <!-- 专辑图片 -->
+      <div class="album">
+        <img src="./imgs/404_cloud.png" />
+      </div>
+      <!-- 播放条 -->
+      <div class="play">
+        <div class="words">
+          <a class="songName" href="javascript:;">呼吸决定</a>
+          <a class="band" href="javascript:;">Fine乐团</a>
+          <a class="src" href="javascript:;"></a>
+          <span></span>
+        </div>
+        <Progress />
       </div>
     </div>
     <div class="lock-bg">
@@ -22,8 +38,12 @@
 </template>
 
 <script>
+import Progress from "./components/Progress.vue";
 export default {
   name: "PlayBar",
+  components: {
+    Progress,
+  },
   data() {
     return {
       isLock: true,
@@ -48,16 +68,15 @@ export default {
   background-repeat: repeat-x;
   background-position: 0 10px;
   transition: all 0.8s linear 0.5s;
-  position: relative;
   .wrap {
     width: 980px;
     height: 42px;
-    background-color: skyblue;
     position: absolute;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
     .btns {
+      float: left;
       width: 137px;
       height: 42px;
       a {
@@ -66,15 +85,61 @@ export default {
       }
       .prv,
       .nxt {
-        margin-top: 8px;
+        margin-top: 7px;
         width: 28px;
         height: 28px;
-        background-color: red;
+        background-image: url("./imgs/playbar.png");
+      }
+      .prv {
+        background-position: 0 -130px;
+      }
+      .nxt {
+        background-position: -80px -130px;
       }
       .ply {
+        background-image: url("./imgs/playbar.png");
         width: 36px;
-        background-color: red;
         height: 36px;
+        background-position: 0 -204px;
+        margin: 2px 8px;
+      }
+    }
+    .album {
+      cursor: pointer;
+      float: left;
+      margin: 3px 15px 0 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 3px;
+      background-color: red;
+      img {
+        width: 34px;
+        height: 34px;
+      }
+    }
+    .play {
+      height: 40px;
+      float: left;
+      .words {
+        .songName {
+          color: #e8e8e8;
+          &:hover {
+            color: #9b9b9b;
+          }
+        }
+        .band {
+          max-width: 220px;
+          margin-left: 15px;
+          color: #9b9b9b;
+          &:hover {
+            color: #e8e8e8;
+          }
+        }
+        .src {
+          display: inline-block;
+          background-image: url("./imgs/playbar.png");
+          background-position: -110px -103px;
+        }
       }
     }
   }
