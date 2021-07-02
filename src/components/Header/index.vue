@@ -129,6 +129,9 @@ export default {
           width: 90px;
           border: 1px solid #4F4F4F;
           border-radius: 16px;
+          &:hover {
+            border-color: #fff;
+          }
           .text {
             display: block;
             width: 100%;
@@ -136,6 +139,9 @@ export default {
             line-height: 30px;
             text-align: center;
             color: #ccc;
+            &:hover {
+              color: #fff !important;
+            }
           }
         }
       }
