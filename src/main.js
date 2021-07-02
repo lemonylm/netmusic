@@ -8,7 +8,6 @@ import Header from '@/components/Header'
 
 import "@/plugins/element";
 Vue.config.productionTip = false;
-Vue.prototype.$API = API;
 
 Vue.component(Header.name, Header)
 

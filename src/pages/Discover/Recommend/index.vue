@@ -2,10 +2,15 @@
     <div class="recommend_container">
         <div class="recommend_content">
             <div class="swiper_download_wrap">
+                <div class="left"></div>
+                <div class="right"></div>
                 <!-- 轮播图 -->
                 <div class="swiper_wrap">
                     <div class="block">
-                        <el-carousel trigger="click" height="150px">
+                        <el-carousel autoplay trigger="click">
+                            <el-carousel-item>
+                                <img src="/image/萌萌哒.jpg" alt="">
+                            </el-carousel-item>
                             <el-carousel-item>
                                 <img src="/image/萌萌哒.jpg" alt="">
                             </el-carousel-item>
@@ -13,7 +18,12 @@
                     </div>
                 </div>
                 <!-- 下载 -->
-                <div class="download_wrap"></div>
+                <div class="download_wrap">
+                    <div @mouseenter="isDownload = true" @mouseleave="isDownload = false" class="active_box">
+                        <div v-show="isDownload"></div>
+                    </div>
+                    <p class="tip">PC 安卓 iPhone WP iPad Mac 六大客户端</p>
+                </div>
             </div>
         </div>
     </div>
@@ -22,23 +32,55 @@
 <script>
 export default {
     name:"Recommend",
+    data() {
+        return {
+            isDownload: false
+        }
+    },
+    methods: {
+        async getHomepage() {
+            const result = await this.$API.recommend.getHomePage()
+            console.log(result)
+        } 
+    },
+    created() {
+        this.getHomepage()
+    }
 };
 </script>
 
 <style scoped lang="less">
 .recommend_container {
+    height: 1000px;
+    background: url(/image/recommend/background.jpg) -250px 0 no-repeat;
+    background-size: 130% 750px;
+    background-color: #F5F5F5;
     .recommend_content {
         width: 982px;
         margin: 0 auto;
-        background: pink;
         .swiper_download_wrap {
+            position: relative;
             height: 285px;
-            background: #bfa;
+            .left{
+                width: 225px;
+                height: 120px;
+                position: absolute;
+                left: -254px;
+                top: 30px;
+                background: url(/image/recommend/bg-left.png) no-repeat 0 0 / cover;
+            }
+            .right{
+                width: 196px;
+                height: 131px;
+                right: -225px;
+                top: 30px;
+                position: absolute;
+                background: url(/image/recommend/bg-right.png) no-repeat 0 0 / cover;
+            }
             .swiper_wrap {
                 float: left;
                 width: 730px;
                 height: 100%;
-                background: #baf;
                 .block {
                     width: 100%;
                     height: 100%;
@@ -52,6 +94,10 @@ export default {
                         .el-carousel__item {
                             height: 100%;
                             width: 100%;
+                            img {
+                                width: 100%;
+                                height: 100%;
+                            }
                         }
                     }
                 }
@@ -60,7 +106,25 @@ export default {
                 float: left;
                 width: 252px;
                 height: 100%;
-                background: #bff;
+                background: url(/image/sprite/download.png);
+                display: flex;
+                flex-direction: column;
+                .active_box {
+                    width: 215px;
+                    height: 56px;
+                    margin: 186px 0 0 19px;
+                    cursor: pointer;
+                    & div {
+                        width: 100%;
+                        height: 100%;
+                        background: url(/image/sprite/download.png) 0 416px;
+                    }
+                }
+                .tip {
+                    color: #aaa;
+                    text-align: center;
+                    margin: 10px 0;
+                }
             }
         }
     }
