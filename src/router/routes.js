@@ -2,17 +2,13 @@
 const Discover = () => import("../pages/Discover");
 const MyMusic = () => import("../pages/MyMusic");
 // 二级路由
-<<<<<<< HEAD
 const Recommend = () => import("pages/Discover/Recommend");
 const Rank = () => import("pages/Discover/Rank");
-const PlayList=()=>import('pages/Discover/PlayList');
-const NewDiscShelves=()=>import('pages/Discover/NewDiscShelves');
+const PlayList = () => import("pages/Discover/PlayList");
+const NewDiscShelves = () => import("pages/Discover/NewDiscShelves");
 const Radio = () => import("pages/Discover/Radio");
-=======
-const Recommend = () => import("../pages/Discover/Recommend");
 const Rank = () => import("../pages/Discover/Rank");
-const Singer = () => import("../pages/Discover/Singer")
->>>>>>> yunlixing
+const Singer = () => import("../pages/Discover/Singer");
 // 404
 const NotFound = () => import("../pages/404/404");
 
@@ -44,21 +40,19 @@ export default [
       {
         path: "",
         redirect: "recommend",
-        path:"radio",
-        name:"Radio",
+        path: "radio",
+        name: "Radio",
         component: Radio,
       },
       {
-<<<<<<< HEAD
         path: "",
-        redirect:'recommend'
-      }
-=======
-        path:"singer",
-        name:"Singer",
-        component:Singer
+        redirect: "recommend",
       },
->>>>>>> yunlixing
+      {
+        path: "singer",
+        name: "Singer",
+        component: Singer,
+      },
     ],
   },
   {
@@ -82,5 +76,5 @@ export default [
   {
     path: "/",
     redirect: "/discover/radio",
-  }
+  },
 ];
