@@ -63,6 +63,7 @@ export default {
     background: url(/image/recommend/background.jpg) -250px 0 no-repeat;
     background-size: 130% 750px;
     background-color: #F5F5F5;
+    overflow: hidden;
     .recommend_content {
         width: 982px;
         margin: 0 auto;
