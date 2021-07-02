@@ -22,6 +22,40 @@
                     <p class="tip">PC 安卓 iPhone WP iPad Mac 六大客户端</p>
                 </div>
             </div>
+            <div class="under_content_wrap">
+                <div class="left_wrap">
+                    <div class="one">
+                        <Title title="热门推荐">
+                            <template>
+                                <ul class="type_list">
+                                    <li><a href="javascript:;">华语</a></li>
+                                    <li><a href="javascript:;">流行</a></li>
+                                    <li><a href="javascript:;">摇滚</a></li>
+                                    <li><a href="javascript:;">民谣</a></li>
+                                    <li><a href="javascript:;">电子</a></li>
+                                </ul>
+                            </template>
+                        </Title>
+                        <div class="content">
+                            <Card :cardInfo="item" v-for="item in hotRecommendList" :key="item.id"></Card>
+                        </div>
+                        <Title v-if="recommendList.length" title="个性化推荐"></Title>
+                        <div v-if="recommendList.length" class="content">
+                            <!-- 每日推荐 -->
+                            <div class="day_container">
+                                <div class="img">
+                                    <p class="week">星期五</p>
+                                    <p class="day">2</p>
+                                </div>
+                                <p class="text">每日歌曲推荐</p>
+                                <p class="tips">根据你的口味生成,每天6:00更新</p>
+                            </div>
+                            <Card :cardInfo="item" v-for="item in recommendList" :key="item.id"></Card>
+                        </div>
+                    </div>
+                </div>
+                <div class="right_wrap"></div>
+            </div>
         </div>
     </div>
 </template>
@@ -29,10 +63,16 @@
 <script>
 export default {
     name:"Recommend",
+    components: {
+        Title: () => import('@/components/Recommend/Title'),
+        Card: () => import('@/components/Recommend/Card'),
+    },
     data() {
         return {
             isDownload: false,
-            pageInfo: []
+            pageInfo: [],
+            hotRecommendList: [],
+            recommendList: []
         }
     },
     computed: {
@@ -46,20 +86,35 @@ export default {
             if(result.code === 200) {
                 this.pageInfo = result.data.blocks
             }
-        } 
+        },
+        async getHotRecommend() {
+            const result = await this.$API.recommend.getHotRecommend()
+            if(result.code === 200) {
+                this.hotRecommendList = result.result
+            }
+        },
+        async getRecommend() {
+            const result = await this.$API.recommend.getRecommend();
+            if(result.code === 200) {
+                this.recommendList = result.recommend.slice(0,3)
+            }
+        }
     },
     created() {
         this.getHomepage()
+        this.getHotRecommend()
+        this.getRecommend()
     }
 };
 </script>
 
 <style scoped lang="less">
 .recommend_container {
-    height: 1000px;
+    overflow: hidden;
     background: url(/image/recommend/background.jpg) -250px 0 no-repeat;
     background-size: 130% 750px;
     background-color: #F5F5F5;
+    overflow: hidden;
     .recommend_content {
         width: 982px;
         margin: 0 auto;
@@ -96,6 +151,11 @@ export default {
                             width: 100%;
                             height: 100% !important;
                         }
+                        & /deep/ .el-carousel__indicators {
+                            width: 50%;
+                            display: flex;
+                            justify-content: space-around;
+                        }
                         .el-carousel__item {
                             height: 100%;
                             width: 100%;
@@ -128,10 +188,103 @@ export default {
                 .tip {
                     color: #aaa;
                     text-align: center;
-                    margin: 10px 0;
+                    margin: 14px 0;
                 }
             }
         }
+        .under_content_wrap {
+            width: 982px;
+            box-sizing: border-box;
+            display: flex;
+            .left_wrap {
+                width: 730px;
+                background: #fff;
+                box-sizing: border-box;
+                padding: 20px 20px 40px;
+                .content {
+                    padding: 20px 0 0;
+                    display: flex;
+                    flex-wrap: wrap;
+                    
+                }
+            }
+            .right_wrap {
+                width: 252px;
+                box-sizing: border-box;
+                background: #bfa;
+            }
+        }
     }
+}
+.day_container {
+  cursor: pointer;
+  width: 25%;
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  .img {
+    width: 139px;
+    height: 139px;
+    border: 1px solid #D2D2D2;
+    background: url(/image/sprite/index.png) no-repeat -260px -310px ;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    .week {
+      width: 100%;
+      height: 33px;
+      text-align: center;
+      color: #fff;
+      line-height: 33px;
+      font-size: 14px;
+    }
+    .day {
+        font-size: 90px;
+        font-weight: 700;
+        height: 106px;
+        width: 100%;
+        text-align: center;
+        line-height: 106px;
+    }
+  }
+  .text {
+    width: 140px;
+    font-size: 14px;
+  }
+  .tips {
+      width: 140px;
+      color: #aaa;
+  }
+  .mask {
+    width: 140px;
+    height: 27px;
+    position: absolute;
+    top: 113px;
+    border: 1px solid #000;
+    background-color: rgba(0, 0, 0, .5);
+    display: flex;
+    align-items: center;
+    .ear {
+      width: 14px;
+      height: 11px;
+      background: url(/image/sprite/iconall.png) no-repeat 0 -24px;
+      margin: 0 6px 0 10px;
+    }
+    .count {
+      color: #eee;
+    }
+    .play_box {
+      flex: 1;
+      .play {
+      width: 16px;
+      height: 17px;
+      float: right;
+      margin-right: 10px;
+      background:  url(/image/sprite/iconall.png) no-repeat 0 0;
+    }
+    }
+  }
 }
 </style>
