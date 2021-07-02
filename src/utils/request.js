@@ -11,7 +11,7 @@ instance.interceptors.request.use((config) => {
 instance.interceptors.response.use(
   (config) => {
     nprogress.done();
-    return config;
+    return config.data;
   },
   (err) => {
     nprogress.done();
