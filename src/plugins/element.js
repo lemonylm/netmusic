@@ -4,6 +4,7 @@ import {
   Button,
   MessageBox,
   Message,
+  Radio,
   Menu,
   Submenu,
   MenuItem,
@@ -16,6 +17,7 @@ import {
 // Vue.use(Col);
 // Vue.use(Row);
 Vue.use(Button);
+Vue.use(Radio);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$msgbox = MessageBox;
