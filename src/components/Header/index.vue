@@ -32,6 +32,12 @@
             <a href="javascript:;" class="text">创作者中心</a>
           </div>
         </div>
+        <div class="search_wrap">
+          <div class="search_box">
+            <div class="icon"></div>
+            <input type="text" placeholder="音乐/视频/电台/用户" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -130,6 +136,32 @@ export default {
             line-height: 30px;
             text-align: center;
             color: #ccc;
+          }
+        }
+      }
+      .search_wrap {
+        float: right;
+        width: 158px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        .search_box {
+          background-color: #fff;
+          width: 100%;
+          height: 32px;
+          border-radius: 16px;
+          display: flex;
+          align-items: center;
+          overflow: hidden;
+          .icon {
+            width: 40px;
+            height: 30px;
+            background: url(/image/sprite/topbar.png) no-repeat 0 -100px;
+          }
+          input {
+            flex: 1;
+            border: none;
+            outline: none;
           }
         }
       }
