@@ -5,6 +5,8 @@ const MyMusic = () => import("../pages/MyMusic");
 <<<<<<< HEAD
 const Recommend = () => import("pages/Discover/Recommend");
 const Rank = () => import("pages/Discover/Rank");
+const PlayList=()=>import('pages/Discover/PlayList');
+const NewDiscShelves=()=>import('pages/Discover/NewDiscShelves');
 const Radio = () => import("pages/Discover/Radio");
 =======
 const Recommend = () => import("../pages/Discover/Recommend");
@@ -30,6 +32,18 @@ export default [
         component: Rank,
       },
       {
+        path: "playlist",
+        name: "PlayList",
+        component: PlayList,
+      },
+      {
+        path: "newdiscshelves",
+        name: "NewDiscShelves",
+        component: NewDiscShelves,
+      },
+      {
+        path: "",
+        redirect: "recommend",
         path:"radio",
         name:"Radio",
         component: Radio,
