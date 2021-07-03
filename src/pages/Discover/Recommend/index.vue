@@ -128,8 +128,8 @@ export default {
     },
     data() {
         return {
-            tel:'',
-            password: '',
+            tel:'13485724452',
+            password: '67397012wd',
             isShowLoginBox: false,
             isDownload: false,
             pageInfo: [],
@@ -182,9 +182,20 @@ export default {
         async login () {
             const result = await this.$API.recommend.login(this.tel, this.password);
             if(result.code === 200) {
-                localStorage.setItem('token', result.token)
-            }
+                localStorage.setItem('token', result.token);
                 console.log(result)
+                this.$store.dispatch('get_userInfo', result.profile)
+                this.$bus.$emit('set_login', true)
+                this.$notify({
+                    title: '登录成功',
+                    type: 'success'
+                });
+                this.isShowLoginBox = false
+            } else {
+                this.$notify.error({
+                    title: '用户名或密码错误',
+                });
+            }
         },
         getDate() {
             let week = day().$W;
@@ -410,7 +421,7 @@ export default {
             }
             .right_wrap {
                 width: 252px;
-                background: #bfa;
+                background: #eee;
                 box-sizing: border-box;
             }
         }
