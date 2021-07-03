@@ -130,7 +130,6 @@ export default {
       const { mmProgress, mmProgressInner } = this.$refs;
       const lineWidth = mmProgress.clientWidth - dotWidth;
       const percent = mmProgressInner.clientWidth / lineWidth;
-      console.log(percent);
       this.$emit(isEnd ? "percentChangeEnd" : "percentChange", percent);
     },
   },
@@ -142,6 +141,7 @@ export default {
   position: relative;
   height: 30px;
   .mmProgress-dot {
+    cursor: pointer;
     position: absolute;
     top: 3px;
     left: -4px;

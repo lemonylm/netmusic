@@ -11,5 +11,8 @@ export default {
   async getRecommend() {
     return request.get('/recommend/resource');
   },
-
+  // 新碟上架
+  async getNewAlbum() {
+    return request.get('/album/new?area=ALL&limit=10')
+  }
 };

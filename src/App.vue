@@ -45,6 +45,7 @@ export default {
 .playBar {
   position: fixed;
   bottom: 0;
+  z-index: 9999;
 }
 
 

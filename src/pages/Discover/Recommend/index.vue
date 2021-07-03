@@ -25,6 +25,7 @@
             <div class="under_content_wrap">
                 <div class="left_wrap">
                     <div class="one">
+                        <!-- 热门推荐 -->
                         <Title title="热门推荐">
                             <template>
                                 <ul class="type_list">
@@ -39,19 +40,50 @@
                         <div class="content">
                             <Card :cardInfo="item" v-for="item in hotRecommendList" :key="item.id"></Card>
                         </div>
+                        <!-- 个性化推荐 -->
                         <Title v-if="recommendList.length" title="个性化推荐"></Title>
                         <div v-if="recommendList.length" class="content">
                             <!-- 每日推荐 -->
                             <div class="day_container">
                                 <div class="img">
-                                    <p class="week">星期五</p>
-                                    <p class="day">2</p>
+                                    <p class="week">{{date.week}}</p>
+                                    <p class="day">{{date.day}}</p>
                                 </div>
                                 <p class="text">每日歌曲推荐</p>
                                 <p class="tips">根据你的口味生成,每天6:00更新</p>
                             </div>
                             <Card :cardInfo="item" v-for="item in recommendList" :key="item.id"></Card>
                         </div>
+                        <!-- 新碟上架 -->
+                        <Title title="新碟上架"></Title>
+                        <!-- 轮播图 -->
+                        <div class="new_album_swiper">
+                            <div class="block">
+                                <el-carousel indicator-position="none" arrow="always" :autoplay="false" trigger="click">
+                                    <el-carousel-item>
+                                        <div class="item_wrap" v-for="album of newAlbum.slice(0,5)" :key="album.id">
+                                            <div class="img_wrap">
+                                                <img v-lazy="album.picUrl" alt="">
+                                            </div>
+                                            <p class="text">{{album.name}}</p>
+                                            <p class="author">{{album.artists[0].name}}</p>
+                                        </div>
+                                    </el-carousel-item>
+                                    <el-carousel-item>
+                                        <div class="item_wrap" v-for="album of newAlbum.slice(5,10)" :key="album.id">
+                                            <div class="img_wrap">
+                                                <img v-lazy="album.picUrl" alt="">
+                                            </div>
+                                            <p class="text">{{album.name}}</p>
+                                            <p class="author">{{album.artists[0].name}}</p>
+                                        </div>
+                                    </el-carousel-item>
+                                </el-carousel>
+                            </div>
+                        </div>
+                        <!-- <div class="content">
+                            <Card :cardInfo="item" v-for="item in newAlbum" :key="item.id"></Card>
+                        </div> -->
                     </div>
                 </div>
                 <div class="right_wrap"></div>
@@ -61,6 +93,7 @@
 </template>
 
 <script>
+import day from 'dayjs'
 export default {
     name:"Recommend",
     components: {
@@ -72,7 +105,12 @@ export default {
             isDownload: false,
             pageInfo: [],
             hotRecommendList: [],
-            recommendList: []
+            recommendList: [],
+            newAlbum: [],
+            date: {
+                day: 0,
+                week: '星期八'
+            }
         }
     },
     computed: {
@@ -98,12 +136,51 @@ export default {
             if(result.code === 200) {
                 this.recommendList = result.recommend.slice(0,3)
             }
+        },
+        async getNewAlbum() {
+            const result = await this.$API.recommend.getNewAlbum();
+            if(result.code === 200) {
+                this.newAlbum = result.albums
+            }
+        },
+        getDate() {
+            let week = day().$W;
+            switch(week) {
+                case 1:
+                    week = '星期一';
+                    break;
+                case 2:
+                    week = '星期二';
+                    break;
+                case 3:
+                    week = '星期三';
+                    break;
+                case 4:
+                    week = '星期四';
+                    break;
+                case 5:
+                    week = '星期五';
+                    break;
+                case 6:
+                    week = '星期六';
+                    break;
+                case 7:
+                    week = '星期日';
+                    break;
+                default: 
+                    week = '星期八';
+            }
+            this.date = { day: day().$D, week }
         }
     },
     created() {
         this.getHomepage()
         this.getHotRecommend()
         this.getRecommend()
+        this.getNewAlbum()
+    },
+    mounted() {
+        this.getDate();
     }
 };
 </script>
@@ -205,7 +282,76 @@ export default {
                     padding: 20px 0 0;
                     display: flex;
                     flex-wrap: wrap;
-                    
+                }
+                .new_album_swiper {
+                    padding: 20px 0;
+                    height: 186px;
+                    .block {
+                        width: 100%;
+                        height: 100%;
+                        .el-carousel {
+                            height: 100%;
+                            width: 100%;
+                            border: 1px solid #ccc;
+                            & /deep/ .el-carousel__container {
+                                width: 100%;
+                                height: 100% !important;
+                                .el-carousel__arrow--left {
+                                    margin-left: -15px;
+                                    width: 30px;
+                                    height: 30px;
+                                }
+                                .el-carousel__arrow--right {
+                                    margin-right: -15px;
+                                    width: 30px;
+                                    height: 30px;
+                                }
+                            }
+                            & /deep/ .el-carousel__indicators {
+                                width: 50%;
+                                display: flex;
+                                justify-content: space-around;
+                            }
+                            .el-carousel__item {
+                                background: #F5F5F5;
+                                padding: 0 20px;
+                                height: 100%;
+                                width: 100%;
+                                box-sizing: border-box;
+                                display: flex;
+                                padding-top: 25px;
+                                justify-content: space-around;
+                                &.is-animating {
+                                    -webkit-transition: -webkit-transform 1s ease-in-out;
+                                    transition: -webkit-transform 1s ease-in-out;
+                                    transition: transform 1s ease-in-out;
+                                    transition: transform 1s ease-in-out,-webkit-transform 1s ease-in-out;
+                                }
+                                .item_wrap {
+                                    width: 118px;
+                                    .img_wrap {
+                                        background: url(/image/sprite/coverall.png) no-repeat 0 -570px;
+                                        box-shadow: 0 10px 5px -3px #ccc;
+                                        img {
+                                            width: 100px;
+                                            height: 100px;
+                                            border: 1px solid #ccc;
+                                        }
+                                    }
+                                    p {
+                                        height: 15px;
+                                        line-height: 15px;
+                                        &.text {
+                                            margin-top: 5px;
+                                        }
+                                        &.author {
+                                            color: #666;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             .right_wrap {
