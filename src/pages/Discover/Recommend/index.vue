@@ -234,10 +234,6 @@ export default {
     },
     created() {
         this.getHomepage()
-<<<<<<< HEAD
-        // this.getHotRecommend()
-        // this.getRecommend()
-=======
         this.getHotRecommend()
         this.getRecommend()
         this.getNewAlbum()
@@ -246,7 +242,6 @@ export default {
     mounted() {
         this.getDate();
         this.changeIsShowLoginBox()
->>>>>>> 18760ff0b56d90580a5215f01422800a799151a3
     }
 };
 </script>
