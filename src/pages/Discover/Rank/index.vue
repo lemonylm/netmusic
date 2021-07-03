@@ -9,6 +9,7 @@
          :key="item.id"
          :label="item.id"
         >
+        </el-radio>
           <div class="radio-details">
             <div class="img">
               <img :src="item.coverImgUrl" alt="" />
@@ -18,7 +19,6 @@
               <p class="info">{{item.updateFrequency}}</p>
             </div>
           </div>
-        </el-radio>
       </div>
       <div class="album-details">
         <div class="album-details padding-0">
