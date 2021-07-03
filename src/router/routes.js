@@ -8,6 +8,8 @@ const PlayList = () => import("pages/Discover/PlayList");
 const NewDiscShelves = () => import("pages/Discover/NewDiscShelves");
 const Radio = () => import("pages/Discover/Radio");
 const Singer = () => import("../pages/Discover/Singer");
+//三级路由
+const SettleSinger = () => import("../pages/Discover/Singer/settleSinger")
 // 404
 const NotFound = () => import("../pages/404/404");
 
@@ -45,6 +47,13 @@ export default [
         path: "singer",
         name: "Singer",
         component: Singer,
+        children:[
+          {
+            path:"settleSinger",
+            name:'settleSinger',
+            component:SettleSinger
+          }
+        ]
       },
       {
         path: "",

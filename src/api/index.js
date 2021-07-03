@@ -1,4 +1,11 @@
 import recommend from "./discover/recommend";
-import singer from "./discover/singer";
-import player from "./discover/player";
-export { recommend, singer, player };
+import rank from './discover/rank';
+import singer from './discover/singer'
+import radio from "./discover/radio";
+
+export {
+  recommend,
+  rank,
+  singer,
+  radio,
+}

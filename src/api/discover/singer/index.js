@@ -8,12 +8,12 @@ export default {
     async hostSingerList(){
         return request.get('/top/artists')
     },
-    //收藏歌手列表
-    async CollectionSinger(){
-        return request.get('/artist/sublist')
-    },
     //歌手榜
     async singerSheet (){
+        return request.get('/toplist/artist')
+    },
+    //地区
+    async regionSinger(){
         return request.get('/toplist/artist')
     }
 }
