@@ -3,4 +3,16 @@ export default {
   async getHomePage() {
     return request.get('/homepage/block/page');
   },
+  // 热门推荐歌单
+  async getHotRecommend() {
+    return request.get('/personalized?limit=8');
+  },
+  // 每日推荐歌单
+  async getRecommend() {
+    return request.get('/recommend/resource');
+  },
+  // 新碟上架
+  async getNewAlbum() {
+    return request.get('/album/new?area=ALL&limit=10')
+  }
 };

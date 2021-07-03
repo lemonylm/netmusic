@@ -9,9 +9,9 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 instance.interceptors.response.use(
-  (confing) => {
+  (response) => {
     nprogress.done();
-    return confing;
+    return response.data;
   },
   (err) => {
     nprogress.done();
