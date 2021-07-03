@@ -492,6 +492,7 @@ export default {
                 height: 50px;
                 text-align: center;
                 .login_btn {
+                    cursor: pointer;
                     margin-top: 30px;
                     background: #C20C0C;
                     color: #fff;
