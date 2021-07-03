@@ -15,5 +15,9 @@ export default {
     //地区
     async regionSinger(){
         return request.get('/toplist/artist')
+    },
+    //歌手热门50首
+    async hostSongs(){
+      return request.get('/artist/top/song')  
     }
 }
