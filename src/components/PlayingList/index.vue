@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       curIndex: "",
-      curId: "",
+      curId: 1858083996,
     };
   },
   mounted() {},
@@ -70,9 +70,11 @@ export default {
         this.songInfoList = tmpList;
       },
     },
-    curId(val) {
-      let idx = this.songList.findIndex((item) => item.id === val);
-      this.$refs.row.scrollTop = 40 + (idx - 2) * 70;
+    curId: {
+      handler(val) {
+        let idx = this.songList.findIndex((item) => item.id === val);
+        this.$refs.row.scrollTop = 40 + (idx - 2) * 70;
+      },
     },
   },
 };
