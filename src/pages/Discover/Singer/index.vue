@@ -137,11 +137,11 @@ export default {
   methods: {
        async getSingerList() {
             const result = await this.$API.singer.getSingerList()
-            // console.log(result)
-            if(result.code === 200) {
+            console.log(result)
+            if(result.data.code === 200) {
                 this.singerList = result.data.artists
             }
-            // console.log(result.data.artists)
+            console.log(this.singerList)
         },
         async hostSingerList(){
             const result = await this.$API.singer.hostSingerList()
