@@ -14,5 +14,17 @@ export default {
   // 新碟上架
   async getNewAlbum() {
     return request.get('/album/new?area=ALL&limit=10')
-  }
+  },
+  // 榜单
+  async getTopList() {
+    return request.get('/toplist')
+  },
+  // 获取排行榜数据
+  async getPlaylistDetail(id) {
+    return request.get(`/playlist/detail?id=${id}`)
+  },
+  // 获取排行榜歌曲数据
+  async getPlaylistSongsDetail(ids) {
+    return request.get(`/song/detail?ids=` + ids)
+  },
 };

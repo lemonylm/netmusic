@@ -83,8 +83,10 @@
                             </div>
                        <!-- 榜单 -->
                             <Title title="榜单"></Title>
-                            <div class="content">
-                                
+                            <div class="content bangdan">
+                                <Toplist :list = "topList[0]"></Toplist>
+                                <Toplist :list = "topList[1]"></Toplist>
+                                <Toplist :list = "topList[2]"></Toplist>
                             </div>
                     </div>
                 </div>
@@ -101,6 +103,7 @@ export default {
     components: {
         Title: () => import('@/components/Recommend/Title'),
         Card: () => import('@/components/Recommend/Card'),
+        Toplist: () => import('@/components/Recommend/Toplist')
     },
     data() {
         return {
@@ -109,6 +112,7 @@ export default {
             hotRecommendList: [],
             recommendList: [],
             newAlbum: [],
+            topList: [],
             date: {
                 day: 0,
                 week: '星期八'
@@ -143,6 +147,12 @@ export default {
             const result = await this.$API.recommend.getNewAlbum();
             if(result.code === 200) {
                 this.newAlbum = result.albums
+            }
+        },
+        async getTopList() {
+            const result = await this.$API.recommend.getTopList();
+            if(result.code === 200) {
+                this.topList = result.list
             }
         },
         getDate() {
@@ -180,6 +190,7 @@ export default {
         this.getHotRecommend()
         this.getRecommend()
         this.getNewAlbum()
+        this.getTopList()
     },
     mounted() {
         this.getDate();
@@ -284,6 +295,10 @@ export default {
                     padding: 20px 0 0;
                     display: flex;
                     flex-wrap: wrap;
+                    &.bangdan {
+                        display: flex;
+                        padding: 20px 0 40px;
+                    }
                 }
                 .new_album_swiper {
                     padding: 20px 0;
@@ -359,7 +374,6 @@ export default {
             .right_wrap {
                 width: 252px;
                 box-sizing: border-box;
-                background: #bfa;
             }
         }
     }
