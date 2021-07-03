@@ -5,11 +5,12 @@
         <p class="kind-title">云音乐特色榜</p>
         <div>
           <el-radio
+            
             class="radio-list"
             v-for="item in toplist"
             :key="item.id"
             :label="item.id"
-             @click="changelist"
+             @click="showlist()"
           >
             <div class="radio-details">
               <div class="img">
@@ -85,13 +86,13 @@
                 <span>{{index + 1}}</span>
                 <span class="iconfont" >&#xe638;</span>
               </td>
-              <td class="over" :title="item.name">
+              <td class="over" >
                 <p></p>
               </td>
               <td class="timer">
                 <span></span>
               </td>
-              <td class="td-name">
+              <td class="td-name" >
                 <p></p>
               </td>
             </tr>
@@ -193,16 +194,15 @@ export default {
       }
     },
    async getplaylistDetail(id) {
-    const result = await this.$API.rank.getplaylistDetail(id);
+    const result = await this.$API.rank.getplaylistDetail(this.id);
     if (result.code === 200) {
       this.id = result.data.list.id
-      console.log(this.id)
       this.playlistDetail = result.data.list
     }
   },
    
-   changelist(id){
-       this.id = list.id
+   showlist(){
+     this.id =result.data.playlist.id  
    }
 
   },
