@@ -27,4 +27,8 @@ export default {
   async getPlaylistSongsDetail(ids) {
     return request.get(`/song/detail?ids=` + ids)
   },
+  // 登录
+  async login(phone, password) {
+    return request.get(`/login/cellphone?phone=${phone}&password=${password}`)
+  },
 };

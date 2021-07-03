@@ -93,6 +93,27 @@
                 <div class="right_wrap"></div>
             </div>
         </div>
+        <div class="login_box" :style="{'display': isShowLoginBox ? 'block' : 'none'}">
+            <div class="header">
+                <span>登录</span>
+                <span class="close" @click="isShowLoginBox = false">×</span>
+            </div>
+            <div class="content">
+                <div class="wrap">
+                    <div class="tel input">
+                        <p>手机号: </p>
+                        <input v-model="tel" type="text">
+                    </div>
+                    <div class="password input">
+                        <p>密码: </p>
+                        <input v-model="password" type="password">
+                    </div>
+                </div>
+                <div class="btn_wrap">
+                    <button class="login_btn" @click="login">登录</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -107,6 +128,9 @@ export default {
     },
     data() {
         return {
+            tel:'',
+            password: '',
+            isShowLoginBox: false,
             isDownload: false,
             pageInfo: [],
             hotRecommendList: [],
@@ -155,6 +179,13 @@ export default {
                 this.topList = result.list
             }
         },
+        async login () {
+            const result = await this.$API.recommend.login(this.tel, this.password);
+            if(result.code === 200) {
+                localStorage.setItem('token', result.token)
+            }
+                console.log(result)
+        },
         getDate() {
             let week = day().$W;
             switch(week) {
@@ -183,6 +214,11 @@ export default {
                     week = '星期八';
             }
             this.date = { day: day().$D, week }
+        },
+        changeIsShowLoginBox() {
+            this.$bus.$on('chang_isShowLoginBox', () => {
+                this.isShowLoginBox = true
+            })
         }
     },
     created() {
@@ -194,6 +230,7 @@ export default {
     },
     mounted() {
         this.getDate();
+        this.changeIsShowLoginBox()
     }
 };
 </script>
@@ -373,8 +410,86 @@ export default {
             }
             .right_wrap {
                 width: 252px;
+                background: #bfa;
                 box-sizing: border-box;
             }
+        }
+    }
+    .login_box {
+        width: 530px;
+        height: 371px;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        z-index: 9999;
+        border-radius: 5px;
+        .header {
+            width: 530px;
+            height: 38px;
+            box-sizing: border-box;
+            background: #2D2D2D;
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 38px;
+            padding-left: 20px;
+            .close {
+                float: right;
+                font-size: 30px;
+                margin-right: 10px;
+                line-height: 30px;
+                cursor: pointer;
+            }
+        }
+        .content {
+            width: 530px;
+            height: 333px;
+            box-sizing: border-box;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .wrap {
+                margin-top: 70px;
+                width: 50%;
+                height: 40%;
+                .input {
+                    display: flex;
+                    width: 100%;
+                    height: 50%;
+                    align-items: center;
+                    justify-content: flex-end;
+                    & p {
+                        font-size: 14px;
+                        margin-right: 5px;
+                    }
+                    & input {
+                        width: 78%;
+                        height: 30px;
+                        border-radius: 5px;
+                        border: 1px solid #ccc;
+                        outline: none;
+                        padding-left: 3px;
+                    }
+                }
+            }
+            .btn_wrap {
+                width: 50%;
+                height: 50px;
+                text-align: center;
+                .login_btn {
+                    margin-top: 30px;
+                    background: #C20C0C;
+                    color: #fff;
+                    width: 60%;
+                    height: 50px;
+                    border: none;
+                    border-radius: 25px;
+                }
+            } 
         }
     }
 }

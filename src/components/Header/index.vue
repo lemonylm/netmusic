@@ -30,11 +30,11 @@
         </ul>
         <sup class="hot"></sup>
         <!-- 判断用户是否登录， 若登录则显示头像， 否则显示登录 -->
-        <div v-if="true" class="avatar">
+        <div v-if="isLogin" class="avatar">
           <img src="/image/萌萌哒.jpg" alt="">
         </div>
         <div v-else class="login_wrap">
-          <a class="login" href="javascript:;">登录</a>
+          <a class="login" href="javascript:;" @click="showLogin">登录</a>
         </div>
         <div class="creater_center_wrap">
           <div class="creater_center">
@@ -56,7 +56,18 @@
 <script>
 export default {
   name: "Header",
-  props: ['path']
+  props: ['path'],
+  data() {
+    return {
+      isLogin: false,
+    }
+  },
+  methods: {
+    showLogin() {
+      if(!this.isLogin)
+        this.$bus.$emit('chang_isShowLoginBox', true)
+    }
+  }
 };
 </script>
 

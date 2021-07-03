@@ -25,7 +25,14 @@
 <script>
 export default {
   name: "Toplist",
-  props: ['list'],
+  props: {
+    list: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
   data() {
     return {
       trackIds: [],
