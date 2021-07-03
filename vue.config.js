@@ -2,7 +2,7 @@ module.exports = {
   lintOnSave: false,
 
   devServer: {
-    port: 8081,
+    port: 8080,
     open: true,
     proxy: {
       "/api": {
