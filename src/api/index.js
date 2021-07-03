@@ -7,5 +7,5 @@ export {
   recommend,
   rank,
   singer,
-  radio
+  radio,
 }
