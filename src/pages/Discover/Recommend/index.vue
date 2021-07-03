@@ -102,8 +102,8 @@ export default {
     },
     created() {
         this.getHomepage()
-        this.getHotRecommend()
-        this.getRecommend()
+        // this.getHotRecommend()
+        // this.getRecommend()
     }
 };
 </script>
