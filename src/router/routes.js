@@ -1,12 +1,17 @@
 // 一级路由
-const Discover = () => import("pages/Discover");
-const MyMusic = () => import("pages/MyMusic");
+const Discover = () => import("../pages/Discover");
+const MyMusic = () => import("../pages/MyMusic");
 // 二级路由
 const Recommend = () => import("pages/Discover/Recommend");
 const Rank = () => import("pages/Discover/Rank");
+const PlayList = () => import("pages/Discover/PlayList");
+const NewDiscShelves = () => import("pages/Discover/NewDiscShelves");
 const Radio = () => import("pages/Discover/Radio");
+const Singer = () => import("../pages/Discover/Singer");
+//三级路由
+const SettleSinger = () => import("../pages/Discover/Singer/settleSinger")
 // 404
-const NotFound = () => import("pages/404/404");
+const NotFound = () => import("../pages/404/404");
 
 export default [
   {
@@ -24,14 +29,36 @@ export default [
         component: Rank,
       },
       {
-        path:"radio",
-        name:"Radio",
+        path: "playlist",
+        name: "PlayList",
+        component: PlayList,
+      },
+      {
+        path: "newdiscshelves",
+        name: "NewDiscShelves",
+        component: NewDiscShelves,
+      },
+      {
+        path: "radio",
+        name: "Radio",
         component: Radio,
       },
       {
+        path: "singer",
+        name: "Singer",
+        component: Singer,
+        children:[
+          {
+            path:"settleSinger",
+            name:'settleSinger',
+            component:SettleSinger
+          }
+        ]
+      },
+      {
         path: "",
-        redirect:'recommend'
-      }
+        redirect: "recommend",
+      },
     ],
   },
   {
@@ -55,5 +82,5 @@ export default [
   {
     path: "/",
     redirect: "/discover/radio",
-  }
+  },
 ];
