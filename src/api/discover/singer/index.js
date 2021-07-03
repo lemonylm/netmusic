@@ -1,8 +1,8 @@
 import request from '@/utils/request.js'
 
 export default {
-   async getSingerList(type,area){
-        return request.get(`/artist/list?type=${type}&area=${area}`)
+   async getSingerList(){
+        return request.get(`/artist/list`)
     },
     //热门歌手
     async hostSingerList(){

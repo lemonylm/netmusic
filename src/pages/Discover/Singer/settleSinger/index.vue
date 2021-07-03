@@ -5,8 +5,9 @@
         <div class="singerLs">
             <h2 class="title">推荐</h2>
             <ul class="list">
+            <li class="item">推荐歌手</li>
                 <li class="item">入驻歌手</li>
-                <li class="item">推荐歌手</li>
+                
             </ul>
             <div class="boder"></div>
 

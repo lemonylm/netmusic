@@ -7,18 +7,9 @@
             <ul class="list">
                 
                 <li class="item">推荐歌手</li>
-                <li class="item" @click="toSettle">入驻歌手</li>
+                <li class="item">入驻歌手</li>
             </ul>
             <div class="boder"></div>
-
-           <!-- <div class="chinese">
-                <h2></h2>
-                <ul class="chineseSinger">
-                    <li class="item">华语男歌手</li>
-                    <li class="item">华语女歌手</li>
-                    <li class="item">华语组合/乐队</li>
-                </ul>
-            </div>-->
             <div class="chinese">
                 <h2 class="title">华语</h2>
                 <ul class="list">
@@ -37,7 +28,7 @@
                 </ul>
                 <div class="boder"></div>
             </div>
-             <div class="chinese">
+            <div class="chinese">
                 <h2 class="title">日本</h2>
                 <ul class="list">
                     <li class="item">日本男歌手</li>
@@ -56,7 +47,7 @@
                 <div class="boder"></div>
             </div>
             <div class="chinese">
-                <h2 class="title">其它</h2>
+                <h2 class="title">其他</h2>
                 <ul class="list">
                     <li class="item">其他男歌手</li>
                     <li class="item">其他女歌手</li>
@@ -102,8 +93,8 @@
         </div>
         <!--歌手名称列表-->
         <div class="singerName">
-            <div class="nameItem" v-for="(sheet,index) in singerSheetList" :key="sheet.id">
-                <a href="##">{{sheet.name}}</a>
+            <div class="nameItem" v-for="(name,index) in singerName" :key="name.id">
+                <a href="##">{{name.name}}</a>
                 <i class="icon el-icon-user-solid"></i>
             </div>
         </div>
@@ -122,7 +113,7 @@ export default {
           area:-1,
           singerList:[],
           hostSinger:[],
-          singerSheetList:[]
+          singerName:[]
       }
   },
   mounted() {
@@ -130,7 +121,7 @@ export default {
   },
   methods: {
        async getSingerList() {
-            const result = await this.$API.singer.getSingerList(this.type,this.area)
+            const result = await this.$API.singer.getSingerList()
             // console.log(result)
             if(result.code === 200) {
                 this.singerList = result.artists.splice(0,10)
@@ -143,21 +134,15 @@ export default {
             if(result.code === 200){
                 this.hostSinger = result.artists.splice(10,10)
             }
+            // console.log(this.hostSinger)
         },
         async singerSheet(){
             const result = await this.$API.singer.singerSheet()
-            console.log(result)
             if(result.code === 200){
-                this.singerSheetList = result.list.artists
+                this.singerName = result.list.artists
             }
-            // console.log(this.singerSheetList)
-        },
-
-
-
-        //跳转到入驻歌手页
-        toSettle(){
-            this.$router.push({path:'settleSinger'})
+            console.log(result)
+            console.log(this.singerName)
         }
   },
    created() {
