@@ -1,13 +1,12 @@
 <template>
-  <div class="singer">
+   <div class="singer">
     <!--歌手列表-->
     <div class="singerSort">
         <div class="singerLs">
             <h2 class="title">推荐</h2>
             <ul class="list">
-                
+                <li class="item">入驻歌手</li>
                 <li class="item">推荐歌手</li>
-                <li class="item" @click="toSettle">入驻歌手</li>
             </ul>
             <div class="boder"></div>
 
@@ -76,34 +75,18 @@
         </div>
             <!--图片展示-->
         <div class="singerList">
-            <div class="singerItem" v-for="(singer,index) in singerList" :key="singer.id">
-                <img class="image" :src="singer.picUrl" alt="">
+            <div class="singerItem">
+                <img class="image" src="../image/1.png" alt="">
                 <div class="text">
-                    <p class="name">{{singer.name}}</p>
-                    <a href="##" class="icon el-icon-user-solid"></a>
-                </div>
-            </div>
-        </div>
-        <!--热门歌手-->
-        <div class="settleSinger">
-            <h2>热门歌手</h2>
-            <a href="##">更对 ></a>
-            <div class="border"></div>
-        </div>
-            <!--图片展示-->
-        <div class="singerList">
-            <div class="singerItem" v-for="(host,index) in hostSinger" :key="host.id">
-                <img class="image" :src="host.picUrl" alt="">
-                <div class="text">
-                    <p class="name">{{host.name}}</p>
+                    <p class="name">老薛</p>
                     <a href="##" class="icon el-icon-user-solid"></a>
                 </div>
             </div>
         </div>
         <!--歌手名称列表-->
         <div class="singerName">
-            <div class="nameItem" v-for="(sheet,index) in singerSheetList" :key="sheet.id">
-                <a href="##">{{sheet.name}}</a>
+            <div class="nameItem">
+                <a href="##">哈哈</a>
                 <i class="icon el-icon-user-solid"></i>
             </div>
         </div>
@@ -115,60 +98,8 @@
 
 <script>
 export default {
-  name: "Singer",
-  data() {
-      return {
-          type:-1,
-          area:-1,
-          singerList:[],
-          hostSinger:[],
-          singerSheetList:[]
-      }
-  },
-  mounted() {
-      
-  },
-  methods: {
-       async getSingerList() {
-            const result = await this.$API.singer.getSingerList(this.type,this.area)
-            // console.log(result)
-            if(result.code === 200) {
-                this.singerList = result.artists.splice(0,10)
-            }
-            // console.log(this.singerList)
-        },
-        async hostSingerList(){
-            const result = await this.$API.singer.hostSingerList()
-            // console.log(result)
-            if(result.code === 200){
-                this.hostSinger = result.artists.splice(10,10)
-            }
-        },
-        async singerSheet(){
-            const result = await this.$API.singer.singerSheet()
-            console.log(result)
-            if(result.code === 200){
-                this.singerSheetList = result.list.artists
-            }
-            // console.log(this.singerSheetList)
-        },
-
-
-
-        //跳转到入驻歌手页
-        toSettle(){
-            this.$router.push({path:'settleSinger'})
-        }
-  },
-   created() {
-        this.getSingerList()
-        this.hostSingerList()
-        this.singerSheet()
-    },
-  computed:{
-      
-  }
-};
+  name: '',
+}
 </script>
 
 <style lang="less" scoped>

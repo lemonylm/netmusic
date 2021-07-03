@@ -1,19 +1,19 @@
 import request from '@/utils/request.js'
 
 export default {
-   async getSingerList(){
-        return request.get(`/artist/list`)
+   async getSingerList(type,area){
+        return request.get(`/artist/list?type=${type}&area=${area}`)
     },
     //热门歌手
     async hostSingerList(){
         return request.get('/top/artists')
     },
-    //收藏歌手列表
-    async CollectionSinger(){
-        return request.get('/artist/sublist')
-    },
     //歌手榜
     async singerSheet (){
+        return request.get('/toplist/artist')
+    },
+    //地区
+    async regionSinger(){
         return request.get('/toplist/artist')
     }
 }
