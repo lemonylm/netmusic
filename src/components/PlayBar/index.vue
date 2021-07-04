@@ -113,7 +113,8 @@
           href="javascript:;"
           title="播放列表"
           @click="isShowList = !isShowList"
-        ></a>
+          >{{ songList.length || 0 }}</a
+        >
         <PlayingList
           ref="plList"
           :curId="songId"
@@ -417,7 +418,7 @@ export default {
   transition: all 0.5s linear 0.5s;
   user-select: none;
   .wrap {
-    width: 980px;
+    width: 1020px;
     height: 42px;
     position: absolute;
     top: 20px;
@@ -644,8 +645,13 @@ export default {
         }
       }
       .list {
+        position: absolute;
+        width: 60px;
+        height: 25px;
+        text-indent: 30px;
         background-image: url("./imgs/playbar.png");
         background-position: -42px -68px;
+        line-height: 25px;
         &:hover {
           background-position: -42px -98px;
         }
