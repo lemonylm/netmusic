@@ -7,11 +7,13 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 
 import Header from '@/components/Header'
+// import Recommend from '@/components/Recommend'
 
 import "@/plugins/element";
 Vue.config.productionTip = false;
 
 Vue.component(Header.name, Header)
+// Vue.component(Recommend.Card, Recommend)
 
 new Vue({
   beforeCreate() {

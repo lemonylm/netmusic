@@ -6,9 +6,11 @@
 </template>
  <script>
 import PlayBar from "components/PlayBar";
+// import Recommend from "components/Recommend";
 export default {
   components: {
     PlayBar,
+    // Recommend,
   },
 };
 </script>
