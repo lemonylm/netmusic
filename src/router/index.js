@@ -1,6 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from "./routes";
+import store from '@/store/index'
+
+import user from '@/store/modules/user'
+
 const originPush = VueRouter.prototype.push;
 const originReplace = VueRouter.prototype.replace;
 VueRouter.prototype.push = function(...args) {
@@ -25,7 +29,21 @@ const router = new VueRouter({
     };
   },
 });
-router.beforeEach((to, from, next) => {
-  next();
+router.beforeEach(async (to, from, next) => {
+  const token = localStorage.getItem('token');
+  if(token) {
+    if(user.state.userInfo.nickname) {
+      next()
+    } else {
+      const result = await store.dispatch('get_userInfo');
+      if(result === 'ok') {
+        next(to.path)
+      } else {
+        next('/notfound')
+      }
+    }
+  } else {
+    next()
+  }
 });
 export default router;

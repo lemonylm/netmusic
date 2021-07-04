@@ -5,6 +5,9 @@ import store from "./store";
 import * as API from "@/api";
 import 'element-ui/lib/theme-chalk/index.css';
 
+import lazyload from 'vue-lazyload'
+import source from '../public/image/萌萌哒.jpg'
+Vue.use(lazyload, { source })
 
 import Header from '@/components/Header'
 

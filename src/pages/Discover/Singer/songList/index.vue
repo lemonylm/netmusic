@@ -55,7 +55,7 @@ export default {
         //   console.log(this.detail)
       },
       play(id){
-
+          
       }
   },
   created(){

@@ -23,16 +23,18 @@
       </div>
       <!-- 专辑图片 -->
       <div class="album">
-        <img src="./imgs/avatar.gif" />
+        <img :src="songInfo.picUrl ? songInfo.picUrl : `/image/avatar.gif`" />
       </div>
       <!-- 播放条 -->
       <div class="play">
         <div class="words">
-          <a class="songName" href="javascript:;">呼吸决定</a>
-          <a class="band" href="javascript:;">Fine乐团</a>
-          <a class="src" href="javascript:;"></a>
+          <a class="songName" href="javascript:;">{{ songInfo.songName }}</a>
+          <a class="band" href="javascript:;">{{ songInfo.singer }}</a>
+          <a class="src" href="javascript:;" @click="copyLink"></a>
+          <input type="text" ref="ipt" class="copy" v-model="shareUrl" />
         </div>
         <Progress
+          :totalTime="totalTime"
           :percent="percentMusic"
           :percent-progress="currentProgress"
           @percentChange="progressMusic"
@@ -46,8 +48,13 @@
       <!-- 分享等选项 -->
       <div class="oper">
         <a class="icn" href="javascript:;" title="画中画歌词"></a>
-        <a class="like" href="javascript:;" title="收藏"></a>
-        <a class="share" href="javascript:;" title="分享"></a>
+        <a
+          class="like"
+          href="javascript:;"
+          title="收藏"
+          @click="testAddList"
+        ></a>
+        <a class="share" href="javascript:;" title="分享" @click="copyLink"></a>
       </div>
       <!-- 控制条 -->
       <div class="controller">
@@ -97,7 +104,28 @@
           :title="mode[2]"
         ></a>
 
-        <a class="list" href="javascript:;" title="播放列表"></a>
+        <a
+          class="list"
+          href="javascript:;"
+          title="播放列表"
+          @click="isShowList = !isShowList"
+        ></a>
+        <PlayingList
+          :curId="songId"
+          ref="plList"
+          class="playingList"
+          v-show="isShowList"
+          :songList="fmtSongList"
+          @changeSong="changeSong"
+        />
+        <Lyric
+          class="lyric"
+          v-if="isShowList"
+          :currentT="curTime"
+          :id="songId"
+          :songName="songInfo.songName"
+          :singer="songInfo.singer"
+        />
       </div>
     </div>
     <div class="lock-bg">
@@ -113,32 +141,63 @@
 
 <script>
 import Progress from "./components/Progress.vue";
-import dayjs from "dayjs";
+import Lyric from "components/Lyric";
+import PlayingList from "components/PlayingList";
 import throttle from "lodash/throttle";
+import dayjs from "dayjs";
+import randomSortArray from "@/utils/shuffle";
+import { mapState } from "vuex";
 export default {
   name: "PlayBar",
   components: {
     Progress,
+    Lyric,
+    PlayingList,
   },
   data() {
     return {
+      rdmCurIdx: 0,
+      shareUrl: "",
       isLock: true,
       isPlay: false,
       isMute: false,
       isShowVolume: false,
+      isShowList: false,
+      isFirstPlay: true,
       volume: 50,
-      startY: 0,
+      startY: 50,
+      endV: 0,
       currentProgress: 0, // 当前缓冲进度
       curTime: 0,
       totalTime: 0,
       mode: ["顺序播放", "单曲循环", "随机"],
       currentMode: 0,
-      audioPath:
-        "http://m801.music.126.net/20210702215034/954b4251053d36aacfcb0281b4765c6a/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/8833391338/95b3/efe8/12b8/a0947809e3a0c3be9d460033dbae8259.mp3",
+      audioPath: "",
       isDown: false,
+      songId: 1858083996,
+      songInfo: {
+        songName: "",
+        singer: "",
+        picUrl: "",
+      },
+
+      randomList: [],
     };
   },
   methods: {
+    // 获取音乐
+    async getMusic() {
+      const infoRes = await this.$API.player.getSongInfo(this.songId);
+      if (infoRes.code === 200) {
+        this.songInfo.songName = infoRes.songs[0].name;
+        this.songInfo.singer = infoRes.songs[0].ar[0].name;
+        this.songInfo.picUrl = infoRes.songs[0].al.picUrl;
+      }
+      const urlRes = await this.$API.player.getMusicUrl(this.songId);
+      if (urlRes.code === 200) {
+        this.audioPath = urlRes.data[0].url;
+      }
+    },
     //   修改锁定状态
     changeStatus() {
       let { isLock } = this;
@@ -150,17 +209,19 @@ export default {
     },
     // 修改音乐进度
     progressMusicEnd(percent) {
-      this.$refs.audio.currentTime = this.totalTime * percent;
+      !this.isFirstPlay &&
+        (this.$refs.audio.currentTime = this.totalTime * percent);
     },
     // 播放和暂停
     audioPlay(flag) {
+      this.isFirstPlay = false;
       this.isPlay = flag;
       if (flag) {
         this.$refs.audio.play();
         this.timer = setInterval(() => {
           this.curTime = this.$refs.audio.currentTime;
           this.totalTime = this.$refs.audio.duration;
-        }, 500);
+        }, 100);
       } else {
         this.$refs.audio.pause();
         clearInterval(this.timer);
@@ -176,23 +237,60 @@ export default {
       }
     },
     // 下一首
-    next() {},
+    next() {
+      if (this.currentMode !== 2) {
+        this.$refs.plList.curIndex++;
+        if (this.$refs.plList.curIndex > this.songList.length - 1) {
+          this.$refs.plList.curIndex = 0;
+        }
+        this.$refs.plList.curId = this.songId =
+          this.songList[this.$refs.plList.curIndex].id;
+      } else {
+        this.rdmCurIdx++;
+        if (this.rdmCurIdx > this.songList.length - 1) {
+          this.rdmCurIdx = 0;
+        }
+        this.$refs.plList.curId = this.songId =
+          this.randomList[this.rdmCurIdx].id;
+      }
+    },
     // 上一首
-    prev() {},
+    prev() {
+      if (this.currentMode !== 2) {
+        this.$refs.plList.curIndex--;
+        if (this.$refs.plList.curIndex < 0) {
+          this.$refs.plList.curIndex = this.songList.length - 1;
+        }
+        this.$refs.plList.curId = this.songId =
+          this.songList[this.$refs.plList.curIndex].id;
+      } else {
+        this.rdmCurIdx--;
+        if (this.rdmCurIdx < 0) {
+          this.rdmCurIdx = this.songList.length - 1;
+        }
+        this.$refs.plList.curId = this.songId =
+          this.randomList[this.rdmCurIdx].id;
+      }
+    },
+
+    changeSong(id) {
+      this.songId = id;
+    },
     // 调整音量
     changeVolume(e) {
       let { isDown } = this;
       if (isDown) {
         let dis = e.clientY - this.startY;
-        if (dis > 50) {
-          dis = 50;
-        } else if (dis < -50) {
-          dis = -50;
+        let v = this.endV - dis;
+        if (v > 100) {
+          v = 100;
+        } else if (v < 0) {
+          v = 0;
         }
-        this.volume = 50 - dis;
-        this.$refs.audio.volume = (50 - dis) / 100;
-        this.$refs.vBar.style.height = 50 - dis + "px";
-        this.$refs.vBtn.style.top = 50 + dis + "px";
+        this.$refs.audio.volume = v / 100;
+        this.$refs.vBar.style.height = v + "px";
+        this.$refs.vBtn.style.top = 100 - v + "px";
+        this.volume = v;
       }
     },
     // 音量按钮按下
@@ -200,35 +298,101 @@ export default {
       this.isDown = isDown;
       this.startY = e.clientY;
     },
+    // 复制分享链接
+    async copyLink() {
+      const res = await this.$API.player.getShareInfo(this.songId);
+      if (res.code === 200) {
+        this.shareUrl = res.resUrl;
+        this.$refs.ipt.select();
+        this.$nextTick(() => {
+          document.execCommand("Copy");
+          this.$message({
+            message: "复制分享链接成功~",
+            type: "success",
+          });
+        });
+      }
+    },
+    // 测试添加歌单
+    testAddList() {
+      this.$store.dispatch("updateSongList", 19723756);
+    },
   },
   computed: {
+    ...mapState({
+      songList: (state) => state.playlist.songList,
+    }),
     //   计算进度条的进度
     percentMusic() {
       const { curTime, totalTime } = this;
       return curTime / totalTime || 0;
     },
+    // 格式化歌曲列表
+    fmtSongList() {
+      return this.songList.map((item) => {
+        return {
+          id: item.id,
+          songName: item.name,
+          singer: item.ar[0].name,
+          picUrl: item.al.picUrl,
+          desc: item.alia,
+        };
+      });
+    },
   },
   watch: {
+    // 监视音频路径变化 重新改变时间
     audioPath: {
       handler() {
         this.curTime = this.$refs.audio.currentTime;
         this.totalTime = this.$refs.audio.duration;
       },
     },
+    // 如果当前歌曲播放完继续下一首歌曲
+    curTime() {
+      if (this.currentMode === 1) {
+        if (this.curTime >= this.totalTime - 1) {
+          this.$refs.audio.currentTime = 0;
+        }
+      } else if (this.curTime === this.totalTime) {
+        this.next();
+      }
+    },
+    // 当前模式
+    currentMode() {
+      if (this.currentMode === 2) {
+        this.randomList = randomSortArray(this.songList);
+      } else if (this.currentMode === 0) {
+        let idx = this.songList.findIndex((item) => item.id === this.songId);
+        this.$refs.plList.curIndex = idx;
+      }
+    },
+    // 根据歌曲id变化 重新发请求
+    async songId() {
+      await this.getMusic();
+      this.audioPlay(true);
+    },
+    // 根据歌曲列表变化  重置播放顺序
+    songList() {
+      this.songId = this.songList[0].id;
+    },
   },
   filters: {
+    // 格式化时间
     fmtTime(value) {
       if (!value) return "00:00";
       return dayjs(Math.floor(value * 1000)).format("mm:ss");
     },
   },
   mounted() {
+    this.getMusic();
     window.addEventListener(
       "mousemove",
       throttle(this.changeVolume, 20, { trailing: false })
     );
     window.addEventListener("mouseup", () => {
       this.isDown = false;
+      this.endV = this.volume;
     });
   },
 };
@@ -311,6 +475,13 @@ export default {
     .play {
       height: 40px;
       float: left;
+      .copy {
+        // display: none;
+        width: 1px;
+        height: 1px;
+        position: absolute;
+        left: -1000px;
+      }
       .words {
         height: 15px;
         a {
@@ -402,6 +573,7 @@ export default {
         height: 25px;
         margin-right: 2px;
         .bar {
+          z-index: 99;
           position: absolute;
           top: -124px;
           left: -4px;
@@ -449,7 +621,6 @@ export default {
           }
         }
       }
-
       .mode {
         background-image: url("./imgs/playbar.png");
         background-position: -3px -344px;
@@ -477,6 +648,16 @@ export default {
         &:hover {
           background-position: -42px -98px;
         }
+      }
+      .lyric {
+        position: absolute;
+        left: 450px;
+        top: -306px;
+      }
+      .playingList {
+        left: -50px;
+        position: absolute;
+        top: -306px;
       }
     }
   }

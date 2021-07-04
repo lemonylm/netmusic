@@ -27,7 +27,7 @@
                 </ul>
                 <div class="boder"></div>
             </div>
-             <div class="chinese">
+            <div class="chinese">
                 <h2 class="title">日本</h2>
                 <ul class="list">
                     <li class="item">日本男歌手</li>
@@ -46,7 +46,7 @@
                 <div class="boder"></div>
             </div>
             <div class="chinese">
-                <h2 class="title">其它</h2>
+                <h2 class="title">其他</h2>
                 <ul class="list">
                     <li class="item">其他男歌手</li>
                     <li class="item">其他女歌手</li>
@@ -149,7 +149,7 @@ export default {
   methods: {
         async getSingerList() {
             const result = await this.$API.singer.getSingerList(this.type,this.area)
-            console.log(result)
+            // console.log(result)
             if(result.code === 200) {
                 this.singerList = result.artists.splice(0,10)
             }
@@ -161,6 +161,7 @@ export default {
             if(result.code === 200){
                 this.hostSinger = result.artists.splice(10,10)
             }
+            // console.log(this.hostSinger)
         },
         async singerSheet(){
             const result = await this.$API.singer.singerSheet()
@@ -168,7 +169,7 @@ export default {
             if(result.code === 200){
                 this.singerSheetList = result.list.artists
             }
-            // console.log(this.singerSheetList)
+            console.log(this.singerSheetList)
         },
         //切换歌手分类
         vIf(a){

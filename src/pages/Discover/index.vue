@@ -11,6 +11,9 @@
             <router-link :class="{active: $route.path === '/discover/rank'}" :to="{ path: '/discover/rank' }">排行榜</router-link>
           </li>
           <li class="discover_nav_item">
+            <router-link :class="{active: $route.path === '/discover/playlist'}" :to="{ path: '/discover/playlist' }">歌单</router-link>
+          </li>
+          <li class="discover_nav_item">
             <router-link :class="{active: $route.path === '/discover/radio'}" :to="{ path: '/discover/radio' }">主播电台</router-link>
           </li>
           <li class="discover_nav_item">
