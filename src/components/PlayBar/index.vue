@@ -46,7 +46,12 @@
       </div>
       <!-- 分享等选项 -->
       <div class="oper">
-        <a class="icn" href="javascript:;" title="画中画歌词"></a>
+        <a
+          class="icn"
+          href="javascript:;"
+          title="画中画歌词"
+          @click="testChangeSongId"
+        ></a>
         <a
           class="like"
           href="javascript:;"
@@ -115,7 +120,6 @@
           class="playingList"
           v-show="isShowList"
           :songList="fmtSongList"
-          @changeSong="changeSong"
         />
         <Lyric
           class="lyric"
@@ -172,7 +176,6 @@ export default {
       currentMode: 0,
       audioPath: "",
       isDown: false,
-      songId: 1858083996,
       songInfo: {
         songName: "",
         singer: "",
@@ -241,13 +244,16 @@ export default {
         if (this.$refs.plList.curIndex > this.songList.length - 1) {
           this.$refs.plList.curIndex = 0;
         }
-        this.songId = this.songList[this.$refs.plList.curIndex].id;
+        this.$store.dispatch(
+          "playOneSong",
+          this.songList[this.$refs.plList.curIndex].id
+        );
       } else {
         this.rdmCurIdx++;
         if (this.rdmCurIdx > this.songList.length - 1) {
           this.rdmCurIdx = 0;
         }
-        this.songId = this.randomList[this.rdmCurIdx].id;
+        this.$store.dispatch("playOneSong", this.randomList[this.rdmCurIdx].id);
       }
     },
     // 上一首
@@ -257,19 +263,19 @@ export default {
         if (this.$refs.plList.curIndex < 0) {
           this.$refs.plList.curIndex = this.songList.length - 1;
         }
-        this.songId = this.songList[this.$refs.plList.curIndex].id;
+        this.$store.dispatch(
+          "playOneSong",
+          this.songList[this.$refs.plList.curIndex].id
+        );
       } else {
         this.rdmCurIdx--;
         if (this.rdmCurIdx < 0) {
           this.rdmCurIdx = this.songList.length - 1;
         }
-        this.songId = this.randomList[this.rdmCurIdx].id;
+        this.$store.dispatch("playOneSong", this.randomList[this.rdmCurIdx].id);
       }
     },
 
-    changeSong(id) {
-      this.songId = id;
-    },
     // 调整音量
     changeVolume(e) {
       let { isDown } = this;
@@ -300,7 +306,7 @@ export default {
         //         .then(() => {
         //     alert('写入成功, 可以往文本框里复制内容')
         // })
-     
+
         this.$message({
           message: "复制分享链接成功~",
           type: "success",
@@ -314,10 +320,15 @@ export default {
     testAddList() {
       this.$store.dispatch("updateSongList", 19723756);
     },
+    // 测试播放一首歌
+    testChangeSongId() {
+      this.$store.dispatch("playOneSong", 405998841);
+    },
   },
   computed: {
     ...mapState({
       songList: (state) => state.playlist.songList,
+      songId: (state) => state.playlist.songId,
     }),
     //   计算进度条的进度
     percentMusic() {
@@ -371,7 +382,7 @@ export default {
     },
     // 根据歌曲列表变化  重置播放顺序
     songList() {
-      this.songId = this.songList[0].id;
+      this.$store.dispatch("playOneSong", this.songList[0].id);
     },
   },
   filters: {

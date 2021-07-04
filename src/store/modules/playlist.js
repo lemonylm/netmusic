@@ -1,5 +1,6 @@
 import axios from "@/utils/request";
 const state = {
+  songId: 1858083996,
   songList: [
     {
       name: "最远的远方",
@@ -7330,17 +7331,25 @@ const mutations = {
   SET_SONG_LIST(state, list) {
     state.songList = list;
   },
+  SET_SONG_ID(state, id) {
+    state.songId = id;
+  },
 };
 const actions = {
+  // 根据歌单id更改歌曲列表
   async updateSongList({ commit }, id) {
     const res = await axios.get(`/playlist/detail?id=${id}`);
     if (res.code === 200) {
       commit("SET_SONG_LIST", res.playlist.tracks);
     }
   },
-  async updateSingerList({ commit },list) {
-
-      commit("SET_SONG_LIST",list);
+  // 根据歌单列表直接更改列表
+  async updateSingerList({ commit }, list) {
+    commit("SET_SONG_LIST", list);
+  },
+  // 直接播放一首歌曲
+  async playOneSong({ commit }, id) {
+    commit("SET_SONG_ID", id);
   },
 };
 const getters = {};
