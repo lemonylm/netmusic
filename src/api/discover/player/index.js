@@ -16,4 +16,7 @@ export default {
   getShareInfo(id) {
     return request.get(`/share/resource?id=${id}&msg=快来听!`);
   },
+  updateSongList(id){
+
+  }
 };

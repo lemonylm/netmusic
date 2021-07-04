@@ -128,8 +128,8 @@ export default {
     },
     data() {
         return {
-            tel:'13485724452',
-            password: '67397012wd',
+            tel:'',
+            password: '',
             isShowLoginBox: false,
             isDownload: false,
             pageInfo: [],
