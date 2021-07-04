@@ -32,10 +32,12 @@ export default {
   props: {
     list: {
       type: Object,
-      default: {
-        coverImgUrl: "",
-        name: "",
-        id:''
+      default: () => {
+        return {
+          coverImgUrl: "",
+          name: "",
+          id: "",
+        };
       },
     },
   },

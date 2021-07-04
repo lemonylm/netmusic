@@ -45,13 +45,11 @@ export default {
   data() {
     return {
       curIndex: "",
-      curId: 1858083996,
     };
   },
   methods: {
     changeList(index, id) {
       this.curIndex = index;
-      this.curId = id;
       this.$emit("changeSong", id);
     },
   },

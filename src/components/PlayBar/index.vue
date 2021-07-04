@@ -31,7 +31,6 @@
           <a class="songName" href="javascript:;">{{ songInfo.songName }}</a>
           <a class="band" href="javascript:;">{{ songInfo.singer }}</a>
           <a class="src" href="javascript:;" @click="copyLink"></a>
-          <input type="text" ref="ipt" class="copy" v-model="shareUrl" />
         </div>
         <Progress
           :totalTime="totalTime"
@@ -111,8 +110,8 @@
           @click="isShowList = !isShowList"
         ></a>
         <PlayingList
-          :curId="songId"
           ref="plList"
+          :curId="songId"
           class="playingList"
           v-show="isShowList"
           :songList="fmtSongList"
@@ -157,7 +156,6 @@ export default {
   data() {
     return {
       rdmCurIdx: 0,
-      shareUrl: "",
       isLock: true,
       isPlay: false,
       isMute: false,
@@ -243,15 +241,13 @@ export default {
         if (this.$refs.plList.curIndex > this.songList.length - 1) {
           this.$refs.plList.curIndex = 0;
         }
-        this.$refs.plList.curId = this.songId =
-          this.songList[this.$refs.plList.curIndex].id;
+        this.songId = this.songList[this.$refs.plList.curIndex].id;
       } else {
         this.rdmCurIdx++;
         if (this.rdmCurIdx > this.songList.length - 1) {
           this.rdmCurIdx = 0;
         }
-        this.$refs.plList.curId = this.songId =
-          this.randomList[this.rdmCurIdx].id;
+        this.songId = this.randomList[this.rdmCurIdx].id;
       }
     },
     // 上一首
@@ -261,15 +257,13 @@ export default {
         if (this.$refs.plList.curIndex < 0) {
           this.$refs.plList.curIndex = this.songList.length - 1;
         }
-        this.$refs.plList.curId = this.songId =
-          this.songList[this.$refs.plList.curIndex].id;
+        this.songId = this.songList[this.$refs.plList.curIndex].id;
       } else {
         this.rdmCurIdx--;
         if (this.rdmCurIdx < 0) {
           this.rdmCurIdx = this.songList.length - 1;
         }
-        this.$refs.plList.curId = this.songId =
-          this.randomList[this.rdmCurIdx].id;
+        this.songId = this.randomList[this.rdmCurIdx].id;
       }
     },
 
@@ -302,14 +296,17 @@ export default {
     async copyLink() {
       const res = await this.$API.player.getShareInfo(this.songId);
       if (res.code === 200) {
-        this.shareUrl = res.resUrl;
-        this.$refs.ipt.select();
+        navigator.clipboard.writeText(res.resUrl);
+        //         .then(() => {
+        //     alert('写入成功, 可以往文本框里复制内容')
+        // })
+     
+        this.$message({
+          message: "复制分享链接成功~",
+          type: "success",
+        });
         this.$nextTick(() => {
-          document.execCommand("Copy");
-          this.$message({
-            message: "复制分享链接成功~",
-            type: "success",
-          });
+          // document.execCommand("Copy");
         });
       }
     },
@@ -475,13 +472,6 @@ export default {
     .play {
       height: 40px;
       float: left;
-      .copy {
-        // display: none;
-        width: 1px;
-        height: 1px;
-        position: absolute;
-        left: -1000px;
-      }
       .words {
         height: 15px;
         a {
