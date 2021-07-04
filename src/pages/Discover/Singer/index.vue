@@ -5,8 +5,8 @@
         <div class="singerLs">
             <h2 class="title">推荐</h2>
             <ul class="list">
-                <li class="item">推荐歌手</li>
-                <li class="item">入驻歌手</li>
+                <li class="item"  @click="vIf(true)">推荐歌手</li>
+                <li class="item" @click="vIf(false)">入驻歌手</li>
             </ul>
             <div class="boder"></div>
             <div class="chinese">
@@ -57,7 +57,7 @@
         </div>
     </div>
     <!--推荐歌手展示-->
-    <div class="singerShow" >
+    <div class="singerShow" v-if="isShow">
         <!--入驻歌手-->
         <div class="settleSinger">
             <h2>入驻歌手</h2>
@@ -99,9 +99,9 @@
         </div>
     </div>
     <!--入驻歌手展示-->
-    <div>
+    <div v-else>
     <!--歌手展示-->
-    <div class="singerShow" v-if="false">
+    <div class="singerShow">
         <!--入驻歌手-->
         <div class="settleSinger">
             <h2>入驻歌手</h2>
@@ -140,7 +140,7 @@ export default {
           singerList:[],
           hostSinger:[],
           singerSheetList:[],
-          isShow:1
+          isShow:true
       }
   },
   mounted() {
@@ -170,7 +170,10 @@ export default {
             }
             // console.log(this.singerSheetList)
         },
-
+        //切换歌手分类
+        vIf(a){
+            this.isShow = a
+        },
        
         toSongs(id){
             this.$router.push({name:"songList", params: {id}})

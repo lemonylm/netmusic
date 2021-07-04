@@ -17,7 +17,11 @@ export default {
         return request.get('/toplist/artist')
     },
     //歌手热门50首
-    async hostSongs(){
-      return request.get('/artist/top/song')  
+    async hostSongs(id){
+      return request.get(`/artist/top/song?id=${id}`)  
+    },
+    //获取歌手详情
+    async singerDetails(id){
+        return request.get(`/artist/detail?id=${id}`)
     }
 }

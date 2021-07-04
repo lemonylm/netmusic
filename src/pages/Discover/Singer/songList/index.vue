@@ -2,16 +2,16 @@
   <div class="songs">
         <div class="header">
             <div class="title">
-                <h1 class="name">张惠妹</h1>
-                <p class="nameMini">阿妹；阿密特</p>
-                <img class="img" src="../image/1.png" alt="">
+                <h1 class="name">{{detail.name}}</h1>
+                <img class="img" :src="detail.cover" alt="">
             </div>
             <h2 class="bofangList">播放列表</h2>
             <div class="songsList">
                 <ul>
-                    <li>
-                        <i class="icon el-icon-video-play"></i>
-                        <p>老鼠爱大米</p>
+                    <li  v-for="(songs,index) in songs" :key="songs.id">
+                    <!-- -->
+                        <i class="icon el-icon-video-play" @click="play(songs.id)"></i>
+                        <p>{{songs.name}}</p>
 
                     </li>
                 </ul>
@@ -23,17 +23,43 @@
 <script>
 export default {
   name: '',
+  data() {
+      return {
+          id:0,
+          songs:[],
+          detail:{}
+      }
+  },
   mounted() {
-      console.log(this.$route)
+    //   console.log(this.$route.params.id)
+      this.id = this.$route.params.id
+    //   console.log(this.id)
+      this.getHostSongs()
+      this.getSingerDetails()
   },
   methods: {
       async getHostSongs(){
-          const result = this.$API.singer.hostSongs()
-          
+          const result = await this.$API.singer.hostSongs(this.id)
+        //   console.log(result)
+          if(result.code === 200){
+              this.songs = result.songs
+          }
+          console.log(this.songs)
+      },
+      async getSingerDetails(){
+          const result = await this.$API.singer.singerDetails(this.id)
+        //   console.log(result)
+          if(result.code === 200){
+              this.detail = result.data.artist
+          }
+        //   console.log(this.detail)
+      },
+      play(id){
+
       }
   },
   created(){
-      this.getHostSongs()
+      
   }
 }
 </script>
@@ -67,6 +93,8 @@ export default {
             .bofangList{
                 font-size: 28px;
                 text-align: center;
+                border-bottom: 1px solid #ccc;
+                padding-bottom: 20px;
             }
             .songsList{
                 font-size: 14px;
