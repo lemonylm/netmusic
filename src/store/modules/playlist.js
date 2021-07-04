@@ -7338,6 +7338,10 @@ const actions = {
       commit("SET_SONG_LIST", res.playlist.tracks);
     }
   },
+  async updateSingerList({ commit },list) {
+
+      commit("SET_SONG_LIST",list);
+  },
 };
 const getters = {};
 export default {

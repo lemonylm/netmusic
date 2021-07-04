@@ -40,7 +40,7 @@ export default {
   methods: {
       async getHostSongs(){
           const result = await this.$API.singer.hostSongs(this.id)
-        //   console.log(result)
+          console.log(result)
           if(result.code === 200){
               this.songs = result.songs
           }
@@ -54,8 +54,8 @@ export default {
           }
         //   console.log(this.detail)
       },
-      play(id){
-          
+      play(){
+          this.$store.dispatch('updateSingerList',this.songs)
       }
   },
   created(){
