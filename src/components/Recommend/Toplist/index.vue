@@ -1,9 +1,9 @@
 <template>
   <div class="item">
     <div class="top_wrap">
-      <img :src="list.coverImgUrl" alt="">
+      <img :src="list.coverImgUrl" alt="" />
       <div class="info">
-        <p class="title">{{list.name}}</p>
+        <p class="title">{{ list.name }}</p>
         <div class="icon">
           <div class="play"></div>
           <div class="add"></div>
@@ -11,9 +11,13 @@
       </div>
     </div>
     <ul class="content_wrap">
-      <li class="content_item" v-for="(item,index) of songs.slice(0, 10)" :key="item.id">
-        <span class="index">{{index + 1}}</span>
-        <span class="name">{{item.name}}</span>
+      <li
+        class="content_item"
+        v-for="(item, index) of songs.slice(0, 10)"
+        :key="item.id"
+      >
+        <span class="index">{{ index + 1 }}</span>
+        <span class="name">{{ item.name }}</span>
       </li>
       <li class="content_item">
         <p>查看全部></p>
@@ -28,43 +32,50 @@ export default {
   props: {
     list: {
       type: Object,
-      default: () => {
-        return {}
-      }
-    }
+      default: {
+        coverImgUrl: "",
+        name: "",
+        id:''
+      },
+    },
   },
   data() {
     return {
       trackIds: [],
-      songs: []
-    }
+      songs: [],
+    };
   },
   watch: {
     list: {
       immediate: true,
-      async handler() {
-        await this.getPlaylistDetail();
-        const ids = this.trackIds.reduce((prev, item) => {
-          return prev + item.id + ','
-        }, '').slice(0, -1)
-        this.getPlaylistSongsDetail(ids)
-      }
-    }
+      handler(list) {
+        this.getPlaylistDetail(list.id);
+        // const ids = this.trackIds.reduce((prev, item) => {
+        //   return prev + item.id + ','
+        // }, '').slice(0, -1)
+        // this.getPlaylistSongsDetail(ids)
+      },
+    },
   },
   methods: {
-    async getPlaylistDetail() {
-      const result = await this.$API.recommend.getPlaylistDetail(this.list.id);
-      if(result.code === 200) {
-        this.trackIds = result.playlist.trackIds
+    async getPlaylistDetail(id) {
+      const result = await this.$API.recommend.getPlaylistDetail(id);
+      if (result.code === 200) {
+        this.trackIds = result.playlist.trackIds;
+        this.songs = result.playlist.tracks;
+        this.listInfo = {
+          coverImgUrl: result.playlist.coverImgUrl,
+          name: result.playlist.name,
+        };
       }
     },
-    async getPlaylistSongsDetail(ids) {
-      const result = await this.$API.recommend.getPlaylistSongsDetail(ids);
-      if(result.code === 200) {
-        this.songs = result.songs
-      }
-    }
-  }
+    // async getPlaylistSongsDetail(ids) {
+    //   const result = await this.$API.recommend.getPlaylistSongsDetail(ids);
+    //   if(result.code === 200) {
+    //     this.songs = result.songs
+    //   }
+    // }
+  },
 };
 </script>
 
@@ -73,7 +84,7 @@ export default {
   box-sizing: border-box;
   height: 472px;
   flex: 1;
-  background: #F4F4F4;
+  background: #f4f4f4;
   border: 1px solid #ccc;
   .top_wrap {
     padding: 20px 0 20px 20px;
@@ -85,7 +96,8 @@ export default {
       border: 1px solid #ccc;
       box-sizing: border-box;
     }
-    .info {font-weight: 700;
+    .info {
+      font-weight: 700;
       padding-left: 10px;
       .title {
         font-size: 14px;
@@ -114,13 +126,15 @@ export default {
       height: 32px;
       line-height: 32px;
       display: flex;
-      &:nth-of-type(1), &:nth-of-type(2), &:nth-of-type(3) {
+      &:nth-of-type(1),
+      &:nth-of-type(2),
+      &:nth-of-type(3) {
         .index {
           color: #c10d0c;
         }
       }
       &:nth-of-type(2n-1) {
-        background: #E8E8E8;
+        background: #e8e8e8;
       }
       .index {
         width: 35px;

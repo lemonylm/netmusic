@@ -30,11 +30,11 @@ export default {
     },
     songName: {
       type: String,
-      default: "123",
+      default: "songName",
     },
     singer: {
       type: String,
-      default: "234",
+      default: "singer",
     },
   },
   data() {
@@ -78,7 +78,6 @@ export default {
       return lyric;
     },
     // 动态计算当前index
-
     curIndex() {
       return this.fmtLyric.findIndex((item) => item.time >= this.currentT) - 1;
     },
@@ -90,12 +89,12 @@ export default {
         let num = 1;
         let timer = setInterval(() => {
           this.$refs.row.scrollTop =
-            (this.curIndex - 1) * 43 + (43 / 50) * (num - 1);
+            (this.curIndex - 1) * 40 + (40 / 50) * (num - 1);
           num++;
           if (num === 50) {
             clearInterval(timer);
           }
-        }, 20);
+        }, 10);
       },
     },
     // 根据id变化重新获取歌词
@@ -116,7 +115,7 @@ export default {
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(7.5px);
   -webkit-backdrop-filter: blur(7.5px);
-  border-radius: 10px;
+  border-radius: 0 10px 10px 0;
   border: 1px solid rgba(255, 255, 255, 0.18);
   transition: all 1s linear;
   &::-webkit-scrollbar {

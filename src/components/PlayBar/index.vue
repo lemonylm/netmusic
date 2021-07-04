@@ -111,6 +111,7 @@
           @click="isShowList = !isShowList"
         ></a>
         <PlayingList
+          :curId="songId"
           ref="plList"
           class="playingList"
           v-show="isShowList"
@@ -314,7 +315,7 @@ export default {
     },
     // 测试添加歌单
     testAddList() {
-      this.$store.dispatch("updateSongList", 427717976);
+      this.$store.dispatch("updateSongList", 19723756);
     },
   },
   computed: {

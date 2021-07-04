@@ -36,6 +36,10 @@ export default {
         ];
       },
     },
+    curId: {
+      type: Number,
+      default: 1858083996,
+    },
   },
 
   data() {
@@ -44,7 +48,6 @@ export default {
       curId: 1858083996,
     };
   },
-  mounted() {},
   methods: {
     changeList(index, id) {
       this.curIndex = index;
@@ -52,24 +55,7 @@ export default {
       this.$emit("changeSong", id);
     },
   },
-  computed: {},
   watch: {
-    songList: {
-      immediate: true,
-      handler(list) {
-        const tmpList = list.map(async (item) => {
-          const infoRes = await this.$API.player.getSongInfo(item);
-          if (infoRes.code === 200) {
-            return {
-              songName: infoRes.songs[0].name,
-              singer: infoRes.songs[0].ar[0].name,
-              picUrl: infoRes.songs[0].al.picUrl,
-            };
-          }
-        });
-        this.songInfoList = tmpList;
-      },
-    },
     curId: {
       handler(val) {
         let idx = this.songList.findIndex((item) => item.id === val);
@@ -82,6 +68,7 @@ export default {
 
 <style scoped lang="less">
 .List {
+  content-visibility: auto;
   width: 500px;
   height: 300px;
   color: #fff;
@@ -90,13 +77,15 @@ export default {
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(7.5px);
   -webkit-backdrop-filter: blur(7.5px);
-  border-radius: 10px;
+  border-radius: 10px 0 0 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   transition: all 1s linear;
   &::-webkit-scrollbar {
     width: 0 !important;
   }
   .title {
+    content-visibility: auto;
+    contain-intrinsic-size: 40px;
     text-align: center;
     font-size: 22px;
     line-height: 50px;
@@ -106,8 +95,9 @@ export default {
       color: #888;
     }
   }
-
   .row {
+    content-visibility: auto;
+    contain-intrinsic-size: 50px;
     display: flex;
     align-items: center;
     cursor: pointer;
