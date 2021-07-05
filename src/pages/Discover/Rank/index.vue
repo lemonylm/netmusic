@@ -206,8 +206,8 @@ export default {
     },
   },
 
-  async created() {
-    await this.getToplist();
+  created() {
+    this.getToplist();
     this.getplaylistDetail();
   },
 };
