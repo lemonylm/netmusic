@@ -10,8 +10,7 @@ export default {
 
    
   
-    // 获取歌单详情
-    // /playlist/detail
+   
     
   };
   

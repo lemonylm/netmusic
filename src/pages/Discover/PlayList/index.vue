@@ -53,7 +53,7 @@
         </div>
         <div class="main">
           <div class="content">
-             <Card :cardInfo="item" v-for="item in playList" :key="item.id">
+             <Card :cardInfo="item" v-for="item in playList" :key="item.id" @click="changeList(item)">
              </Card>
            
            
@@ -87,19 +87,18 @@ export default {
       const result = await this.$API.playList.getPlayList();
        console.log(result)
       if (result.code === 200) {
-       
+        
         this.playList = result.result;
         // console.log(this.data.result)
       }
     },
-    // async getSingerList() {
-    //         const result = await this.$API.singer.getSingerList()
-    //         // console.log(result)
-    //         if(result.code === 200) {
-    //             this.singerList = result.data.artists
-    //         }
-    //         // console.log(result.data.artists)
-    //     },
+
+    changeList(item) {
+            this.$store.dispatch('saveSongList', item.id);
+            this.$router.push({name: 'EAFList', params: {id: item.id, title: item.name, picUrl: item.picUrl}})
+            
+        }
+        
   },
   created() {
     this.getPlayList()
@@ -109,6 +108,7 @@ export default {
 
 <style lang='less' scoped>
 .playList {
+  
   height: 100%;
   width: 100%;
   background-color: #f5f5f5;
@@ -123,6 +123,7 @@ export default {
       padding: 40px 0;
       .header {
         .header-content {
+          margin-bottom: 20px;
           position: relative;
           // background-color: lightblue;
           height: 40px;
@@ -188,6 +189,7 @@ export default {
               }
               .boxContent {
                 display: flex;
+                
                 .left {
                   width: 100px;
                   height: 300px;
@@ -259,11 +261,13 @@ export default {
       .main {
         
         .content {
+          overflow: hidden;
           display: flex;
-          justify-content: space-between;
+          // justify-content: space-between;
           margin-bottom: 35px;
          flex-wrap: wrap;
           .container {
+            // padding-top: 20px;
             width: 20%;
             position: relative;
            flex-wrap: wrap;
