@@ -5,27 +5,55 @@
         <div class="singerLs">
             <h2 class="title">推荐</h2>
             <ul class="list">
-                <li class="item">入驻歌手</li>
+                
                 <li class="item">推荐歌手</li>
+                <li class="item">入驻歌手</li>
             </ul>
             <div class="boder"></div>
-
-           <!-- <div class="chinese">
-                <h2></h2>
-                <ul class="chineseSinger">
+            <div class="chinese">
+                <h2 class="title">华语</h2>
+                <ul class="list">
                     <li class="item">华语男歌手</li>
                     <li class="item">华语女歌手</li>
                     <li class="item">华语组合/乐队</li>
                 </ul>
-            </div>-->
+                <div class="boder"></div>
+            </div>
             <div class="chinese">
-            <h2 class="title">华语</h2>
-            <ul class="list">
-                <li class="item">华语男歌手</li>
-                <li class="item">华语女歌手</li>
-                <li class="item">华语组合/乐队</li>
-            </ul>
-            <div class="boder"></div>
+                <h2 class="title">欧美</h2>
+                <ul class="list">
+                    <li class="item">欧美男歌手</li>
+                    <li class="item">欧美女歌手</li>
+                    <li class="item">欧美组合/乐队</li>
+                </ul>
+                <div class="boder"></div>
+            </div>
+            <div class="chinese">
+                <h2 class="title">日本</h2>
+                <ul class="list">
+                    <li class="item">日本男歌手</li>
+                    <li class="item">日本女歌手</li>
+                    <li class="item">日本组合/乐队</li>
+                </ul>
+                <div class="boder"></div>
+            </div>
+            <div class="chinese">
+                <h2 class="title">韩国</h2>
+                <ul class="list">
+                    <li class="item">韩国男歌手</li>
+                    <li class="item">韩国女歌手</li>
+                    <li class="item">韩国组合/乐队</li>
+                </ul>
+                <div class="boder"></div>
+            </div>
+            <div class="chinese">
+                <h2 class="title">其他</h2>
+                <ul class="list">
+                    <li class="item">其他男歌手</li>
+                    <li class="item">其他女歌手</li>
+                    <li class="item">其他组合/乐队</li>
+                </ul>
+                <div class="boder"></div>
             </div>
         </div>
     </div>
@@ -39,10 +67,10 @@
         </div>
             <!--图片展示-->
         <div class="singerList">
-            <div class="singerItem">
-                <img class="image" src="" alt="">
+            <div class="singerItem" v-for="(singer,index) in singerList" :key="singer.id">
+                <img class="image" :src="singer.picUrl" alt="">
                 <div class="text">
-                    <p class="name">hhh</p>
+                    <p class="name">{{singer.name}}</p>
                     <a href="##" class="icon el-icon-user-solid"></a>
                 </div>
             </div>
@@ -65,52 +93,8 @@
         </div>
         <!--歌手名称列表-->
         <div class="singerName">
-            <div class="nameItem">
-                <a href="##">张惠妹</a>
-                <i class="icon el-icon-user-solid"></i>
-            </div>
-            <div class="nameItem">
-                <a href="##">张惠妹</a>
-                <i class="icon el-icon-user-solid"></i>
-            </div>
-            <div class="nameItem">
-                <a href="##">张惠妹</a>
-                <i class="icon el-icon-user-solid"></i>
-            </div>
-            <div class="nameItem">
-                <a href="##">张惠妹</a>
-                <i class="icon el-icon-user-solid"></i>
-            </div>
-            <div class="nameItem">
-                <a href="##">张惠妹</a>
-                <i class="icon el-icon-user-solid"></i>
-            </div>
-            <div class="nameItem">
-                <a href="##">张惠妹</a>
-                <i class="icon el-icon-user-solid"></i>
-            </div>
-            <div class="nameItem">
-                <a href="##">张惠妹</a>
-                <i class="icon el-icon-user-solid"></i>
-            </div>
-            <div class="nameItem">
-                <a href="##">张惠妹</a>
-                <i class="icon el-icon-user-solid"></i>
-            </div>
-            <div class="nameItem">
-                <a href="##">张惠妹</a>
-                <i class="icon el-icon-user-solid"></i>
-            </div>
-             <div class="nameItem">
-                <a href="##">张惠妹</a>
-                <i class="icon el-icon-user-solid"></i>
-            </div>
-             <div class="nameItem">
-                <a href="##">张惠妹</a>
-                <i class="icon el-icon-user-solid"></i>
-            </div>
-             <div class="nameItem">
-                <a href="##">张惠妹</a>
+            <div class="nameItem" v-for="(name,index) in singerName" :key="name.id">
+                <a href="##">{{name.name}}</a>
                 <i class="icon el-icon-user-solid"></i>
             </div>
         </div>
@@ -128,7 +112,8 @@ export default {
           type:-1,
           area:-1,
           singerList:[],
-          hostSinger:[]
+          hostSinger:[],
+          singerName:[]
       }
   },
   mounted() {
@@ -139,30 +124,30 @@ export default {
             const result = await this.$API.singer.getSingerList()
             // console.log(result)
             if(result.code === 200) {
-                this.singerList = result.data.artists
+                this.singerList = result.artists.splice(0,10)
             }
-            // console.log(result.data.artists)
+            // console.log(this.singerList)
         },
         async hostSingerList(){
             const result = await this.$API.singer.hostSingerList()
             // console.log(result)
             if(result.code === 200){
-                this.hostSinger = result.data.artists
+                this.hostSinger = result.artists.splice(10,10)
             }
-        },
-        async CollectionSinger(){
-            const result = await this.$API.singer.CollectionSinger()
-            // console.log(result)
+            // console.log(this.hostSinger)
         },
         async singerSheet(){
             const result = await this.$API.singer.singerSheet()
-            // console.log(result)
+            if(result.code === 200){
+                this.singerName = result.list.artists
+            }
+            console.log(result)
+            console.log(this.singerName)
         }
   },
    created() {
         this.getSingerList()
         this.hostSingerList()
-        this.CollectionSinger()
         this.singerSheet()
     },
   computed:{

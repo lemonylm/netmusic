@@ -6,8 +6,8 @@ export default {
         return request.get('/toplist');
     },
     // 获取榜单详情
-    async getplaylistDetail(){
-        return request.get(`/playlist/detail?id=${this.id}`);
+    async getplaylistDetail(id){
+        return request.get(`/playlist/detail?id=${id}`);
     },
 };
 

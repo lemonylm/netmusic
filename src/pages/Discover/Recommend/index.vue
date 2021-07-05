@@ -26,64 +26,66 @@
                 <div class="left_wrap">
                     <div class="one">
                         <!-- 热门推荐 -->
-                        <Title title="热门推荐">
-                            <template>
-                                <ul class="type_list">
-                                    <li><a href="javascript:;">华语</a></li>
-                                    <li><a href="javascript:;">流行</a></li>
-                                    <li><a href="javascript:;">摇滚</a></li>
-                                    <li><a href="javascript:;">民谣</a></li>
-                                    <li><a href="javascript:;">电子</a></li>
-                                </ul>
-                            </template>
-                        </Title>
-                        <div class="content">
-                            <Card :cardInfo="item" v-for="item in hotRecommendList" :key="item.id"></Card>
-                        </div>
+                            <Title title="热门推荐">
+                                <template>
+                                    <ul class="type_list">
+                                        <li><a href="javascript:;">华语</a></li>
+                                        <li><a href="javascript:;">流行</a></li>
+                                        <li><a href="javascript:;">摇滚</a></li>
+                                        <li><a href="javascript:;">民谣</a></li>
+                                        <li><a href="javascript:;">电子</a></li>
+                                    </ul>
+                                </template>
+                            </Title>
+                            <div class="content">
+                                <Card :cardInfo="item" v-for="item in hotRecommendList" :key="item.id"></Card>
+                            </div>
                         <!-- 个性化推荐 -->
-                        <Title v-if="recommendList.length" title="个性化推荐"></Title>
-                        <div v-if="recommendList.length" class="content">
-                            <!-- 每日推荐 -->
-                            <div class="day_container">
-                                <div class="img">
-                                    <p class="week">{{date.week}}</p>
-                                    <p class="day">{{date.day}}</p>
+                            <Title v-if="recommendList.length" title="个性化推荐"></Title>
+                            <div v-if="recommendList.length" class="content">
+                                <!-- 每日推荐 -->
+                                <div class="day_container">
+                                    <div class="img">
+                                        <p class="week">{{date.week}}</p>
+                                        <p class="day">{{date.day}}</p>
+                                    </div>
+                                    <p class="text">每日歌曲推荐</p>
+                                    <p class="tips">根据你的口味生成,每天6:00更新</p>
                                 </div>
-                                <p class="text">每日歌曲推荐</p>
-                                <p class="tips">根据你的口味生成,每天6:00更新</p>
+                                <Card :cardInfo="item" v-for="item in recommendList" :key="item.id"></Card>
                             </div>
-                            <Card :cardInfo="item" v-for="item in recommendList" :key="item.id"></Card>
-                        </div>
                         <!-- 新碟上架 -->
-                        <Title title="新碟上架"></Title>
-                        <!-- 轮播图 -->
-                        <div class="new_album_swiper">
-                            <div class="block">
-                                <el-carousel indicator-position="none" arrow="always" :autoplay="false" trigger="click">
-                                    <el-carousel-item>
-                                        <div class="item_wrap" v-for="album of newAlbum.slice(0,5)" :key="album.id">
-                                            <div class="img_wrap">
-                                                <img v-lazy="album.picUrl" alt="">
+                            <Title title="新碟上架"></Title>
+                            <!-- 轮播图 -->
+                            <div class="new_album_swiper">
+                                <div class="block">
+                                    <el-carousel indicator-position="none" arrow="always" :autoplay="false" trigger="click">
+                                        <el-carousel-item>
+                                            <div class="item_wrap" v-for="album of newAlbum.slice(0,5)" :key="album.id">
+                                                <div class="img_wrap">
+                                                    <img v-lazy="album.picUrl" alt="">
+                                                </div>
+                                                <p class="text">{{album.name}}</p>
+                                                <p class="author">{{album.artists[0].name}}</p>
                                             </div>
-                                            <p class="text">{{album.name}}</p>
-                                            <p class="author">{{album.artists[0].name}}</p>
-                                        </div>
-                                    </el-carousel-item>
-                                    <el-carousel-item>
-                                        <div class="item_wrap" v-for="album of newAlbum.slice(5,10)" :key="album.id">
-                                            <div class="img_wrap">
-                                                <img v-lazy="album.picUrl" alt="">
+                                        </el-carousel-item>
+                                        <el-carousel-item>
+                                            <div class="item_wrap" v-for="album of newAlbum.slice(5,10)" :key="album.id">
+                                                <div class="img_wrap">
+                                                    <img v-lazy="album.picUrl" alt="">
+                                                </div>
+                                                <p class="text">{{album.name}}</p>
+                                                <p class="author">{{album.artists[0].name}}</p>
                                             </div>
-                                            <p class="text">{{album.name}}</p>
-                                            <p class="author">{{album.artists[0].name}}</p>
-                                        </div>
-                                    </el-carousel-item>
-                                </el-carousel>
+                                        </el-carousel-item>
+                                    </el-carousel>
+                                </div>
                             </div>
-                        </div>
-                        <!-- <div class="content">
-                            <Card :cardInfo="item" v-for="item in newAlbum" :key="item.id"></Card>
-                        </div> -->
+                       <!-- 榜单 -->
+                            <Title title="榜单"></Title>
+                            <div class="content">
+                                
+                            </div>
                     </div>
                 </div>
                 <div class="right_wrap"></div>

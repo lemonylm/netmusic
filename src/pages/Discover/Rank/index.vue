@@ -5,12 +5,11 @@
         <p class="kind-title">云音乐特色榜</p>
         <div>
           <el-radio
-            
             class="radio-list"
             v-for="item in toplist"
             :key="item.id"
             :label="item.id"
-             @click="showlist()"
+            @click="showlist(this.id)"
           >
             <div class="radio-details">
               <div class="img">
@@ -26,10 +25,10 @@
       </div>
       <div class="album-details">
         <div class="album-details padding-0">
-          <div class="cover">
+          <div class="cover" >
             <div class="left">
-              <div class="img">
-                <img :src="playlist.coverImgUrl" alt="" />
+              <div class="img" >
+                <img :src="toplist.coverImgUrl" alt="" />
               </div>
             </div>
             <div class="right">
@@ -50,14 +49,17 @@
                 <span class="txt"></span>
               </div>
               <div class="play-but">
-                <button class="blue-button">
-                  <span class="iconfont">&#xe638;</span> <span>播放</span>
+                <button class="blue-button" style="background-color:#4291DA">
+                  <span class="icon el-icon-video-play"></span> <span>播放</span>
                 </button>
                 <button class="white-button">
-                  <span class="iconfont">&#xe6a4;</span> <span>收藏</span>
+                  <span class="icon el-icon-star-on"></span> <span>收藏</span>
                 </button>
                 <button class="white-button">
-                  <span class="iconfont">&#xe695;</span> <span>(1305)</span>
+                  <span class="icon el-icon-download"></span> <span>下载</span>
+                </button>
+                <button class="white-button">
+                  <span class="icon el-icon-download"></span> <span>评论</span>
                 </button>
               </div>
             </div>
@@ -81,18 +83,18 @@
               <th>时长</th>
               <th>歌手</th>
             </tr>
-            <tr  v-for="(item,index) in playlist" :key="item.id">
+            <tr v-for="(item, index) in playlist" :key="item.id">
               <td class="index">
-                <span>{{index + 1}}</span>
-                <span class="iconfont" >&#xe638;</span>
+                <span>{{ index + 1 }}</span>
+                <span class="iconfont">&#xe638;</span>
               </td>
-              <td class="over" >
+              <td class="over">
                 <p></p>
               </td>
               <td class="timer">
                 <span></span>
               </td>
-              <td class="td-name" >
+              <td class="td-name">
                 <p></p>
               </td>
             </tr>
@@ -173,18 +175,11 @@ export default {
     return {
       artistToplist: [],
       toplist: [],
-      id: 0,
-      playlist: {
-        tracks: [
-          {
-            h: { size: 11037301 },
-            ar: [{ name: "" }],
-            al: {},
-          },
-        ],
-      },
+       id: 0,
+      playlist: []
     };
   },
+
   computed: {},
   methods: {
     async getToplist() {
@@ -193,23 +188,26 @@ export default {
         this.toplist = result.list;
       }
     },
-   async getplaylistDetail(id) {
-    const result = await this.$API.rank.getplaylistDetail(this.id);
-    if (result.code === 200) {
-      this.id = result.data.list.id
-      this.playlistDetail = result.data.list
-    }
-  },
-   
-   showlist(){
-     this.id =result.data.playlist.id  
-   }
+    async getplaylistDetail() {
+      // console.log(this.toplist)
+      const result = await this.$API.rank.getplaylistDetail(this.toplist[0].id);
+      
+      if (result.code === 200) {
+       this.getplaylistDetail = result.list
+       this.playlist.id = result.playlist.id
+       console.log(this.playlist.coverImgUrl)
+      }      
+    },
 
-  },
-  
+    
 
-  created() {
-    this.getToplist();
+    showlist(id) {
+      this.result.list.id = id;
+    },
+  },
+
+  async created() {
+    await this.getToplist();
     this.getplaylistDetail();
   },
 };
@@ -380,6 +378,9 @@ export default {
           .play-but {
             display: flex;
             margin-top: 20px;
+                white-button{
+                    font-family: 18;
+                }
             button {
               margin-right: 10px;
               &.blue-button:hover {
@@ -392,8 +393,9 @@ export default {
                 background-image: linear-gradient(
                   #fff,
                   rgb(225, 225, 225),
-                  #fff
+                  #fff,
                 );
+
               }
               cursor: pointer;
               display: flex;
