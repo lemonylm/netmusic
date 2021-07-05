@@ -7334,6 +7334,7 @@ const mutations = {
   SET_SONG_ID(state, id) {
     state.songId = id;
   },
+
 };
 const actions = {
   // 根据歌单id更改歌曲列表
@@ -7351,7 +7352,7 @@ const actions = {
   async playOneSong({ commit }, id) {
     commit("SET_SONG_ID", id);
   },
-};
+}
 const getters = {};
 export default {
   state,
