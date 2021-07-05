@@ -189,13 +189,11 @@ export default {
       }
     },
     async getplaylistDetail() {
-      // console.log(this.toplist)
       const result = await this.$API.rank.getplaylistDetail(this.toplist[0].id);
       
       if (result.code === 200) {
        this.getplaylistDetail = result.list
        this.playlist.id = result.playlist.id
-       console.log(this.playlist.coverImgUrl)
       }      
     },
 

@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import throttle from "lodash/throttle";
 export default {
   name: "PlayingList",
   props: {
@@ -49,10 +50,14 @@ export default {
     };
   },
   methods: {
-    changeList(index, id) {
-      this.curIndex = index;
-      this.$store.dispatch("playOneSong", id);
-    },
+    changeList: throttle(
+      function (index, id) {
+        this.curIndex = index;
+        this.$store.dispatch("playOneSong", id);
+      },
+      500,
+      { trailing: false }
+    ),
   },
   watch: {
     curId: {

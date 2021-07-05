@@ -181,7 +181,6 @@ export default {
             const result = await this.$API.recommend.login(this.tel, this.password);
             if(result.code === 200) {
                 localStorage.setItem('token', result.token);
-                console.log(result)
                 this.$store.dispatch('get_userInfo', result.profile)
                 this.$bus.$emit('set_login', true)
                 this.$notify({

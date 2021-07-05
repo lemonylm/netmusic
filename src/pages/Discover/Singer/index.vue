@@ -165,11 +165,9 @@ export default {
         },
         async singerSheet(){
             const result = await this.$API.singer.singerSheet()
-            console.log(result)
             if(result.code === 200){
                 this.singerSheetList = result.list.artists
             }
-            console.log(this.singerSheetList)
         },
         //切换歌手分类
         vIf(a){
