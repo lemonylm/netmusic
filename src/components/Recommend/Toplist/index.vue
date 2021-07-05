@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <div class="top_wrap">
+    <div v-on="$listeners" class="top_wrap">
       <img :src="list.coverImgUrl" alt="" />
       <div class="info">
         <p class="title">{{ list.name }}</p>
