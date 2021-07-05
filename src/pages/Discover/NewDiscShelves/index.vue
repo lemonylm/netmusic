@@ -70,9 +70,8 @@ export default {
       }
     },
 
-    changeList(id) {
-      // this.curIndex = index;
-      // console.log(id)
+  async   changeList(id) {
+    
       this.$store.dispatch("updateSongList",id);
     },
     async allDescList() {
@@ -131,6 +130,7 @@ export default {
           margin-bottom: 35px;
           flex-wrap: wrap;
           .main-content {
+            cursor: pointer;
             flex-wrap: wrap;
             width: 153px;
             // background-color: sandybrown;

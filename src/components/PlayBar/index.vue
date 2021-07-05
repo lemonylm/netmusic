@@ -239,43 +239,57 @@ export default {
       }
     },
     // 下一首
-    next() {
-      if (this.currentMode !== 2) {
-        this.$refs.plList.curIndex++;
-        if (this.$refs.plList.curIndex > this.songList.length - 1) {
-          this.$refs.plList.curIndex = 0;
+    next: throttle(
+      function () {
+        if (this.currentMode !== 2) {
+          this.$refs.plList.curIndex++;
+          if (this.$refs.plList.curIndex > this.songList.length - 1) {
+            this.$refs.plList.curIndex = 0;
+          }
+          this.$store.dispatch(
+            "playOneSong",
+            this.songList[this.$refs.plList.curIndex].id
+          );
+        } else {
+          this.rdmCurIdx++;
+          if (this.rdmCurIdx > this.songList.length - 1) {
+            this.rdmCurIdx = 0;
+          }
+          this.$store.dispatch(
+            "playOneSong",
+            this.randomList[this.rdmCurIdx].id
+          );
         }
-        this.$store.dispatch(
-          "playOneSong",
-          this.songList[this.$refs.plList.curIndex].id
-        );
-      } else {
-        this.rdmCurIdx++;
-        if (this.rdmCurIdx > this.songList.length - 1) {
-          this.rdmCurIdx = 0;
-        }
-        this.$store.dispatch("playOneSong", this.randomList[this.rdmCurIdx].id);
-      }
-    },
+      },
+      500,
+      { trailing: false }
+    ),
     // 上一首
-    prev() {
-      if (this.currentMode !== 2) {
-        this.$refs.plList.curIndex--;
-        if (this.$refs.plList.curIndex < 0) {
-          this.$refs.plList.curIndex = this.songList.length - 1;
+    prev: throttle(
+      function () {
+        if (this.currentMode !== 2) {
+          this.$refs.plList.curIndex--;
+          if (this.$refs.plList.curIndex < 0) {
+            this.$refs.plList.curIndex = this.songList.length - 1;
+          }
+          this.$store.dispatch(
+            "playOneSong",
+            this.songList[this.$refs.plList.curIndex].id
+          );
+        } else {
+          this.rdmCurIdx--;
+          if (this.rdmCurIdx < 0) {
+            this.rdmCurIdx = this.songList.length - 1;
+          }
+          this.$store.dispatch(
+            "playOneSong",
+            this.randomList[this.rdmCurIdx].id
+          );
         }
-        this.$store.dispatch(
-          "playOneSong",
-          this.songList[this.$refs.plList.curIndex].id
-        );
-      } else {
-        this.rdmCurIdx--;
-        if (this.rdmCurIdx < 0) {
-          this.rdmCurIdx = this.songList.length - 1;
-        }
-        this.$store.dispatch("playOneSong", this.randomList[this.rdmCurIdx].id);
-      }
-    },
+      },
+      500,
+      { trailing: false }
+    ),
 
     // 调整音量
     changeVolume(e) {
@@ -403,8 +417,6 @@ export default {
       this.isDown = false;
       this.endV = this.volume;
     });
-
-    console.log(this.$refs.audio)
   },
 };
 </script>

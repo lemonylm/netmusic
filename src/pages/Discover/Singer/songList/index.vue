@@ -33,18 +33,15 @@ export default {
   mounted() {
     //   console.log(this.$route.params.id)
       this.id = this.$route.params.id
-      console.log(this.id)
       this.getHostSongs()
       this.getSingerDetails()
   },
   methods: {
       async getHostSongs(){
           const result = await this.$API.singer.hostSongs(this.id)
-          console.log(result)
           if(result.code === 200){
               this.songs = result.songs
           }
-          console.log(this.songs)
       },
       async getSingerDetails(){
           const result = await this.$API.singer.singerDetails(this.id)
