@@ -41,7 +41,7 @@ export default {
     },
     curId: {
       type: Number,
-      default: 1858083996,
+      default: "",
     },
   },
   data() {
