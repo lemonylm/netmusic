@@ -7326,6 +7326,7 @@ const state = {
       publishTime: 0,
     },
   ],
+  copy_songList: []
 };
 const mutations = {
   SET_SONG_LIST(state, list) {
@@ -7334,6 +7335,9 @@ const mutations = {
   SET_SONG_ID(state, id) {
     state.songId = id;
   },
+  SAVE_SONG_LIST(state, list) {
+    state.copy_songList = list;
+  }
 };
 const actions = {
   // 根据歌单id更改歌曲列表
@@ -7351,6 +7355,12 @@ const actions = {
   async playOneSong({ commit }, id) {
     commit("SET_SONG_ID", id);
   },
+  async saveSongList({commit}, id) {
+    const res = await axios.get(`/playlist/detail?id=${id}`);
+    if (res.code === 200) {
+      commit("SAVE_SONG_LIST", res.playlist.tracks);
+    }
+  }
 };
 const getters = {};
 export default {

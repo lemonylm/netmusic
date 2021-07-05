@@ -8,7 +8,7 @@
             <h2 class="bofangList">播放列表</h2>
             <div class="songsList">
                 <ul>
-                    <li @click="play(songs.id)" class="li" v-for="songs in songList" :key="songs.id">
+                    <li @click="play(songs.id)" class="li" v-for="songs in copy_songList" :key="songs.id">
                     <!-- -->
                         <i class="icon el-icon-video-play"></i>
                         <p>{{songs.name}}</p>
@@ -31,11 +31,15 @@ export default {
   },
   computed: {
       ...mapState({
-          songList: state => state.playlist.songList
+          songList: state => state.playlist.songList,
+          copy_songList: state => state.playlist.copy_songList,
       })
   },
   methods: {
       play(id){
+          if(!this.copy_songList.length) {
+            this.$store.dispatch('updateSongList', this.$route.params.id)
+          }
           this.$store.commit('SET_SONG_ID',id)
       }
   },

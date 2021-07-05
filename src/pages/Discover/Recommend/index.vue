@@ -233,7 +233,7 @@ export default {
             const result = await this.$API.recommend.getDailyRecommendPlayList();
             if(result.code === 200) {
                 if(this.$store.state.user.userInfo.nickname) {
-                    this.$store.commit('SET_SONG_LIST', result.data.dailySongs)
+                    this.$store.commit('SAVE_SONG_LIST', result.data.dailySongs)
                     this.$router.push({name: 'EAFList', params: { title: '每日推荐' }})
                 }
                 else
@@ -243,7 +243,7 @@ export default {
             }
         },
         handler_toPlayList(item) {
-            this.$store.dispatch('updateSongList', item.id);
+            this.$store.dispatch('saveSongList', item.id);
             this.$router.push({name: 'EAFList', params: {id: item.id, title: item.name, picUrl: item.picUrl}})
         }
     },
