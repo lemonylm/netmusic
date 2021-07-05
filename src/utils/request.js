@@ -2,7 +2,10 @@ import axios from "axios";
 import nprogress from "nprogress";
 const instance = axios.create({
   baseURL: "/api",
-  timeout: 10000,
+  timeout: 20000,
+  headers: {
+    token: localStorage.getItem("token"),
+  },
 });
 instance.interceptors.request.use((config) => {
   nprogress.start();
