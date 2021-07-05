@@ -9,7 +9,7 @@
             v-for="item in toplist"
             :key="item.id"
             :label="item.id"
-            @click="showlist(this.id)"
+            @click="showlist(playlistDetail)"
           >
             <div class="radio-details">
               <div class="img">
@@ -28,12 +28,12 @@
           <div class="cover" >
             <div class="left">
               <div class="img" >
-                <img :src="toplist.coverImgUrl" alt="" />
+                <img :src="playlistDetail.coverImgUrl" alt="" />
               </div>
             </div>
             <div class="right">
               <div class="title">
-                <span class="label">专辑 </span>
+                <span class="label">{{ playlistDetail.name }} </span>
                 <span class="txt"></span>
               </div>
               <div class="auth">
@@ -83,19 +83,19 @@
               <th>时长</th>
               <th>歌手</th>
             </tr>
-            <tr v-for="(item, index) in playlist" :key="item.id">
+            <tr v-for="(item, index) in playlistDetail.tracks" :key="item.id">
               <td class="index">
                 <span>{{ index + 1 }}</span>
                 <span class="iconfont">&#xe638;</span>
               </td>
               <td class="over">
-                <p></p>
+                <p>{{ item.name }}</p>
               </td>
               <td class="timer">
-                <span></span>
+                <span>{{ item.h | timerFilter }}</span>
               </td>
               <td class="td-name">
-                <p></p>
+                <p>{{ item.ar[0].name }}</p>
               </td>
             </tr>
           </table>
@@ -169,18 +169,32 @@
 </template>
 
 <script>
+import {mapfilter} from 'vuex'
 export default {
   name: "rank",
   data() {
     return {
       artistToplist: [],
-      toplist: [],
+      toplist: [],//获取榜单
        id: 0,
-      playlist: []
+      playlistDetail:{}, // 歌曲详情
+      playlist: {
+
+      }
     };
   },
-
+filters: {
+    timerFilter: function (value) {
+      try {
+        return (value.size / 999000).toFixed(2);
+      } catch (error) {}
+    },
+  },
   computed: {},
+  async mounted() {
+     await this.getToplist();
+      this.getplaylistDetail();
+  },
   methods: {
     async getToplist() {
       const result = await this.$API.rank.getToplist();
@@ -188,25 +202,25 @@ export default {
         this.toplist = result.list;
       }
     },
-    async getplaylistDetail() {
+
+    async getplaylistDetail() {   
       const result = await this.$API.rank.getplaylistDetail(this.toplist[0].id);
-      
       if (result.code === 200) {
-       this.getplaylistDetail = result.list
-       this.playlist.id = result.playlist.id
+       this.playlistDetail = result.playlist
+
       }      
     },
 
     
 
-    showlist(id) {
-      this.result.list.id = id;
-    },
+     showlist(id){
+      this.$router.push({name:'rank',query:'id'})     
+     }
   },
 
   created() {
-    this.getToplist();
-    this.getplaylistDetail();
+    // this.getToplist();
+  
   },
 };
 </script>

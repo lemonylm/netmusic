@@ -7,6 +7,7 @@ export default {
     },
     // 获取榜单详情
     async getplaylistDetail(id){
+        ///playlist/detail?id=24381616
         return request.get(`/playlist/detail?id=${id}`);
     },
 };
