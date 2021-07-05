@@ -19,7 +19,7 @@
           @mouseleave="mouseLeave"
           @mouseenter="curIndex = index"
         >
-          <i :class="{ active: curIndex === index }">
+          <i :class="{ active: curIndex === index }" @click="changeSong">
             <img src="@/../public/image/radio/iconall.png" alt="" />
           </i>
           <a class="cvrleft" title="播放">
@@ -57,6 +57,9 @@ export default {
     mouseOver() {},
     mouseLeave() {
       this.curIndex = null;
+    },
+    changeSong(){
+      this.$store.dispatch("playOneSong",this.rdiTopInfo[this.curIndex].mainSong.id)
     },
   },
 };

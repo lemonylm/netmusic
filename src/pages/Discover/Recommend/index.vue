@@ -38,7 +38,7 @@
                                 </template>
                             </Title>
                             <div class="content">
-                                <Card @click="handler_toPlayList(item.id)" :cardInfo="item" v-for="item in hotRecommendList" :key="item.id"></Card>
+                                <Card @click="handler_toPlayList(item)" :cardInfo="item" v-for="item in hotRecommendList" :key="item.id"></Card>
                             </div>
                         <!-- 个性化推荐 -->
                             <Title v-if="recommendList.length" title="个性化推荐"></Title>
@@ -52,7 +52,7 @@
                                     <p class="text">每日歌曲推荐</p>
                                     <p class="tips">根据你的口味生成,每天6:00更新</p>
                                 </div>
-                                <Card @click="handler_toPlayList(item.id)" :cardInfo="item" v-for="item in recommendList" :key="item.id"></Card>
+                                <Card @click="handler_toPlayList(item)" :cardInfo="item" v-for="item in recommendList" :key="item.id"></Card>
                             </div>
                         <!-- 新碟上架 -->
                             <Title title="新碟上架"></Title>
@@ -84,7 +84,7 @@
                        <!-- 榜单 -->
                             <Title title="榜单"></Title>
                             <div class="content bangdan">
-                                <Toplist @click="handler_toPlayList(item.id)" :key="item.id" v-for="item of topList.slice(0,3)" :list = "item"></Toplist>
+                                <Toplist @click="handler_toPlayList(item)" :key="item.id" v-for="item of topList.slice(0,3)" :list = "item"></Toplist>
                             </div>
                     </div>
                 </div>
@@ -233,8 +233,8 @@ export default {
             const result = await this.$API.recommend.getDailyRecommendPlayList();
             if(result.code === 200) {
                 if(this.$store.state.user.userInfo.nickname) {
-                    this.$store.commit('SET_SONG_LIST', result.data.dailySongs)
-                    this.$router.push('/discover/songlist')
+                    this.$store.commit('SAVE_SONG_LIST', result.data.dailySongs)
+                    this.$router.push({name: 'EAFList', params: { title: '每日推荐' }})
                 }
                 else
                     this.$notify.error({
@@ -242,9 +242,9 @@ export default {
                     });
             }
         },
-        handler_toPlayList(id) {
-            this.$store.dispatch('updateSongList', id);
-            this.$router.push('/discover/songlist')
+        handler_toPlayList(item) {
+            this.$store.dispatch('saveSongList', item.id);
+            this.$router.push({name: 'EAFList', params: {id: item.id, title: item.name, picUrl: item.picUrl}})
         }
     },
     created() {
