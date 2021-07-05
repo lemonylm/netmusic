@@ -19,6 +19,9 @@
           <li class="discover_nav_item">
             <router-link :class="{active: $route.path === '/discover/singer'}" :to="{ path: '/discover/singer' }">歌手</router-link>
           </li>
+          <li class="discover_nav_item">
+            <router-link :class="{active: $route.path === '/discover/newdiscshelves'}" :to="{ path: '/discover/newdiscshelves' }">新碟上架</router-link>
+          </li>
         </ul>
       </div>
     </div>
