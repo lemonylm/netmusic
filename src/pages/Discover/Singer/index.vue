@@ -5,9 +5,8 @@
         <div class="singerLs">
             <h2 class="title">推荐</h2>
             <ul class="list">
-                
-                <li class="item">推荐歌手</li>
-                <li class="item">入驻歌手</li>
+                <li class="item"  @click="vIf(true)">推荐歌手</li>
+                <li class="item" @click="vIf(false)">入驻歌手</li>
             </ul>
             <div class="boder"></div>
             <div class="chinese">
@@ -57,8 +56,8 @@
             </div>
         </div>
     </div>
-    <!--歌手展示-->
-    <div class="singerShow">
+    <!--推荐歌手展示-->
+    <div class="singerShow" v-if="isShow">
         <!--入驻歌手-->
         <div class="settleSinger">
             <h2>入驻歌手</h2>
@@ -67,7 +66,7 @@
         </div>
             <!--图片展示-->
         <div class="singerList">
-            <div class="singerItem" v-for="(singer,index) in singerList" :key="singer.id">
+            <div class="singerItem" v-for="(singer,index) in singerList" :key="singer.id" @click="toSongs(singer.id)">
                 <img class="image" :src="singer.picUrl" alt="">
                 <div class="text">
                     <p class="name">{{singer.name}}</p>
@@ -93,14 +92,41 @@
         </div>
         <!--歌手名称列表-->
         <div class="singerName">
-            <div class="nameItem" v-for="(name,index) in singerName" :key="name.id">
-                <a href="##">{{name.name}}</a>
+            <div class="nameItem" v-for="(sheet,index) in singerSheetList" :key="sheet.id">
+                <p class="id">{{sheet.name}}</p>
+                <i class="header icon el-icon-user-solid"></i>
+            </div>
+        </div>
+    </div>
+    <!--入驻歌手展示-->
+    <div v-else>
+    <!--歌手展示-->
+    <div class="singerShow">
+        <!--入驻歌手-->
+        <div class="settleSinger">
+            <h2>入驻歌手</h2>
+            <a href="##">更对 ></a>
+            <div class="border"></div>
+        </div>
+            <!--图片展示-->
+        <div class="singerList">
+            <div class="singerItem" v-for="(sheet,index) in singerSheetList" :key="sheet.id">
+                <img class="image" :src="sheet.picUrl" alt="">
+                <div class="text">
+                    <p class="name">{{sheet.name}}</p>
+                    <a href="##" class="icon el-icon-user-solid"></a>
+                </div>
+            </div>
+        </div>
+        <!--歌手名称列表-->
+        <div class="singerName">
+            <div class="nameItem" v-for="(sheet,index) in singerSheetList" :key="sheet.id">
+                <a href="##">{{sheet.name}}</a>
                 <i class="icon el-icon-user-solid"></i>
             </div>
         </div>
     </div>
-
-    
+    </div>
   </div>
 </template>
 
@@ -113,15 +139,16 @@ export default {
           area:-1,
           singerList:[],
           hostSinger:[],
-          singerName:[]
+          singerSheetList:[],
+          isShow:true
       }
   },
   mounted() {
       
   },
   methods: {
-       async getSingerList() {
-            const result = await this.$API.singer.getSingerList()
+        async getSingerList() {
+            const result = await this.$API.singer.getSingerList(this.type,this.area)
             // console.log(result)
             if(result.code === 200) {
                 this.singerList = result.artists.splice(0,10)
@@ -138,12 +165,22 @@ export default {
         },
         async singerSheet(){
             const result = await this.$API.singer.singerSheet()
-            if(result.code === 200){
-                this.singerName = result.list.artists
-            }
             console.log(result)
-            console.log(this.singerName)
+            if(result.code === 200){
+                this.singerSheetList = result.list.artists
+            }
+            console.log(this.singerSheetList)
+        },
+        //切换歌手分类
+        vIf(a){
+            this.isShow = a
+        },
+       
+        toSongs(id){
+            this.$router.push({name:"songList", params: {id}})
         }
+        
+        
   },
    created() {
         this.getSingerList()
@@ -175,11 +212,13 @@ export default {
             height: 25px;
             padding-left: 14px;
             font-size: 18px;
+            cursor: pointer;
         }
         .item{
             width: 160px;
             height: 29px;
             padding-left: 14px;
+            cursor: pointer;
         }
         .boder{
             width: 160px;
@@ -214,13 +253,13 @@ export default {
       }
       .singerList{
           width: 720px;
-          height: 368px;
           background: #fff;
           margin: 30px auto 0;
-          border: 1px solid #ccc;
+          border-bottom: 1px solid #ccc;
           box-sizing: border-box;
           display: flex;
           flex-wrap: wrap;
+          cursor: pointer;
           .singerItem{
               width: 130px;
               height: 154px;
@@ -252,6 +291,12 @@ export default {
               align-items: center;
               padding-left: 17px;
               flex-grow: 1;
+              .id{
+                  cursor: pointer;
+              }
+              .header{
+                  cursor: pointer;
+              }
           }
       }
   }

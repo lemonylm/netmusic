@@ -38,13 +38,13 @@
                                 </template>
                             </Title>
                             <div class="content">
-                                <Card :cardInfo="item" v-for="item in hotRecommendList" :key="item.id"></Card>
+                                <Card @click="handler_toPlayList(item.id)" :cardInfo="item" v-for="item in hotRecommendList" :key="item.id"></Card>
                             </div>
                         <!-- 个性化推荐 -->
                             <Title v-if="recommendList.length" title="个性化推荐"></Title>
                             <div v-if="recommendList.length" class="content">
                                 <!-- 每日推荐 -->
-                                <div class="day_container">
+                                <div @click="handler_toDailyRecommendPlayList" class="day_container">
                                     <div class="img">
                                         <p class="week">{{date.week}}</p>
                                         <p class="day">{{date.day}}</p>
@@ -52,7 +52,7 @@
                                     <p class="text">每日歌曲推荐</p>
                                     <p class="tips">根据你的口味生成,每天6:00更新</p>
                                 </div>
-                                <Card :cardInfo="item" v-for="item in recommendList" :key="item.id"></Card>
+                                <Card @click="handler_toPlayList(item.id)" :cardInfo="item" v-for="item in recommendList" :key="item.id"></Card>
                             </div>
                         <!-- 新碟上架 -->
                             <Title title="新碟上架"></Title>
@@ -84,9 +84,7 @@
                        <!-- 榜单 -->
                             <Title title="榜单"></Title>
                             <div class="content bangdan">
-                                <Toplist :list = "topList[0]"></Toplist>
-                                <Toplist :list = "topList[1]"></Toplist>
-                                <Toplist :list = "topList[2]"></Toplist>
+                                <Toplist @click="handler_toPlayList(item.id)" :key="item.id" v-for="item of topList.slice(0,3)" :list = "item"></Toplist>
                             </div>
                     </div>
                 </div>
@@ -182,9 +180,20 @@ export default {
         async login () {
             const result = await this.$API.recommend.login(this.tel, this.password);
             if(result.code === 200) {
-                localStorage.setItem('token', result.token)
-            }
+                localStorage.setItem('token', result.token);
                 console.log(result)
+                this.$store.dispatch('get_userInfo', result.profile)
+                this.$bus.$emit('set_login', true)
+                this.$notify({
+                    title: '登录成功',
+                    type: 'success'
+                });
+                this.isShowLoginBox = false
+            } else {
+                this.$notify.error({
+                    title: '用户名或密码错误',
+                });
+            }
         },
         getDate() {
             let week = day().$W;
@@ -207,7 +216,7 @@ export default {
                 case 6:
                     week = '星期六';
                     break;
-                case 7:
+                case 0:
                     week = '星期日';
                     break;
                 default: 
@@ -219,6 +228,23 @@ export default {
             this.$bus.$on('chang_isShowLoginBox', () => {
                 this.isShowLoginBox = true
             })
+        },
+        async handler_toDailyRecommendPlayList() {
+            const result = await this.$API.recommend.getDailyRecommendPlayList();
+            if(result.code === 200) {
+                if(this.$store.state.user.userInfo.nickname) {
+                    this.$store.commit('SET_SONG_LIST', result.data.dailySongs)
+                    this.$router.push('/discover/songlist')
+                }
+                else
+                    this.$notify.error({
+                        title: '请登录后再试',
+                    });
+            }
+        },
+        handler_toPlayList(id) {
+            this.$store.dispatch('updateSongList', id);
+            this.$router.push('/discover/songlist')
         }
     },
     created() {
@@ -410,7 +436,7 @@ export default {
             }
             .right_wrap {
                 width: 252px;
-                background: #bfa;
+                background: #eee;
                 box-sizing: border-box;
             }
         }
@@ -481,6 +507,7 @@ export default {
                 height: 50px;
                 text-align: center;
                 .login_btn {
+                    cursor: pointer;
                     margin-top: 30px;
                     background: #C20C0C;
                     color: #fff;

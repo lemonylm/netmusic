@@ -31,4 +31,8 @@ export default {
   async login(phone, password) {
     return request.get(`/login/cellphone?phone=${phone}&password=${password}`)
   },
+  // 获取每日推荐
+  async getDailyRecommendPlayList() {
+    return request.get(`/recommend/songs`)
+  },
 };

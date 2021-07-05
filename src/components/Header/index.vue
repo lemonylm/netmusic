@@ -31,7 +31,7 @@
         <sup class="hot"></sup>
         <!-- 判断用户是否登录， 若登录则显示头像， 否则显示登录 -->
         <div v-if="isLogin" class="avatar">
-          <img src="/image/萌萌哒.jpg" alt="">
+          <img :src="userInfo.avatarUrl" alt="">
         </div>
         <div v-else class="login_wrap">
           <a class="login" href="javascript:;" @click="showLogin">登录</a>
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: "Header",
   props: ['path'],
@@ -62,11 +63,30 @@ export default {
       isLogin: false,
     }
   },
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.userInfo
+    })
+  },
   methods: {
     showLogin() {
       if(!this.isLogin)
         this.$bus.$emit('chang_isShowLoginBox', true)
+    },
+    hasLogin() {
+      this.$bus.$on('set_login', (value) => {
+        this.isLogin = value
+      })
+    },
+    judgeLogin() {
+      if(this.userInfo.nickname) {
+        this.isLogin = true
+      } 
     }
+  },
+  mounted() {
+    this.judgeLogin()
+    this.hasLogin()
   }
 };
 </script>

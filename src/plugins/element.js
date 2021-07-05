@@ -13,10 +13,9 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownItem,
-  
-  
   Carousel,
-  CarouselItem
+  CarouselItem,
+  Notification
 } from "element-ui";
 // Vue.use(Menu);
 // Vue.use(Submenu);
@@ -30,6 +29,7 @@ Vue.use(Button);
 Vue.use(Radio);
 Vue.use(Carousel);
 Vue.use(CarouselItem);
+Vue.prototype.$notify = Notification;
 
 
 
