@@ -61,10 +61,6 @@ export default {
     changeSong(){
       this.$store.dispatch("playOneSong",this.rdiTopInfo[this.curIndex].mainSong.id)
     },
-    // addList(){
-    //   // this.$store.dispatch("updateSongList", this.rdiTopInfo[this.curIndex].mainSong.id);
-    //   this.$store.dispatch("updateSongList", 1857583956);
-    // },
   },
 };
 </script>
