@@ -2,15 +2,15 @@
   <div class="songs">
         <div class="header">
             <div class="title">
-                <h1 class="name">{{detail.name}}</h1>
-                <img class="img" :src="detail.cover" alt="">
+                <h1 class="name">{{$route.params.title}}</h1>
+                <img class="img" :src="$route.params.picUrl" alt="">
             </div>
             <h2 class="bofangList">播放列表</h2>
             <div class="songsList">
                 <ul>
-                    <li  v-for="(songs,index) in songs" :key="songs.id">
+                    <li @click="play(songs.id)" class="li" v-for="songs in copy_songList" :key="songs.id">
                     <!-- -->
-                        <i class="icon el-icon-video-play" @click="play(songs.id)"></i>
+                        <i class="icon el-icon-video-play"></i>
                         <p>{{songs.name}}</p>
 
                     </li>
@@ -21,44 +21,27 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  name: '',
+  name: 'EAFList',
   data() {
       return {
-          id:0,
-          songs:[],
-          detail:{}
+          pic: ''
+      }
+  },
+  computed: {
+      ...mapState({
+          songList: state => state.playlist.songList,
+          copy_songList: state => state.playlist.copy_songList,
+      })
+  },
+  methods: {
+      play(id){
+        this.$store.commit('SET_SONG_LIST', this.copy_songList)
+        this.$store.commit('SET_SONG_ID',id)
       }
   },
   mounted() {
-    //   console.log(this.$route.params.id)
-      this.id = this.$route.params.id
-      console.log(this.id)
-      this.getHostSongs()
-      this.getSingerDetails()
-  },
-  methods: {
-      async getHostSongs(){
-          const result = await this.$API.singer.hostSongs(this.id)
-          console.log(result)
-          if(result.code === 200){
-              this.songs = result.songs
-          }
-          console.log(this.songs)
-      },
-      async getSingerDetails(){
-          const result = await this.$API.singer.singerDetails(this.id)
-        //   console.log(result)
-          if(result.code === 200){
-              this.detail = result.data.artist
-          }
-        //   console.log(this.detail)
-      },
-      play(){
-          this.$store.dispatch('updateSingerList',this.songs)
-      }
-  },
-  created(){
       
   }
 }
@@ -112,5 +95,10 @@ export default {
         }
     }
     
-
+    .li {
+        &:hover {
+            background: #eee;
+            cursor: pointer;
+        }
+    }
 </style>

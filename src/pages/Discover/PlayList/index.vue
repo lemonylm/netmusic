@@ -53,7 +53,7 @@
         </div>
         <div class="main">
           <div class="content">
-             <Card :cardInfo="item" v-for="item in playList" :key="item.id" @click="changeList(item.id)">
+             <Card :cardInfo="item" v-for="item in playList" :key="item.id" @click="changeList(item)">
              </Card>
            
            
@@ -93,11 +93,12 @@ export default {
       }
     },
 
-    changeList(id) {
-            this.$router.push('/discover/songlist')
-            this.$store.dispatch('updateSongList', id);
+    changeList(item) {
+            this.$store.dispatch('saveSongList', item.id);
+            this.$router.push({name: 'EAFList', params: {id: item.id, title: item.name, picUrl: item.picUrl}})
             
         }
+        
   },
   created() {
     this.getPlayList()

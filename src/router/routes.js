@@ -5,6 +5,7 @@ const MyMusic = () => import("../pages/MyMusic");
 const Recommend = () => import("pages/Discover/Recommend");
 const Rank = () => import("pages/Discover/Rank");
 const PlayList = () => import("pages/Discover/PlayList");
+const EAFList = () => import("pages/EAFList");
 const NewDiscShelves = () => import("pages/Discover/NewDiscShelves");
 const Radio = () => import("pages/Discover/Radio");
 const Singer = () => import("../pages/Discover/Singer");
@@ -34,6 +35,11 @@ export default [
         component: PlayList,
       },
       {
+        path: "eaflist/:id?",
+        name: "EAFList",
+        component: EAFList,
+      },
+      {
         path: "newdiscshelves",
         name: "NewDiscShelves",
         component: NewDiscShelves,
@@ -49,7 +55,7 @@ export default [
         component: Singer,
       },
       {
-        path:"songlist",
+        path:"songlist/:id?",
         name:"songList",
         component:songList
       },

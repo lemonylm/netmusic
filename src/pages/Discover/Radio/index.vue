@@ -82,7 +82,9 @@ export default {
     async getPlyList() {
       const result = await this.$API.radio.getPlyList();
       if (result.code === 200) {
+        // console.log(result)
         this.plyList = result.programs;
+        console.log(this.plyList)
       }
     },
     async getRdiList() {

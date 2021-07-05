@@ -10,7 +10,7 @@
         <li v-for="item in 4" :key="item">
           <a>
             <img
-              src="https://p2.music.126.net/L5qthiLu91qFUXfBhQ3wRg==/109951165771082767.jpg?param=200y200"
+              src="@/../public/image/radio/bg.jpg"
               alt=""
             />
           </a>

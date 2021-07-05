@@ -403,6 +403,8 @@ export default {
       this.isDown = false;
       this.endV = this.volume;
     });
+
+    console.log(this.$refs.audio)
   },
 };
 </script>
