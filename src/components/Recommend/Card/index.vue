@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-on="$listeners" class="container">
     <img :src="cardInfo.picUrl" alt="">
     <p>{{cardInfo.name}}</p>
     <div class="mask">
