@@ -8,14 +8,14 @@
           </div>
         </div>
         <div class="main">
-          <div class="content">
-            <div class="main-content" v-for="desc in descList" :key="desc.id">
+          <div class="content" >
+            <div class="main-content" v-for="(item,index) in descList" :key="item.id" @click="changeList(item.id)">
               <div class="box">
-                <img class="image" :src="desc.picUrl" alt="" />
+                <img class="image" :src="item.picUrl" alt="" />
               </div>
-              <a href="javascript:;" class="text">{{ desc.name }}</a>
+              <a href="javascript:;" class="text">{{ item.name }}</a>
               <p class="author">
-                <a href="javascript:;" class="name">{{ desc.artist.name }}</a>
+                <a href="javascript:;" class="name">{{ item.artist.name }}</a>
               </p>
             </div>
           </div>
@@ -35,13 +35,13 @@
         </div>
         <div class="main">
           <div class="content">
-            <div class="main-content" v-for="list in allList" :key="list.id">
+            <div class="main-content" v-for="(item,index) in allList" :key="item.id" @click="changeList(item.id)">
               <div class="box">
-                <img class="image" :src="list.picUrl" alt="" />
+                <img class="image" :src="item.picUrl" alt="" />
               </div>
-              <a href="javascript:;" class="text">{{ list.name }}</a>
+              <a href="javascript:;" class="text">{{ item.name }}</a>
               <p class="author">
-                <a href="javascript:;" class="name">{{ list.artist.name }}</a>
+                <a href="javascript:;" class="name">{{ item.artist.name }}</a>
               </p>
             </div>
           </div>
@@ -58,16 +58,22 @@ export default {
     return {
       descList: {},
       allList: {},
+      curIndex: "",
     };
   },
   methods: {
     async getDescList() {
       const result = await this.$API.newDiscShelves.getDescList(this.limit);
-      console.log(result);
+      // console.log(result);
       if (result.code === 200) {
-        // result=result.splice(0,10)
         this.descList = result.monthData.splice(0, 10);
       }
+    },
+
+    changeList(id) {
+      // this.curIndex = index;
+      // console.log(id)
+      this.$store.dispatch("updateSongList",id);
     },
     async allDescList() {
       const result = await this.$API.newDiscShelves.allDescList(this.limit);
@@ -99,6 +105,7 @@ export default {
       // background-color: red;
       .header {
         .header-content {
+          margin-bottom: 20px;
           // background-color: lightblue;
           height: 40px;
           border-bottom: 2px solid #c20c0c;
@@ -118,6 +125,7 @@ export default {
       }
       .main {
         .content {
+          margin-bottom: 20px;
           display: flex;
           justify-content: space-between;
           margin-bottom: 35px;
