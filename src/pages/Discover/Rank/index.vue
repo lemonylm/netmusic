@@ -5,11 +5,12 @@
         <p class="kind-title">云音乐特色榜</p>
         <div>
           <el-radio
+            v-model="active"
             class="radio-list"
             v-for="item in toplist"
             :key="item.id"
             :label="item.id"
-            @click="showlist(playlistDetail)"
+            @click="showlist()"
           >
             <div class="radio-details">
               <div class="img">
@@ -37,15 +38,15 @@
                 <span class="txt"></span>
               </div>
               <div class="auth">
-                <span class="label">歌手: </span>
+                <span class="label">   </span>
                 <span class="txt"> </span>
               </div>
               <div class="create-time">
-                <span class="label">发行时间: </span>
-                <span class="txt"> </span>
+                <span class="label icon el-icon-timer" >最近更新: 07月05日</span>
+                <span class="txt">(刚刚更新) </span>
               </div>
               <div class="create-firm">
-                <span class="label">发行公司: </span>
+                <span class="label">   </span>
                 <span class="txt"></span>
               </div>
               <div class="play-but">
@@ -94,7 +95,7 @@
               <td class="timer">
                 <span>{{ item.h | timerFilter }}</span>
               </td>
-              <td class="td-name">
+              <td class="td-name" :title="item.ar[0].name">
                 <p>{{ item.ar[0].name }}</p>
               </td>
             </tr>
@@ -177,16 +178,21 @@ export default {
       artistToplist: [],
       toplist: [],//获取榜单
        id: 0,
-      playlistDetail:{}, // 歌曲详情
-      playlist: {
-
-      }
+      playlistDetail:{
+         tracks:[
+           {
+              h:{size: 11037301}
+           }
+         ]
+      }, // 歌曲详情
+      playlist: {},
+      active:""
     };
   },
 filters: {
     timerFilter: function (value) {
       try {
-        return (value.size / 999000).toFixed(2);
+        return (value.size /2400000).toFixed(2);
       } catch (error) {}
     },
   },
@@ -207,15 +213,15 @@ filters: {
       const result = await this.$API.rank.getplaylistDetail(this.toplist[0].id);
       if (result.code === 200) {
        this.playlistDetail = result.playlist
-
-      }      
+      }
+      
+          
     },
 
-    
-
-     showlist(id){
-      this.$router.push({name:'rank',query:'id'})     
-     }
+    showlist(){
+      this.playlistDetail.id = this.toplist[1].id;
+    }
+     
   },
 
   created() {
@@ -447,7 +453,7 @@ filters: {
           }
           .title {
             display: flex;
-            border-radius: 3px;
+      
             align-items: center;
             .label {
               &::before {
@@ -455,11 +461,7 @@ filters: {
                 position: absolute;
                 right: -29px;
                 top: -1px;
-                border: 13px solid rgb(221, 32, 32);
-                border-left-width: 16px;
-                border-right-color: rgba(0, 0, 0, 0);
-                border-top-color: rgba(0, 0, 0, 0);
-                border-bottom-color: rgba(0, 0, 0, 0);
+               
               }
               &::after {
                 content: "";
@@ -476,16 +478,12 @@ filters: {
               padding: 0 10px;
               line-height: 24px;
               height: 24px;
-              font-size: 14px;
+              font-size: 18px;
               position: relative;
               // background-color: rgb(210,26,26);
-              background-image: linear-gradient(
-                rgb(221, 32, 32),
-                rgb(204, 21, 21)
-              );
-              color: #fff;
-              border-top: 1px solid rgb(230, 79, 79);
-              border-bottom: 1px solid rgb(173, 17, 17);
+             
+              color: #000;
+              
             }
             .txt {
               line-height: 1;
