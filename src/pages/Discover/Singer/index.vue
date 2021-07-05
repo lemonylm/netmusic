@@ -82,7 +82,7 @@
         </div>
             <!--图片展示-->
         <div class="singerList">
-            <div class="singerItem" v-for="(host,index) in hostSinger" :key="host.id">
+            <div class="singerItem" v-for="(host,index) in hostSinger" :key="host.id" @click="toSongs(host.id)">
                 <img class="image" :src="host.picUrl" alt="">
                 <div class="text">
                     <p class="name">{{host.name}}</p>
@@ -110,7 +110,7 @@
         </div>
             <!--图片展示-->
         <div class="singerList">
-            <div class="singerItem" v-for="(sheet,index) in singerSheetList" :key="sheet.id">
+            <div class="singerItem" v-for="(sheet,index) in singerSheetList" :key="sheet.id" @click="toSongs(sheet.id)">
                 <img class="image" :src="sheet.picUrl" alt="">
                 <div class="text">
                     <p class="name">{{sheet.name}}</p>
@@ -177,9 +177,11 @@ export default {
         },
        
         toSongs(id){
-            this.$router.push({name:"songList", params: {id}})
-        }
-        
+            this.$router.push({name:"songList", params:{id}})
+        },
+        // goSongs(id){
+        //     this.$router.push({name:"songList", params:{id}})
+        // }
         
   },
    created() {

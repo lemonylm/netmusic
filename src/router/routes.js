@@ -55,7 +55,7 @@ export default [
         component: Singer,
       },
       {
-        path:"songlist",
+        path:"songlist/:id?",
         name:"songList",
         component:songList
       },
