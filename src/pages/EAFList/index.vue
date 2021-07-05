@@ -37,10 +37,8 @@ export default {
   },
   methods: {
       play(id){
-          if(!this.copy_songList.length) {
-            this.$store.dispatch('updateSongList', this.$route.params.id)
-          }
-          this.$store.commit('SET_SONG_ID',id)
+        this.$store.commit('SET_SONG_LIST', this.copy_songList)
+        this.$store.commit('SET_SONG_ID',id)
       }
   },
   mounted() {
