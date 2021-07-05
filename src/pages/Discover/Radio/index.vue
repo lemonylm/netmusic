@@ -1,161 +1,49 @@
 <template>
   <div class="container">
-    <div class="test">radio</div>
+    <!-- <div class="test">radio</div> -->
     <div class="main-container">
       <div class="main-header">
-        <ul v-for="item in 15" :key="item">
-          <li>
-            <a href="##">
-              <div class="imgs">
-                <img
-                  src="http://p1.music.126.net/icULXvfqWJMFvcjTrXSLeA==/109951165406422565.jpg"
-                  alt=""
-                />
-              </div>
-              <span>情感</span>
-            </a>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <a href="##">
-              <div class="imgs">
-                <img
-                  src="http://p1.music.126.net/icULXvfqWJMFvcjTrXSLeA==/109951165406422565.jpg"
-                  alt=""
-                />
-              </div>
-              <span>推荐</span>
-            </a>
-          </li>
-          <li>
-            <a href="##">
-              <div class="imgs">
-                <img
-                  src="http://p1.music.126.net/icULXvfqWJMFvcjTrXSLeA==/109951165406422565.jpg"
-                  alt=""
-                />
-              </div>
-              <span>推荐</span>
-            </a>
-          </li>
-          <li>
-            <a href="##">
-              <div class="imgs">
-                <img
-                  src="http://p1.music.126.net/icULXvfqWJMFvcjTrXSLeA==/109951165406422565.jpg"
-                  alt=""
-                />
-              </div>
-              <span>推荐</span>
-            </a>
-          </li>
-        </ul>
+        <div v-show="isShow === 'one'" class="swiper">
+          <ul v-for="item in 18" :key="item">
+            <li>
+              <a href="##">
+                <div class="imgs">
+                  <img
+                    src="http://p1.music.126.net/icULXvfqWJMFvcjTrXSLeA==/109951165406422565.jpg"
+                    alt=""
+                  />
+                </div>
+                <span>情感</span>
+              </a>
+            </li>
+          </ul>
+          <span class="one" @click="isShow = 'one'">&lt;</span>
+          <span class="two" @click="isShow = 'two'">&gt;</span>
+        </div>
+        <div v-show="isShow === 'two'" class="swiper">
+          <ul v-for="item in 3" :key="item">
+            <li>
+              <a href="##">
+                <div class="imgs">
+                  <img
+                    src="http://p1.music.126.net/icULXvfqWJMFvcjTrXSLeA==/109951165406422565.jpg"
+                    alt=""
+                  />
+                </div>
+                <span>音乐</span>
+              </a>
+            </li>
+          </ul>
+          <span class="one" @click="isShow = 'one'">&lt;</span>
+          <span class="two" @click="isShow = 'two'">&gt;</span>
+        </div>
       </div>
       <div class="main-middle">
-        <div class="left">
-          <div class="middle-header">
-            <h3>
-              <a href="javascript:;">永劫无间</a>
-            </h3>
-            <a href="javascript:">更多 ></a>
-          </div>
-          <!-- 隔行变色表格 -->
-
-          <ul
-            v-for="(item, index) in 10"
-            :key="index"
-            class="content"
-            ref="contents"
-            @mouseover="mouseOver"
-            @mouseleave="mouseLeave"
-            :style="active"
-          >
-            <li class="item">
-              <a class="cvrleft" title="播放">
-                <img
-                  src="http://p1.music.126.net/SLASkSEu_TZdKfukCtaEtA==/109951165776991634.jpg?param=40x40"
-                  alt=""
-                />
-                <i class="imgs" ref="ply" :style="actives">
-                  <img
-                    src="https://s2.music.126.net/style/web2/img/iconall.png?e4ea7e2d7061b982427f4e18ef2e26b1"
-                    alt=""
-                  />
-                </i>
-              </a>
-              <div class="cvrmiddle">
-                <a class="top"
-                  >《时光唱片店》第五期：应该活在当下还是好好规划人生？</a
-                >
-                <a class="bottom">《时光唱片店》</a>
-              </div>
-              <a class="cvrright"> 风灵月影 </a>
-            </li>
-          </ul>
-        </div>
-        <div class="right">
-          <div class="middle-header">
-            <h3>
-              <a href="javascript:;">7.8公测</a>
-            </h3>
-            <a href="javascript:">更多 ></a>
-          </div>
-          <ul
-            v-for="(item, index) in 10"
-            :key="index"
-            class="content"
-            ref="contents"
-            @mouseover="mouseOver"
-            @mouseleave="mouseLeave"
-            :style="active"
-          >
-            <li class="item">
-              <a class="cvrleft" title="播放">
-                <img
-                  src="http://p1.music.126.net/SLASkSEu_TZdKfukCtaEtA==/109951165776991634.jpg?param=40x40"
-                  alt=""
-                />
-                <i class="imgs" ref="ply" :style="actives">
-                  <img
-                    src="https://s2.music.126.net/style/web2/img/iconall.png?e4ea7e2d7061b982427f4e18ef2e26b1"
-                    alt=""
-                  />
-                </i>
-              </a>
-              <div class="cvrmiddle">
-                <a class="top"
-                  >《时光唱片店》第五期：应该活在当下还是好好规划人生？</a
-                >
-                <a class="bottom">《时光唱片店》</a>
-              </div>
-              <a class="cvrright"> 风灵月影 </a>
-            </li>
-          </ul>
-        </div>
+        <RdiTop :rdiTopInfo="this.plyList"></RdiTop>
+        <RdiTop :rdiTopInfo="this.plyList"></RdiTop>
       </div>
       <div class="main-more">
-        <div class="rdimore" v-for="item in 4" :key="item">
-          <div class="title">
-            <span class="left" @click="tuijian">音乐电台推荐</span>
-            <p class="right" @click="gengduo">更多 ></p>
-          </div>
-
-          <ul class="rdiList">
-            <li v-for="item in 4" :key="item">
-              <a>
-                <img
-                  src="https://p2.music.126.net/L5qthiLu91qFUXfBhQ3wRg==/109951165771082767.jpg?param=200y200"
-                  alt=""
-                />
-              </a>
-              <div class="cnt">
-                <a href="##">音乐记事本</a>
-                <p>我对不起老刘哇！</p>
-              </div>
-            </li>
-          </ul>
-        </div>
+        <RdiMore :rdiMoreInfo="this.rdiList"></RdiMore>
       </div>
     </div>
   </div>
@@ -167,49 +55,83 @@ export default {
   data() {
     return {
       isShown: false,
-      active: "",
-      actives: "",
+      headerCategory: [],
+      plyList: [],
+      rdiList: [],
+      // 轮播图
+      isShow: "one",
+      itemIndex: 0,
     };
   },
-  methods: {
-    mouseOver() {
-      this.active = "background-color:#eee";
-      this.actives = "display:block";
-    },
-    mouseLeave() {
-      this.active = "";
-      this.actives = "";
-      this.$refs.contents.style = "";
-      this.$refs.ply.style = "";
-    },
-    tuijian() {},
-    gengduo() {},
+  components: {
+    RdiTop: () => import("@/components/Radio/rdiTop"),
+    RdiMore: () => import("@/components/Radio/rdiMore"),
   },
+  created() {
+    this.getHeaderCategory();
+    this.getPlyList();
+    this.getRdiList();
+  },
+  methods: {
+    async getHeaderCategory() {
+      const result = await this.$API.radio.getHeaderCategory();
+      if (result.code === 200) {
+        this.headerCategory = result.data;
+      }
+    },
+    async getPlyList() {
+      const result = await this.$API.radio.getPlyList();
+      if (result.code === 200) {
+        this.plyList = result.programs;
+      }
+    },
+    async getRdiList() {
+      const result = await this.$API.radio.getRdiList();
+      if (result.code === 200) {
+        this.rdiList = result.subscribers;
+      }
+    },
+    select(index) {
+      this.itemIndex = index;
+    },
+  },
+  computed: {},
 };
 </script>
 
-<style lang="less">
+<style lang="less"  scoped>
 .container {
-  // height: 2222px;
   background-color: #f5f5f5;
-}
-.container .test {
-  width: 100%;
-  height: 206px;
-  margin-top: -100px;
-  background-color: #80869e;
 }
 .container .main-container {
   width: 980px;
   margin: 0 auto;
-  border: 1px solid paleturquoise;
+  background-color: white;
+  // border: 1px solid paleturquoise;
   display: flex;
   flex-direction: column;
   .main-header {
     margin: 40px auto 0;
     // width: 900px;
     height: 194px;
-    // background-color: yellowgreen;
+    // background-color: skyblue;
+    .swiper {
+      position: relative;
+      .one {
+        position: absolute;
+        top: 85px;
+        left: 0;
+        font-size: 20px;
+        cursor: pointer;
+      }
+      .two {
+        font-size: 20px;
+        position: absolute;
+        top: 85px;
+        right: 0;
+        cursor: pointer;
+      }
+    }
     ul {
       width: 933px;
       li {
@@ -241,163 +163,13 @@ export default {
     width: 900px;
     height: 643px;
     margin: 0 auto;
-    .left {
-      width: 426px;
-      height: 643px;
-      float: left;
-    }
-    .right {
-      width: 426px;
-      height: 643px;
-      float: right;
-    }
-    .middle-header {
-      width: 426px;
-      height: 42px;
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 2px solid #c20c0c;
-      h3 {
-        a {
-          color: #333;
-          font-size: 28px;
-        }
-        a:hover {
-          color: #333 !important;
-          text-decoration: underline;
-        }
-      }
-      a {
-        margin-top: 14px;
-      }
-      a:hover {
-        color: #333 !important;
-        text-decoration: underline;
-      }
-    }
-    // 列表组件
-    .content {
-      position: relative;
-      height: 60px;
-      .item {
-        padding-top: 10px;
-        display: flex;
-        .cvrleft {
-          margin-left: 20px;
-          width: 40px;
-          height: 40px;
-          .imgs {
-            position: absolute;
-            display: none;
-            // display: block;
-            width: 22px;
-            height: 22px;
-            top: 32px;
-            left: 44px;
-            overflow: hidden;
-            margin: -11px 0 0 -11px;
-            background-position: 0 -85px;
-            _background-position: 0 0;
-          }
-        }
-        .cvrmiddle {
-          width: 254px;
-          .top {
-            color: #333;
-            display: block;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            word-wrap: normal;
-            cursor: pointer;
-          }
-          .bottom {
-            color: #999;
-            cursor: pointer;
-          }
-          a:hover {
-            color: #333 !important;
-            text-decoration: underline;
-          }
-        }
-        .cvrright {
-          height: 16px;
-          cursor: pointer;
-          line-height: 16px;
-          border: 1px solid #999;
-          font-size: 12px;
-        }
-        a:hover {
-          color: #999 !important;
-          text-decoration: underline;
-        }
-      }
-    }
+    display: flex;
+    justify-content: space-between;
   }
   .main-more {
     width: 900px;
     margin: 0 auto;
     // background-color: skyblue;
-    .rdimore {
-      width: 900px;
-      height: 364px;
-      // background-color: #caccce;
-      .title {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 2px solid red;
-        span {
-          font-size: 28px;
-        }
-        p {
-          margin-top: 10px;
-        }
-      }
-      .rdiList {
-        display: flex;
-        flex-wrap: wrap;
-        li {
-          width: 434px;
-          height: 160px;
-          padding-right: 14px;
-          // border: 1px solid green;
-          a {
-            position: relative;
-            img {
-              width: 120px;
-              height: 120px;
-              position: absolute;
-              top: 20px;
-              left: 0;
-            }
-          }
-          .cnt {
-            width: 295px;
-            height: 64px;
-            // background-color: skyblue;
-            margin: 50px 0 0 140px;
-            a {
-              font-size: 20px;
-              color: #333;
-            }
-            a:hover {
-              text-decoration: underline;
-              color: #333 !important;
-            }
-            p {
-              margin-top: 20px;
-              color: #333;
-            }
-          }
-        }
-      }
-    }
   }
 }
-// .on {
-//   background: pink;
-// }
-// .off {
-//   background: skyblue;
-// }
 </style>

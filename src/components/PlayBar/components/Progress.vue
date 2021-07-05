@@ -12,12 +12,17 @@
       class="mmProgress-dot"
       @mousedown.prevent="barDown"
       @touchstart.prevent="barDown"
-    ></div>
+    >
+      <div class="curText" v-show="isShowText">
+        {{ (totalTime * (progressWidth / 466) || 0) | fmtTime }}
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 const dotWidth = 15;
+import dayjs from "dayjs";
 export default {
   name: "Progress",
   props: {
@@ -31,6 +36,11 @@ export default {
       type: [Number],
       default: 0,
     },
+    // 总时间
+    totalTime: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
@@ -39,6 +49,8 @@ export default {
         startX: 0, // 记录最开始点击的X坐标
         left: 0, // 记录当前已经移动的距离
       },
+      progressWidth: 0,
+      isShowText: false,
     };
   },
   watch: {
@@ -94,6 +106,7 @@ export default {
     },
     // 鼠标按下事件
     barDown(e) {
+      this.isShowText = true;
       this.move.status = true;
       this.move.startX = e.clientX || e.touches[0].pageX;
       this.move.left = this.$refs.mmProgressInner.clientWidth;
@@ -111,10 +124,10 @@ export default {
         Math.max(0, this.move.left + dist)
       );
       this.moveSilde(offsetWidth);
-      this.commitPercent();
     },
     // 鼠标/触摸释放事件
     barUp(e) {
+      this.isShowText = false;
       if (this.move.status) {
         this.commitPercent(true);
         this.move.status = false;
@@ -122,6 +135,7 @@ export default {
     },
     // 移动滑块
     moveSilde(offsetWidth) {
+      this.progressWidth = offsetWidth;
       this.$refs.dot.style.transform = `translateX(${offsetWidth}px)`;
       this.$refs.mmProgressInner.style.width = `${offsetWidth}px`;
     },
@@ -130,8 +144,13 @@ export default {
       const { mmProgress, mmProgressInner } = this.$refs;
       const lineWidth = mmProgress.clientWidth - dotWidth;
       const percent = mmProgressInner.clientWidth / lineWidth;
-      console.log(percent);
       this.$emit(isEnd ? "percentChangeEnd" : "percentChange", percent);
+    },
+  },
+  filters: {
+    fmtTime(value) {
+      if (!value) return "00:00";
+      return dayjs(Math.floor(value * 1000)).format("mm:ss");
     },
   },
 };
@@ -142,6 +161,7 @@ export default {
   position: relative;
   height: 30px;
   .mmProgress-dot {
+    cursor: pointer;
     position: absolute;
     top: 3px;
     left: -4px;
@@ -153,6 +173,19 @@ export default {
     z-index: 9999;
     background-image: url("../imgs/iconall.png");
     background-position: -4px -254px;
+    .curText {
+      text-align: center;
+      position: absolute;
+      width: 35px;
+      height: 15px;
+      top: -25px;
+      background: rgba(255, 255, 255, 0.65);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(5.5px);
+      -webkit-backdrop-filter: blur(5.5px);
+      border-radius: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
   }
 }
 .mmProgress {

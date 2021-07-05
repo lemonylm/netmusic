@@ -1,9 +1,7 @@
 import recommend from "./discover/recommend";
-import playList from './discover/playList'
-import newDiscShelves from "./discover/newDiscShelves";
+import rank from "./discover/rank";
+import singer from "./discover/singer";
+import radio from "./discover/radio";
+import player from "./discover/player";
 
-export {
-  recommend,
-  playList,
-  newDiscShelves
-}
+export { recommend, rank, singer, radio, player };
