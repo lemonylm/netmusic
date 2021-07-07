@@ -10,7 +10,7 @@
             v-for="item in toplist"
             :key="item.id"
             :label="item.id"
-            @click="showlist()"
+            @click="showlist(id)"
           >
             <div class="radio-details">
               <div class="img">
@@ -214,12 +214,12 @@ filters: {
       if (result.code === 200) {
        this.playlistDetail = result.playlist
       }
-      
+      this.active = result.playlist.id
           
     },
 
     showlist(){
-      this.playlistDetail.id = this.toplist[1].id;
+       let active = this.toplist[1].id
     }
      
   },
